@@ -41,25 +41,32 @@ export default function Register() {
     }
 
     return (
-        <div>
-            <h2>Register</h2>
-            {error && (
-                <ErrorNotice message={error} clearError={() => setError(undefined)}/>
-            )}
-            <form onSubmit={submit}>
-                <label>Email</label>
-                <input id='register-email' type='email' onChange={e => setEmail(e.target.value)}/>
+        <div className='flex justify-center p-3'>
+            <div className='flex-col'>
+                <h2 className='flex p-3 font-bold justify-center xl:text-2xl'>Register</h2>
+                {error && (
+                    <ErrorNotice message={error} clearError={() => setError(undefined)}/>
+                )}
+                <form onSubmit={submit}>
+                    <div className='flex justify-center'>
+                        <div className='flex-col justify-center'>
+                            <label>Email:</label>
+                            <input className='flex justify-center bg-black-t-50 border-black p-1' type='email' onChange={e => setEmail(e.target.value)}/>
 
-                <label>Password</label>
-                <input id='register-password' type='password' onChange={e => setPassword(e.target.value)}/>
-                <input type='password' placeholder='verify password' onChange={e => setPasswordCheck(e.target.value)}/>
+                            <label>Password:</label>
+                            <input className='flex justify-center bg-black-t-50 border-black p-1' type='password' onChange={e => setPassword(e.target.value)}/>
+                            <input className='flex justify-center bg-black-t-50 border-black p-1 mt-3' type='password' placeholder='verify password' onChange={e => setPasswordCheck(e.target.value)}/>
 
-                <label>Display Name</label>
-                <input id='register-display-name' type='text' onChange={e => setDisplayName(e.target.value)}/>
-
-                
-                <input type='submit' value='Register'/>
-            </form>
+                            <label>Display Name:</label>
+                            <input className='flex justify-center bg-black-t-50 border-black p-1' type='text' onChange={e => setDisplayName(e.target.value)}/>
+                            
+                            <div className='flex justify-center'>
+                                <input className='my-5 xl:text-xl hover:bg-black hover:text-white' type='submit' value='Register'/>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     )
 }

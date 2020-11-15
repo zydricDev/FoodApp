@@ -35,7 +35,7 @@ export default function Login() {
                         <label className=''>Password:</label>
                         <input className='flex justify-center bg-black-t-50 border-black p-1' type='password' onChange={e => setPassword(e.target.value)}/>
                         <div className='flex justify-center'>
-                            <input className='my-5 xl:text-xl' type='submit' value='Login'/>
+                            <input className='my-5 xl:text-xl hover:bg-black hover:text-white' type='submit' value='Login'/>
                         </div>
                     </div>
                 </div>
