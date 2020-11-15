@@ -7,7 +7,7 @@ import Register from './components/auth/Register'
 import Header from './components/layout/Header'
 import UserContext from './context/UserContext'
 
-import './style.css'
+
 
 
 
@@ -17,6 +17,8 @@ export default function App() {
         user: undefined,
     })
 
+    //Outside of the program e.g the browser's stuff
+    //useEffect Runs once unless refresh
     useEffect(()=>{
         const checkLoggedIn = async ()=>{
             let token = localStorage.getItem('auth-token')
@@ -30,6 +32,7 @@ export default function App() {
                 null, 
                 {headers:{'auth-token': token}}
             )
+            
             if(tokenRes.data){
                 const userRes = await Axios.get('http://localhost:4000/users/', {
                     headers: {'auth-token': token},

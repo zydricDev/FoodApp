@@ -11,6 +11,8 @@ export default function Register() {
     const [displayName, setDisplayName] = useState()
     const [error, setError] = useState()
 
+    //the first variables have to be the same name as the model in the database
+
     const {setUserData} = useContext(UserContext)
     const history = useHistory()
 
@@ -18,6 +20,7 @@ export default function Register() {
         e.preventDefault()
         try{
             const newUser = {email, password, passwordCheck, displayName}
+            
             await Axios.post('http://localhost:4000/users/register', newUser)
 
             const loginRes = await Axios.post('http://localhost:4000/users/login',{
@@ -30,6 +33,7 @@ export default function Register() {
             })
 
             localStorage.setItem('auth-token', loginRes.data.token)
+            //return you to the home page
             history.push('/')
         }catch(err){
             err.response.data.msg && setError(err.response.data.msg)

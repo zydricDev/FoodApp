@@ -25,16 +25,20 @@ export default function Login() {
     }
     return (
         <div>
-            <h2>Login</h2>
+            <h2 className='flex p-3 font-bold justify-center xl:text-2xl'>LOGIN</h2>
             <form onSubmit={submit}>
-                <label>Email</label>
-                <input id='login-email' type='email' onChange={e => setEmail(e.target.value)}/>
+                <div className='flex justify-center'>
+                    <div className='flex-col justify-center'>
+                        <label className=''>Email:</label>
+                        <input className='flex justify-center bg-black-t-50 border-black p-1' type='email' onChange={e => setEmail(e.target.value)}/>
 
-                <label>Password</label>
-                <input id='login-password' type='password' onChange={e => setPassword(e.target.value)}/>
-                
-                
-                <input type='submit' value='Login'/>
+                        <label className=''>Password:</label>
+                        <input className='flex justify-center bg-black-t-50 border-black p-1' type='password' onChange={e => setPassword(e.target.value)}/>
+                        <div className='flex justify-center'>
+                            <input className='my-5 xl:text-xl' type='submit' value='Login'/>
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
     )

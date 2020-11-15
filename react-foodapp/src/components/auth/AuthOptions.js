@@ -18,16 +18,18 @@ export default function AuthOptions() {
         localStorage.setItem('auth-token', '')
     }
     return (
-        <nav className='auth-options'>
+        <nav className='flex'>
             {
                 //if userData.user true, log out else use the other buttons
                 userData.user ? (
-                    <button onClick={logout}>Log out</button>
+                    <div className='p-3 bg-red-t-50 flex'>
+                        <button className='inline-block mx-3 hover:text-white' onClick={logout}>Log out</button>
+                    </div>
                 ) : (
-                    <> 
-                        <button onClick={register}>Register</button>
-                        <button onClick={login}>Login</button>
-                    </>
+                    <div className='p-3 bg-red-t-50 flex'> 
+                        <button className='inline-block mx-3 hover:text-white focus:outline-none' onClick={register}>Register</button>
+                        <button className='inline-block mx-3 hover:text-white focus:outline-none' onClick={login}>Login</button>
+                    </div>
                 )
             }
             
