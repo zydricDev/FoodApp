@@ -1,5 +1,5 @@
 import React from 'react';
-//import {Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import axios from 'axios';
 
 export default class Home extends React.Component {
@@ -15,7 +15,8 @@ export default class Home extends React.Component {
         this.setState({ foodList });
       })
     }catch(err){
-        console.error(err);
+      
+        console.error("OOOOH NOOO",err);
     }
   }
 
@@ -25,9 +26,11 @@ export default class Home extends React.Component {
             <div className="sm:flex-col md:grid grid-cols-3 gap-4">
             { this.state.foodList.map(food => 
             <div key={food._id} className="p-4">
+                <Link to={`/food/${food._id}`}>
                 <img src={food.image} alt={food.foodName}></img>
-                <p>{food.foodName}</p>
-                <p>{food.price}</p>
+                </Link>
+                <p>Name: {food.foodName}</p>
+                <p>Price: ${food.price}</p>
                 </div>
             ) }
             </div>

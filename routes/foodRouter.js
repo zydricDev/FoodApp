@@ -44,17 +44,10 @@ router.delete('/delete/:id', auth, async (req,res)=>{
 
 router.get('/display', async(req,res)=>{
     try{
-        
-        const displayFood = await Food.find({}, function(err, result) {
-            if (err) {
-              console.log(err);
-            } else {
-              res.json(result);
-            }
-          })
-          .limit(9);
-        res.json({displayFood})
-        
+        const displayFood = await Food.find({}, 
+            function(err, result) {res.json(result) 
+            }).limit(9);
+            
     }catch(err){
         res.status(500).json({error: err.message});
     }
@@ -62,6 +55,7 @@ router.get('/display', async(req,res)=>{
 
 router.get('/:id', async(req,res)=>{
     try{
+        console.log('yarr')
         const food = await Food.findById(req.params.id)
         res.json({
             foodName: food.foodName,
