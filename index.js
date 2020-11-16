@@ -22,3 +22,4 @@ mongoose.connect(
 app.listen(PORT, ()=> console.log(`Server at port: ${PORT}`));
 
 app.use('/users',require('./routes/userRouter'));
+app.use('/food',require('./routes/foodRouter'));
