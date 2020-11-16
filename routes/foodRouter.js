@@ -44,7 +44,7 @@ router.delete('/delete/:id', auth, async (req,res)=>{
 
 router.get('/display', async(req,res)=>{
     try{
-        console.log('pain')
+        
         const displayFood = await Food.find({}, function(err, result) {
             if (err) {
               console.log(err);
@@ -52,7 +52,7 @@ router.get('/display', async(req,res)=>{
               res.json(result);
             }
           })
-          .limit(10);
+          .limit(9);
         res.json({displayFood})
         
     }catch(err){

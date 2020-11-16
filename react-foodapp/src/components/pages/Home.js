@@ -24,7 +24,7 @@ export default class Home extends React.Component {
         <div className="flex justify-center">
             <div className="sm:flex-col md:grid grid-cols-3 gap-4">
             { this.state.foodList.map(food => 
-            <div key={food._id} className="mt-3">
+            <div key={food._id} className="p-4">
                 <img src={food.image} alt={food.foodName}></img>
                 <p>{food.foodName}</p>
                 <p>{food.price}</p>
