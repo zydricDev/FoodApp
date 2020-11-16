@@ -42,6 +42,16 @@ router.delete('/delete/:id', auth, async (req,res)=>{
     }
 })
 
+router.get('/display', async(req,res)=>{
+    try{
+        const displayFood = await Food.find().limit(10)
+        res.json({displayFood})
+        
+    }catch(err){
+        res.status(500).json({error: err.message});
+    }
+})
+
 router.get('/:id', async(req,res)=>{
     try{
         const food = await Food.findById(req.params.id)
@@ -58,5 +68,7 @@ router.get('/:id', async(req,res)=>{
         res.status(500).json({error: err.message});
     }
 })
+
+
 
 module.exports = router;
