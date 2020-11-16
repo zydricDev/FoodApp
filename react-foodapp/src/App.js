@@ -6,6 +6,7 @@ import Login from './components/auth/Login'
 import Register from './components/auth/Register'
 import Header from './components/layout/Header'
 import UserContext from './context/UserContext'
+import FoodItem from './components/pages/FoodItem'
 
 
 
@@ -54,6 +55,7 @@ export default function App() {
                     <Route exact path='/' component={Home}/>
                     <Route path='/login' component={Login}/>
                     <Route path='/register' component={Register}/>
+                    <Route path='/food/:id' component={FoodItem}/>
                 </Switch>
             </UserContext.Provider>
         </BrowserRouter>
