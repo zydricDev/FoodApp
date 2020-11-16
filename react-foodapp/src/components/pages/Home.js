@@ -1,26 +1,39 @@
-import React, {useEffect, useContext} from 'react'
-import {useHistory} from 'react-router-dom'
-import UserContext from '../../context/UserContext'
+import React from 'react';
+//import {Link} from 'react-router-dom';
+import axios from 'axios';
 
+export default class Home extends React.Component {
+  state = {
+    foodList: []
+  }
 
-export default function Home() {
-    const {userData} = useContext(UserContext)
-    const history = useHistory()
+  async componentDidMount() {
+    try{
+        axios.get(`http://localhost:4000/food/display`)
+        .then(res => {
+        const foodList = res.data;
+        this.setState({ foodList });
+      })
+    }catch(err){
+        console.error(err);
+    }
+  }
 
-    
-
-
-    //if the user is not logged in, its redirected to the login page
-    useEffect(()=>{
-        if(!userData.user) history.push('/login');
-        
-    })
-    
-
-
+  render() {
     return (
-        <div>
-            Home
+        <div className="flex justify-center">
+            <div className="sm:flex-col md:grid grid-cols-3 gap-4">
+            { this.state.foodList.map(food => 
+            <div key={food._id} className="mt-3">
+                <img src={food.image} alt={food.foodName}></img>
+                <p>{food.foodName}</p>
+                <p>{food.price}</p>
+                </div>
+            ) }
+            </div>
+            
         </div>
+            
     )
+  }
 }
