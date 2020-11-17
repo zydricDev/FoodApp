@@ -3,6 +3,7 @@ const Food = require('../models/foodModel');
 const auth = require('../middleware/auth');
 
 router.post('/register', auth, async (req,res)=>{
+    console.log(req)
     try{
         let {foodName, userDisplayName, userId, price, desc, image} = req.body;
         if(!foodName || !userDisplayName || !price || !userId){
@@ -55,7 +56,6 @@ router.get('/display', async(req,res)=>{
 
 router.get('/:id', async(req,res)=>{
     try{
-        console.log('yarr')
         const food = await Food.findById(req.params.id)
         res.json({
             foodName: food.foodName,
