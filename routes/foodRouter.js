@@ -3,7 +3,7 @@ const Food = require('../models/foodModel');
 const auth = require('../middleware/auth');
 
 router.post('/register', auth, async (req,res)=>{
-    
+    console.log(req)
     try{
         let {foodName, userDisplayName, userId, price, desc, image} = req.body;
         if(!foodName || !userDisplayName || !price || !userId){

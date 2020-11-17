@@ -19,12 +19,15 @@ export default function RegisterFood() {
 
     const submit = async (e) =>{
         e.preventDefault()
+     
         try{
             setUserDisplayName(userCred.userData.user.displayName)
             setUserId(userCred.userData.user.id)
-            
             const newFood = {foodName, userDisplayName, userId, price, desc, image}
-            await Axios.post('http://localhost:4000/food/register', newFood)
+
+            await Axios.post('http://localhost:4000/food/register', newFood, {
+                headers:{"auth-token": localStorage.getItem('auth-token')}
+            })
             history.push('/')
         }catch(err){
             err.response.data.msg && setError(err.response.data.msg)

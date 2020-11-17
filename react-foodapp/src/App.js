@@ -8,6 +8,7 @@ import Header from './components/layout/Header'
 import UserContext from './context/UserContext'
 import FoodItem from './components/pages/FoodItem'
 import RegisterFood from './components/pages/RegisterFood'
+import DeleteMe from './components/pages/DeleteMe'
 
 
 
@@ -22,6 +23,7 @@ export default function App() {
     //Outside of the program e.g the browser's stuff
     //useEffect Runs once unless refresh
     useEffect(()=>{
+        
         const checkLoggedIn = async ()=>{
             let token = localStorage.getItem('auth-token')
             if(token === null){
@@ -58,7 +60,7 @@ export default function App() {
                     <Route path='/register' component={Register}/>
                     <Route path='/food/register' component={RegisterFood}/>
                     <Route path='/food/:id' component={FoodItem}/>
-                    
+                    <Route path='/user/delete' component={DeleteMe}/>
                 </Switch>
             </UserContext.Provider>
         </BrowserRouter>
