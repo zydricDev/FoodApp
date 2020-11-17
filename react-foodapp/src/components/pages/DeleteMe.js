@@ -17,7 +17,7 @@ export default function DeleteMe() {
             })
             history.push('/')
         }catch(err){
-            console.log('wa')
+            console.log('Error has occured while deleting user')
         }
     }
 
