@@ -27,7 +27,7 @@ export default class Home extends React.Component {
             { this.state.foodList.map(food => 
             <div key={food._id} className="p-4">
                 <Link to={`/food/${food._id}`}>
-                <img src={food.image} alt={food.foodName}></img>
+                  <img src={food.image} alt={food.foodName} className="h-64 w-full object-cover"></img>
                 </Link>
                 <p>Name: {food.foodName}</p>
                 <p>Price: ${food.price}</p>

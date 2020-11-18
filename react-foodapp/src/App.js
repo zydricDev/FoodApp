@@ -9,6 +9,7 @@ import UserContext from './context/UserContext'
 import FoodItem from './components/pages/FoodItem'
 import RegisterFood from './components/pages/RegisterFood'
 import DeleteMe from './components/pages/DeleteMe'
+import MyStore from './components/pages/MyStore'
 
 
 
@@ -59,6 +60,7 @@ export default function App() {
                     <Route path='/login' component={Login}/>
                     <Route path='/register' component={Register}/>
                     <Route path='/food/register' component={RegisterFood}/>
+                    <Route path='/food/myStore' component={MyStore}/>
                     <Route path='/food/:id' component={FoodItem}/>
                     <Route path='/user/delete' component={DeleteMe}/>
                 </Switch>
