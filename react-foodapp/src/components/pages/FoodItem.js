@@ -16,7 +16,7 @@ export default function FoodItem() {
         content =
             <div className="flex justify-center p-3">
                 <div className="flex-col">
-                    <img src={product.data.image} className="px-5 py-10"></img>
+                    <img src={product.data.image} alt={product.data.foodName}className="px-5 py-10"></img>
                     <p className="px-5">Product: {product.data.foodName}</p>
                     <p className="px-5">Price: ${product.data.price}</p>
                     <p className="px-5">Seller: {product.data.userDisplayName}</p>
