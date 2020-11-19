@@ -70,13 +70,30 @@ router.get('/display', async(req,res)=>{
 
 router.patch('/edit/:id', async(req,res)=>{
     try{
-        let {newFoodName, newFoodPrice} = req.body;
+        let {newName, newPrice, newDesc, newImage} = req.body;
+        
         const food = await Food.findById(req.params.id)
+        if(!newName){
+            newName = food.foodName
+        }
+        if(!newPrice){
+            newPrice = food.price
+        }
+        if(!newDesc){
+            newDesc = food.desc
+        }
+        if(!newImage){
+            newImage = food.image
+        }
+
         await food.updateOne({ 
-            foodName: newFoodName,
-            price: newFoodPrice 
+            foodName: newName,
+            price: newPrice,
+            desc: newDesc,
+            image: newImage
+
         })
-        res.json({message: "UPDATED"})
+        res.json(food)
         
     }catch(err){
         res.status(500).json({error: err.message});
