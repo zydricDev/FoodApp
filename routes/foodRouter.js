@@ -3,7 +3,6 @@ const Food = require('../models/foodModel');
 const auth = require('../middleware/auth');
 
 router.post('/register', auth, async (req,res)=>{
-    console.log(req)
     try{
         let {foodName, userDisplayName, userId, price, desc, image} = req.body;
         if(!foodName || !userDisplayName || !price || !userId){
@@ -52,6 +51,37 @@ router.get('/display', async(req,res)=>{
     }catch(err){
         res.status(500).json({error: err.message});
     }
+})
+
+/**router.get('/display/:id', async(req,res)=>{
+    try{
+        const displayFood = await Food.find({userId: req.params.id})
+        res.json(displayFood)
+            
+    }catch(err){
+        res.status(500).json({error: err.message});
+    }
+})
+
+
+
+**/
+
+
+router.patch('/edit/:id', async(req,res)=>{
+    try{
+        let {newFoodName, newFoodPrice} = req.body;
+        const food = await Food.findById(req.params.id)
+        await food.updateOne({ 
+            foodName: newFoodName,
+            price: newFoodPrice 
+        })
+        res.json({message: "UPDATED"})
+        
+    }catch(err){
+        res.status(500).json({error: err.message});
+    }
+    
 })
 
 router.get('/:id', async(req,res)=>{
