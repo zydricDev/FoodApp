@@ -42,11 +42,39 @@ router.delete('/delete/:id', auth, async (req,res)=>{
     }
 })
 
+
+
 router.get('/display', async(req,res)=>{
     try{
-        const displayFood = await Food.find({}, 
-            function(err, result) {res.json(result) 
-            }).limit(9);
+        let page = parseInt(req.query.page)
+        let limit = parseInt(req.query.limit)
+        if(!page){
+            page = 1
+        }
+        if(!limit){
+            limit = 9
+        }
+        const result = {}
+        const displayFood = await Food.find()
+        const startIndex = (page - 1) * limit
+        const endIndex = (page * limit)
+
+        if(endIndex < displayFood.length){
+            result.next = {
+                page: page + 1,
+                limit: limit
+            }
+        }
+        
+        if(startIndex > 0){
+            result.previous = {
+                page: page - 1,
+                limit: limit
+            }
+        }
+        
+        result.result = displayFood.slice(startIndex, endIndex)
+        res.json(result)
             
     }catch(err){
         res.status(500).json({error: err.message});
