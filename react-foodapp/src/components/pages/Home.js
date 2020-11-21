@@ -36,7 +36,7 @@ export default class Home extends React.Component {
 
   async apiCall(){
     try {
-      axios.get(`http://localhost:4000/food/display?page=${this.page}&limit=2`)
+      axios.get(`http://localhost:4000/food/display?page=${this.page}&limit=9`)
         .then(res => {  
           this.setState({ 
             foodList: res.data.result, 
