@@ -5,25 +5,53 @@ import Axios from 'axios'
 
 import ErrorNotice from '../misc/ErrorNotice'
 
+class editedFood extends React.Component {
+    constructor(name, price, desc, image) {
+        super()
+        this.name = name;
+        this.price = price;
+        this.desc = desc;
+        this.image = image;
+        this.edit = false;
+    }
+}
+
 export default function MyStore() {
     const userCred = useContext(UserContext)
-    
-    const url = `http://localhost:4000/food/display`
+    let url = undefined
+
+    if (userCred.userData.user) {
+        url = `http://localhost:4000/food/display/${userCred.userData.user.id}?page=1&limit=9`
+    } else {
+        url = `http://localhost:4000/food/display?page=1&limit=9`
+    }
+
 
     let productList = useAxiosGet(url)
     let content = null
-    const [editMode, setEditMode] = useState(false)
+    
 
     const [newName, setName] = useState()
     const [newPrice, setPrice] = useState()
     const [newDesc, setDesc] = useState()
     const [newImage, setImage] = useState()
     
+    const [myIndex, setIndex] = useState()
+
     const [error, setError] = useState()
-    
-    const canEdit = () => {
-        setEditMode(!editMode)
-    }
+
+
+    let foodValues = [];
+
+    const canEdit = (i) => {
+        if(i == myIndex){
+            setIndex(undefined)
+        }else{
+            setIndex(i)
+        }
+        
+        console.log(myIndex)
+    }   
 
     const submit = async (item) => {
         try {
@@ -39,16 +67,29 @@ export default function MyStore() {
     }
 
     try {
+        if (productList.data) {
+            productList.data.result.map((product, index) => {
 
+                foodValues.push(new editedFood(
+                    product.foodName,
+                    product.price,
+                    product.desc,
+                    product.image
+                ))
+                
+                return null;
+            })
+        }
+    
         if (productList.data) {
 
             content =
                 <div className="flex justify-center">
                     <div className="sm:flex-col md:grid grid-cols-3 gap-4">
-
-                        {productList.data.map((product, index) => product.userId === userCred.userData.user.id ? (
-
+                        {productList.data.result.map((product, index) =>
                             <div key={index}>
+                                <button onClick={ () => { canEdit(index)  }}>Edit</button>
+                                
                                 <img className="h-64 w-full object-cover" src={product.image} alt={product.foodName}></img>
                                 <div className='flex justify-between'>
                                     <div className='flex-col'>
@@ -70,9 +111,11 @@ export default function MyStore() {
                                         </div>
                                     </div>
                                     <div className='flex-col'>
-                                        {editMode && (
-                                            <form onSubmit={()=>submit(product._id)}>
-                                                {error && (<ErrorNotice message={error} clearError={() => setError(undefined)}/>)}                  
+                                        
+                                        {myIndex == index && (
+                                            <form onSubmit={() => submit(product._id)}>
+                                                
+                                                {error && (<ErrorNotice message={error} clearError={() => setError(undefined)} />)}
                                                 <div className='flex justify-between'>
                                                     <label>Name:</label>
                                                     <input className='bg-black-t-50 border-black p-1' type='text' onChange={e => setName(e.target.value)} />
@@ -87,7 +130,7 @@ export default function MyStore() {
                                                     <label>Description:</label>
                                                     <input className='bg-black-t-50 border-black p-1' type='text' onChange={e => setDesc(e.target.value)} />
                                                 </div>
-                                                
+
                                                 <div className='flex justify-between'>
                                                     <label>Image url:</label>
                                                     <input className='bg-black-t-50 border-black p-1' type='text' onChange={e => setImage(e.target.value)} />
@@ -100,9 +143,7 @@ export default function MyStore() {
                                         )}
                                     </div>
                                 </div>
-
                             </div>
-                        ) : (null)
                         )}
 
                     </div>
@@ -115,8 +156,9 @@ export default function MyStore() {
 
     return (
         <div>
-            <button onClick={(canEdit)}>Edit</button>
+            
             {content}
+
         </div>
     )
 }

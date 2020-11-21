@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Food = require('../models/foodModel');
 const auth = require('../middleware/auth');
+const paginate = require('../middleware/paginate');
 
 router.post('/register', auth, async (req,res)=>{
     try{
@@ -44,7 +45,11 @@ router.delete('/delete/:id', auth, async (req,res)=>{
 
 
 
-router.get('/display', async(req,res)=>{
+router.get('/display', paginate(Food), async(req,res)=>{
+    res.json(res.paginate)
+})
+
+router.get('/display/:id', async(req,res)=>{
     try{
         let page = parseInt(req.query.page)
         let limit = parseInt(req.query.limit)
@@ -55,7 +60,7 @@ router.get('/display', async(req,res)=>{
             limit = 9
         }
         const result = {}
-        const displayFood = await Food.find()
+        const displayFood = await Food.find({userId: req.params.id})
         const startIndex = (page - 1) * limit
         const endIndex = (page * limit)
 
@@ -81,19 +86,6 @@ router.get('/display', async(req,res)=>{
     }
 })
 
-/**router.get('/display/:id', async(req,res)=>{
-    try{
-        const displayFood = await Food.find({userId: req.params.id})
-        res.json(displayFood)
-            
-    }catch(err){
-        res.status(500).json({error: err.message});
-    }
-})
-
-
-
-**/
 
 
 router.patch('/edit/:id', async(req,res)=>{
