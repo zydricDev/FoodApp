@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, Fragment} from 'react'
 import {BrowserRouter, Switch, Route} from "react-router-dom"
 import Axios from 'axios'
+
 import Home from './components/pages/Home'
 import Login from './components/auth/Login'
 import Register from './components/auth/Register'
@@ -10,6 +11,7 @@ import FoodItem from './components/pages/FoodItem'
 import RegisterFood from './components/pages/RegisterFood'
 import DeleteMe from './components/pages/DeleteMe'
 import MyStore from './components/pages/MyStore'
+import Landing from './components/pages/Landing'
 
 
 
@@ -54,15 +56,20 @@ export default function App() {
     return <>
         <BrowserRouter>
             <UserContext.Provider value={{userData, setUserData}}>
-                <Header/>
+                
+                
                 <Switch>
-                    <Route exact path='/' component={Home}/>
-                    <Route path='/login' component={Login}/>
-                    <Route path='/register' component={Register}/>
-                    <Route path='/food/register' component={RegisterFood}/>
-                    <Route path='/food/myStore' component={MyStore}/>
-                    <Route path='/food/:id' component={FoodItem}/>
-                    <Route path='/user/delete' component={DeleteMe}/>
+                    <Route path='/Landing' component={Landing}/>
+                    <Fragment>
+                        <Header/>
+                        <Route exact path='/' component={Home}/>
+                        <Route path='/login' component={Login}/>
+                        <Route path='/register' component={Register}/>
+                        <Route path='/food/register' component={RegisterFood}/>
+                        <Route path='/food/myStore' component={MyStore}/>
+                        <Route path='/food/:id' component={FoodItem}/>
+                        <Route path='/user/delete' component={DeleteMe}/>
+                    </Fragment>
                 </Switch>
             </UserContext.Provider>
         </BrowserRouter>

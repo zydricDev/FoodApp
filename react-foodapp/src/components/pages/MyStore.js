@@ -20,38 +20,35 @@ export default function MyStore() {
     const userCred = useContext(UserContext)
     let url = undefined
 
-    if (userCred.userData.user) {
-        url = `http://localhost:4000/food/display/${userCred.userData.user.id}?page=1&limit=9`
-    } else {
-        url = `http://localhost:4000/food/display?page=1&limit=9`
-    }
-
-
-    let productList = useAxiosGet(url)
     let content = null
-    
+    let pageSection = null
+    let foodValues = [];
 
     const [newName, setName] = useState()
     const [newPrice, setPrice] = useState()
     const [newDesc, setDesc] = useState()
     const [newImage, setImage] = useState()
-    
     const [myIndex, setIndex] = useState()
-
+    const [page, setPage] = useState(1)
     const [error, setError] = useState()
 
+    
 
-    let foodValues = [];
+    if (userCred.userData.user) {
+        url = `http://localhost:4000/food/display/${userCred.userData.user.id}?page=${page}&limit=9`
+    } else {
+        url = `http://localhost:4000/food/display?page=1&limit=9`
+    }
+
+    let productList = useAxiosGet(url)
 
     const canEdit = (i) => {
-        if(i == myIndex){
+        if (i === myIndex) {
             setIndex(undefined)
-        }else{
+        } else {
             setIndex(i)
         }
-        
-        console.log(myIndex)
-    }   
+    }
 
     const submit = async (item) => {
         try {
@@ -68,7 +65,7 @@ export default function MyStore() {
 
     try {
         if (productList.data) {
-            productList.data.result.map((product, index) => {
+            productList.data.result.map((product) => {
 
                 foodValues.push(new editedFood(
                     product.foodName,
@@ -76,21 +73,24 @@ export default function MyStore() {
                     product.desc,
                     product.image
                 ))
-                
+
                 return null;
             })
         }
-    
+
         if (productList.data) {
 
             content =
                 <div className="flex justify-center">
-                    <div className="sm:flex-col md:grid grid-cols-3 gap-4">
+                    <div className="sm:flex-col md:grid grid-cols-3 gap-3 p-3">
                         {productList.data.result.map((product, index) =>
                             <div key={index}>
-                                <button onClick={ () => { canEdit(index)  }}>Edit</button>
-                                
+
                                 <img className="h-64 w-full object-cover" src={product.image} alt={product.foodName}></img>
+                                <div className='flex justify-center p-3'>
+                                    <button onClick={() => { canEdit(index) }}>Edit</button>
+                                </div>
+
                                 <div className='flex justify-between'>
                                     <div className='flex-col'>
                                         <div className='flex justify-between'>
@@ -111,10 +111,10 @@ export default function MyStore() {
                                         </div>
                                     </div>
                                     <div className='flex-col'>
-                                        
-                                        {myIndex == index && (
+
+                                        {myIndex === index && (
                                             <form onSubmit={() => submit(product._id)}>
-                                                
+
                                                 {error && (<ErrorNotice message={error} clearError={() => setError(undefined)} />)}
                                                 <div className='flex justify-between'>
                                                     <label>Name:</label>
@@ -148,6 +148,13 @@ export default function MyStore() {
 
                     </div>
                 </div>
+
+            pageSection =
+                <div className='flex justify-center'>
+                    {productList.data.previous && (<button onClick={ () => {setPage(page - 1)}}>Prev</button>)}
+                    {productList.data.next && (<button onClick={ () => {setPage(page + 1)}} className='ml-3'>Next</button>)}
+                </div>
+
         }
     } catch (err) {
         content = <p>Register PLZ</p>
@@ -156,9 +163,8 @@ export default function MyStore() {
 
     return (
         <div>
-            
             {content}
-
+            {pageSection}
         </div>
     )
 }
