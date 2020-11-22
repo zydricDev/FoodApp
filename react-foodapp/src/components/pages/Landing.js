@@ -72,19 +72,21 @@ export default function Landing() {
             </div>
 
             <div className='flex'>
-                <div className='lg:flex p-20 w-full'>
+                <div className='xl:flex p-20 w-full'>
                     <div className='self-center'>
                         <p className='font-bold sm:text-center md:text-3xl text-2xl'>Pickup or delivery from restaurants near you</p>
-                        <p className='sm:text-center'>Explore restaurants that deliver near you, or try yummy takeout fare. With a place for every taste, it’s easy to find food you crave, and order online or through the Grubhub app. Find great meals fast with lots of local menus. Enjoy eating the convenient way with places that deliver to your door.</p>
+                        <p className='sm:text-center xl:px-40'>Explore restaurants that deliver near you, or try yummy takeout fare. With a place for every taste, it’s easy to find food you crave, and order online or through the Grubhub app. Find great meals fast with lots of local menus. Enjoy eating the convenient way with places that deliver to your door.</p>
                     </div>
                     <div className='flex mt-5 sm:mt-0 w-full'>
-                        <img className='object-fill p-10' src='https://images.unsplash.com/photo-1592834236858-2a3c9ecf004f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1867&q=80' alt='美味しい料理'/>
+                        <img className='object-fill md: pt-10' src='https://images.unsplash.com/photo-1592834236858-2a3c9ecf004f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1867&q=80' alt='美味しい料理'/>
                     </div>
                 </div>
             </div>
         
-        
-        
+            <div className='md:flex p-5 bg-blue-500'>
+                <p className='w-full font-bold md:text-center md:text-3xl text-2xl self-center'>About Grubhub</p>
+                <p className='w-full xl:px-20'>Grubhub helps you find and order food from wherever you are. How it works: you type in an address, we tell you the restaurants that deliver to that locale as well as showing you droves of pickup restaurants near you. Want to be more specific? Search by cuisine, restaurant name or menu item. We'll filter your results accordingly. When you find what you're looking for, you can place your order online or by phone, free of charge. Oh, and we also give you access to reviews, coupons, special deals and a 24/7 customer care team that tracks each order and makes sure you get exactly what you want.</p>
+            </div>
         </div>
     )
 }
