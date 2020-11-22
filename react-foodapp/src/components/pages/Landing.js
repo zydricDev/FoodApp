@@ -1,6 +1,13 @@
-import React from 'react'
+import React, {useState} from 'react'
+import {Link} from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
+
+
 
 export default function Landing() {
+    const [search, setSearch] = useState()
+
     return (
         <div>
             <div className='lg:flex'>
@@ -10,11 +17,13 @@ export default function Landing() {
                 </div>
 
                 <div className='flex justify-center w-full'>
-                    <div className='flex-col'>
+                    <div className='flex-col text-blue-500'>
                         <div className='flex justify-end'>
                             <div className='flex px-10 pt-10 pb-40 font-bold text-2xl'>
                                 <p>Get Perks</p>
-                                <p className='ml-5'>Sign in</p>
+                                <Link to='/'>
+                                    <p className='ml-5 hover:text-blue-900'>Sign in</p>
+                                </Link>
                             </div>
                         </div>
 
@@ -22,15 +31,21 @@ export default function Landing() {
                             <div className='flex box-border'>
                                 <div className='flex text-6xl font-bold px-10'>
                                     <p>Order food delivery you’ll love</p>
-                                </div> 
+                                </div>
                             </div>
                         </div>
 
                         <div className='md:flex p-10 justify-center'>
-                            <input className='sm:mb-3 md:mb-0 md:w-5/6 w-full p-3 mb-3 border-2 border-gray-500 rounded' placeholder='Enter street address or zip code'/>
-                            <p className='md:w-1/6 md:ml-5 text-center p-3 bg-indigo-500 rounded text-white font-bold'>Find Food</p>
+                            <div className='w-full relative inline-block'>
+                                <input className='w-full sm:mb-3 md:mb-0 md:w-5/6 p-3 mb-3 border-2 border-gray-500 rounded box-border' placeholder='Enter street address or zip code' />
+                                <FontAwesomeIcon icon={faTimes} className='text-2xl'/>
+                            </div>
+                            
+                      
+                            <p className='md:w-1/6 md:ml-5 text-center p-3 bg-blue-500 hover:bg-blue-900 rounded text-white font-bold'>Find Food</p>
+
                         </div>
-                        
+
                     </div>
                 </div>
 
