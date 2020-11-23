@@ -11,7 +11,7 @@ export default function Header() {
     
     if (location.pathname !== '/Landing') {
         content =
-            <header className='flex justify-between border-b shadow-sm'>
+            <header className='sm:flex flex justify-between border-b shadow-sm'>
                 <div className='flex'>
                     <Link to='/'>
                         <h1 className='xl:text-4xl p-3 text-red-500 hover:text-red-600 font-bold ml-5'>Food App</h1>
