@@ -1,11 +1,13 @@
 import React, {useState, useContext} from 'react'
 import Axios from 'axios'
-import {useHistory} from 'react-router-dom'
+import {useHistory, Link} from 'react-router-dom'
 import UserContext from '../../context/UserContext'
+import ErrorNotice from '../misc/ErrorNotice'
 
 export default function Login() {
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
+    const [error, setError] = useState()
 
     const {setUserData} = useContext(UserContext)
     const history = useHistory()
@@ -13,34 +15,55 @@ export default function Login() {
     
     const submit = async (e) =>{
         e.preventDefault()
-        const loginUser = {email, password}
-        const loginRes = await Axios.post('http://localhost:4000/users/login', loginUser)
-
-        setUserData({
-            token: loginRes.data.token,
-            user: loginRes.data.user,
-        })
-
-        localStorage.setItem('auth-token', loginRes.data.token)
-        history.push('/')
+        try{
+            const loginUser = {email, password}
+            const loginRes = await Axios.post('http://localhost:4000/users/login', loginUser)
+    
+            setUserData({
+                token: loginRes.data.token,
+                user: loginRes.data.user,
+            })
+    
+            localStorage.setItem('auth-token', loginRes.data.token)
+            history.push('/')
+        }catch(err){
+            err.response.data.msg && setError(err.response.data.msg)
+        }
+        
     }
     return (
         <div>
-            <h2 className='flex p-3 font-bold justify-center xl:text-2xl'>LOGIN</h2>
+            <div className='flex justify-center my-10'>
+                {error && (
+                            <ErrorNotice message={error} clearError={() => setError(undefined)}/>
+                )}
+            </div>
             <form onSubmit={submit}>
-                <div className='flex justify-center'>
-                    <div className='flex-col justify-center'>
-                        <label className=''>Email:</label>
-                        <input className='flex justify-center bg-black-t-50 border-black p-1' type='email' onChange={e => setEmail(e.target.value)}/>
+                
+                <div className='flex justify-center py-10'>
+                    <div className='grid border-2 w-2/6 p-5'>
+                        <h2 className='flex justify-center font-bold xl:text-2xl mb-10'>Sign in with your FoodApp account</h2>
+                        <div className='mb-5 grid'>
+                            <label className=''>Email</label>
+                            <input className='border-black rounded p-2 border-2 border-gray-400' type='email' onChange={e => setEmail(e.target.value)} />
+                        </div>
+                        <div className='mb-5 grid'>
+                            <label className=''>Password</label>
+                            <input className='border-black rounded p-2 border-2 border-gray-400' type='password' onChange={e => setPassword(e.target.value)} />
+                        </div>
 
-                        <label className=''>Password:</label>
-                        <input className='flex justify-center bg-black-t-50 border-black p-1' type='password' onChange={e => setPassword(e.target.value)}/>
+                        <input className='xl:text-xl hover:bg-red-700 text-white w-full rounded p-2 bg-red-600' type='submit' value='Login' />
                         <div className='flex justify-center'>
-                            <input className='my-5 xl:text-xl hover:bg-black hover:text-white' type='submit' value='Login'/>
+                            <Link to='/register'>
+                                <p className='hover:text-blue-700 text-blue-600 text-center mt-10'>Create your account</p>
+                            </Link>
                         </div>
                     </div>
+
                 </div>
+                
             </form>
+
         </div>
     )
 }

@@ -44,15 +44,15 @@ router.post('/login', async (req,res)=>{
     try{
         const{email, password} = req.body;
         if(!email || !password){
-            return res.status(400).json({msg: "Not all field have been entered"});
+            return res.status(400).json({msg: "Not all fields have been entered"});
         }
         const user = await User.findOne({email: email});
         if(!user){
-            return res.status(400).json({msg: "Not account with this email registered"});
+            return res.status(400).json({msg: "Unable to find user or user does not exist"});
         }
         const isMatch = await bcrypt.compare(password, user.password);
         if(!isMatch){
-            return res.status(400).json({msg: "Invalid password"});
+            return res.status(400).json({msg: "Please log in with your correct password"});
         }
         const token = jwt.sign({id: user._id}, process.env.JWT_SECRET);
         res.json({

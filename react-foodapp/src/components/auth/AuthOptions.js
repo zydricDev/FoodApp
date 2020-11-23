@@ -22,13 +22,16 @@ export default function AuthOptions() {
             {
                 //if userData.user true, log out else use the other buttons
                 userData.user ? (
-                    <div className='p-3 bg-red-t-50 flex'>
-                        <button className='inline-block mx-3 hover:text-white' onClick={logout}>Log out</button>
+                    <div className='flex justify-center'>
+                        <button className='inline-block mx-3 hover:text-white focus:outline-none' onClick={logout}>
+                            <p className='px-5 border border-gray-500 rounded p-2 font-bold text-blue-400 hover:border-blue-500'>Log Out</p>
+                        </button>
                     </div>
                 ) : (
-                    <div className='p-3 bg-red-t-50 flex'> 
-                        <button className='inline-block mx-3 hover:text-white focus:outline-none' onClick={register}>Register</button>
-                        <button className='inline-block mx-3 hover:text-white focus:outline-none' onClick={login}>Login</button>
+                    <div className='flex justify-center'> 
+                        <button className='inline-block mx-3 hover:text-white focus:outline-none' onClick={login}>
+                            <p className='px-5 border border-gray-500 rounded p-2 font-bold text-blue-400 hover:border-blue-500'>Sign in</p>
+                        </button>
                     </div>
                 )
             }
