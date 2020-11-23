@@ -11,21 +11,27 @@ export default function LoggedInOptions() {
     const myStore = () => history.push('/food/myStore')
     
     return (
-        <nav className='flex'>
+        <nav className='flex ml-20'>
             {
                 userData.user ? (
                     <>
-                        <div className='p-3 flex border-l border-black'>
-                            <button className='inline-block mx-3 hover:text-white focus:outline-none' onClick={foodRegister}>Add Food</button>
+                        <div className='flex ml-10'>
+                            <button className='hover:text-white focus:outline-none' onClick={foodRegister}>
+                                <p className='px-5 rounded p-2 font-bold text-blue-400 hover:text-blue-500'>Add Food</p>
+                            </button>
                         </div>
-                        <div className='p-3 flex border-l border-black'>
-                            <button className='inline-block mx-3 hover:text-white focus:outline-none' onClick={myStore}>View Shop</button>
+                        <div className='flex ml-10'>
+                            <button className='inline-block mx-3 hover:text-white focus:outline-none' onClick={myStore}>
+                                <p className='px-5 rounded p-2 font-bold text-blue-400 hover:text-blue-500'>View My Shop</p>    
+                            </button>
                         </div>
                     </>
                     
                 ) : (
-                    <div className='p-3 flex border-l border-black'> 
-                        <button className='inline-block mx-3 hover:text-white focus:outline-none'>Does something</button>
+                    <div className='flex ml-10'> 
+                        <button className='inline-block mx-3 hover:text-white focus:outline-none'>
+                            <p className='px-5 rounded p-2 font-bold text-blue-400 hover:text-blue-500'>Does Something</p>    
+                        </button>
                     </div>
                 )
             }
