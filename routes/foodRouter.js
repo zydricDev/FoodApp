@@ -9,6 +9,9 @@ router.post('/register', auth, async (req,res)=>{
         if(!foodName || !userDisplayName || !price || !userId){
             return res.status(400).json({msg: "Not all fields have been entered"});
         }
+        if(parseInt(price) <= 0){
+            return res.status(400).json({msg: "Price cannot be 0 or less"});
+        }
         if(!desc){
            desc = 'N/a'
         }
