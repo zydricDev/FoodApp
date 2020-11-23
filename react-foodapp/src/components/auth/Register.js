@@ -33,7 +33,7 @@ export default function Register() {
             })
 
             localStorage.setItem('auth-token', loginRes.data.token)
-            //return you to the home page
+            
             history.push('/')
         }catch(err){
             err.response.data.msg && setError(err.response.data.msg)
@@ -41,28 +41,34 @@ export default function Register() {
     }
 
     return (
-        <div className='flex justify-center p-3'>
-            <div className='flex-col'>
-                <h2 className='flex p-3 font-bold justify-center xl:text-2xl'>Register</h2>
-                {error && (
-                    <ErrorNotice message={error} clearError={() => setError(undefined)}/>
-                )}
+        <div className='flex justify-center mt-10'>
+            <div className='flex-col border border-gray-400 w-2/6'>
+                <div className='flex justify-center mt-2'>
+                    {error && (
+                        <ErrorNotice message={error} clearError={() => setError(undefined)}/>
+                    )}
+                </div>
                 <form onSubmit={submit}>
-                    <div className='flex justify-center'>
-                        <div className='flex-col justify-center'>
-                            <label>Email:</label>
-                            <input className='flex justify-center bg-black-t-50 border-black p-1' type='email' onChange={e => setEmail(e.target.value)}/>
-
-                            <label>Password:</label>
-                            <input className='flex justify-center bg-black-t-50 border-black p-1' type='password' onChange={e => setPassword(e.target.value)}/>
-                            <input className='flex justify-center bg-black-t-50 border-black p-1 mt-3' type='password' placeholder='verify password' onChange={e => setPasswordCheck(e.target.value)}/>
-
-                            <label>Display Name:</label>
-                            <input className='flex justify-center bg-black-t-50 border-black p-1' type='text' onChange={e => setDisplayName(e.target.value)}/>
-                            
-                            <div className='flex justify-center'>
-                                <input className='my-5 xl:text-xl hover:bg-black hover:text-white' type='submit' value='Register'/>
+                    <div className='pb-5'>
+                        
+                        <div className='grid w-2/6 p-5 w-full'>
+                            <h2 className='flex font-bold mb-5 xl:text-2xl'>Create your account</h2>
+                            <div className='mb-5 grid'>
+                                <label className='text-gray-500'>Email</label>
+                                <input className='border-black rounded p-2 border-2 border-gray-400' type='email' onChange={e => setEmail(e.target.value)}/>
                             </div>
+
+                            <div className='mb-5 grid'>
+                                <label className='text-gray-500'>Password (5 character minimum)</label>
+                                <input className='border-black rounded p-2 border-2 border-gray-400' type='password' onChange={e => setPassword(e.target.value)}/>
+                                <input className='border-black rounded p-2 border-2 border-gray-400 mt-1' type='password' placeholder='verify password' onChange={e => setPasswordCheck(e.target.value)}/>
+                            </div>
+                            
+                            <div className='mb-5 grid'>
+                                <label className='text-gray-500'>Display Name</label>
+                                <input className='border-black rounded p-2 border-2 border-gray-400' type='text' onChange={e => setDisplayName(e.target.value)}/>
+                            </div>
+                            <input className='xl:text-xl hover:bg-blue-700 text-white w-full rounded p-2 bg-blue-600' type='submit' value='Register'/>
                         </div>
                     </div>
                 </form>

@@ -20,7 +20,7 @@ export default function Landing() {
                         <div className='flex justify-end'>
                             <div className='flex px-10 pt-10 pb-40 font-bold text-2xl'>
                                 <p>Get Perks</p>
-                                <Link to='/'>
+                                <Link to='/login'>
                                     <p className='ml-5 hover:text-blue-900'>Sign in</p>
                                 </Link>
                             </div>

@@ -44,11 +44,11 @@ export default function Login() {
                     <div className='grid border-2 w-2/6 p-5'>
                         <h2 className='flex justify-center font-bold xl:text-2xl mb-10'>Sign in with your FoodApp account</h2>
                         <div className='mb-5 grid'>
-                            <label className=''>Email</label>
+                            <label className='text-gray-500'>Email</label>
                             <input className='border-black rounded p-2 border-2 border-gray-400' type='email' onChange={e => setEmail(e.target.value)} />
                         </div>
                         <div className='mb-5 grid'>
-                            <label className=''>Password</label>
+                            <label className='text-gray-500'>Password</label>
                             <input className='border-black rounded p-2 border-2 border-gray-400' type='password' onChange={e => setPassword(e.target.value)} />
                         </div>
 
