@@ -12,6 +12,7 @@ import RegisterFood from './components/pages/RegisterFood'
 import DeleteMe from './components/pages/DeleteMe'
 import MyStore from './components/pages/MyStore'
 import Landing from './components/pages/Landing'
+import Mainhub from './components/pages/Mainhub'
 
 
 
@@ -58,7 +59,7 @@ export default function App() {
             <UserContext.Provider value={{ userData, setUserData }}>
                 <Header />
                 <Switch>
-                    
+                    <Route path='/main' component={Mainhub}/>
                     <Route path='/landing' component={Landing} />
                     <Route exact path='/' component={Home} />
                     <Route path='/login' component={Login} />
