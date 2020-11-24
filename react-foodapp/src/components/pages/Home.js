@@ -1,25 +1,26 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Category from '../homeFeatures/filters/Category'
 
 export default class Home extends React.Component {
-  constructor(){
+  constructor() {
     super()
     this.state = {
       foodList: [],
       nextPage: [],
       prevPage: [],
       isLoading: false
-      
+
     }
     this.page = 1;
     this.apiCall = this.apiCall.bind(this)
     this.clickNext = this.clickNext.bind(this)
     this.clickPrev = this.clickPrev.bind(this)
   }
-  
 
-  clickNext = () =>{
+
+  clickNext = () => {
     this.page += 1;
     this.apiCall()
   }
@@ -28,27 +29,27 @@ export default class Home extends React.Component {
     this.page -= 1;
     this.apiCall()
   }
-  
+
 
   componentDidMount() {
     this.apiCall()
   }
 
-  async apiCall(){
+  async apiCall() {
     try {
       axios.get(`http://localhost:4000/food/display?page=${this.page}&limit=9`)
-        .then(res => {  
-          this.setState({ 
-            foodList: res.data.result, 
-            nextPage: res.data.next, 
-            prevPage: res.data.previous 
+        .then(res => {
+          this.setState({
+            foodList: res.data.result,
+            nextPage: res.data.next,
+            prevPage: res.data.previous
           });
-          
-          
+
+
         })
     } catch (err) {
 
-      console.error("OOOOH NOOO", err);
+      console.error(err);
     }
   }
 
@@ -73,15 +74,30 @@ export default class Home extends React.Component {
             </div>
           </div>
 
-          <div className="flex w-full">
+          <div className="flex-col w-full">
+            <div className='flex w-full'>
+              <Category/>
+            </div>
+
             <div className="flex-col w-full">
               {this.state.foodList.map(food =>
                 <div key={food._id} className="flex w-full border-b border-gray-300">
                   <Link to={`/food/${food._id}`}>
-                    <img src={food.image} alt={food.foodName} className="p-3 h-20 w-20 object-cover box-content"/>
+                    <img src={food.image} alt={food.foodName} className="p-3 h-20 w-20 object-cover box-content" />
                   </Link>
                   <div className='flex pl-5 w-full'>
-                    <p className='mt-5 font-medium'>{food.foodName}</p>
+                    <div className='flex w-full'>
+                      <p className='mt-5 font-medium'>{food.foodName}</p>
+                    </div>
+                    <div className='flex w-full justify-around'>
+                      <div className='flex w-3/6'>
+                        <p className='mt-5 font-medium'>{food.price}</p>
+                      </div>
+                      <div className='flex w-full'>
+                        <p className='mt-5 font-medium'>{food.desc}</p>
+                      </div>
+
+                    </div>
                   </div>
                 </div>
               )}
@@ -90,7 +106,7 @@ export default class Home extends React.Component {
 
         </div>
 
-        <div className='flex justify-center m-1'>
+        <div className='flex justify-center p-5'>
           {this.state.prevPage && (<button onClick={this.clickPrev}>Prev</button>)}
           {this.state.nextPage && (<button className='ml-3' onClick={this.clickNext}>Next</button>)}
 
@@ -99,7 +115,7 @@ export default class Home extends React.Component {
 
     return (
       content
-      
+
     )
   }
 }
