@@ -8,6 +8,9 @@ const foodSchema = new mongoose.Schema({
     price: {type: String},
     desc: {type: String},
     image: {type: String},
+    category: {type: String, required: true},
+    feature: {type: Boolean},
+    
 });
 
 module.exports = Food = mongoose.model('foods', foodSchema);

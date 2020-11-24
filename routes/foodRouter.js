@@ -5,8 +5,20 @@ const paginate = require('../middleware/paginate');
 
 router.post('/register', auth, async (req,res)=>{
     try{
-        let {foodName, userDisplayName, userId, price, desc, image} = req.body;
-        if(!foodName || !userDisplayName || !price || !userId){
+        let {
+            foodName, 
+            userDisplayName, 
+            userId, 
+            price, 
+            desc, 
+            image,
+            category,
+            feature,
+            
+            
+        } = req.body;
+
+        if( !foodName || !userDisplayName || !price || !userId || !category ){
             return res.status(400).json({msg: "Not all fields have been entered"});
         }
         if(parseInt(price) <= 0){
@@ -18,6 +30,9 @@ router.post('/register', auth, async (req,res)=>{
         if(!image){
             image = 'https://semantic-ui.com/images/wireframe/image.png'
         }
+        if(!feature){
+            feature = false
+        }
         
         const newFood = new Food({
             foodName,
@@ -25,7 +40,9 @@ router.post('/register', auth, async (req,res)=>{
             userId,
             price,
             desc,
-            image
+            image,
+            category,
+            feature
         });
         const savedFood = await newFood.save();
         
@@ -141,6 +158,15 @@ router.get('/:id', async(req,res)=>{
     }
 })
 
-
+router.get('/testing/:bart', async (req,res)=>{
+    try{
+        const hello = req.params.bart
+        res.json({
+            hello
+        })
+    }catch(err){
+        res.status(500).json({error: err.message});
+    }
+})
 
 module.exports = router;

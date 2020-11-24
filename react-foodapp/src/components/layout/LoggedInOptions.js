@@ -4,7 +4,7 @@ import UserContext from '../../context/UserContext';
 
 
 export default function LoggedInOptions() {
-    const {userData, setUserData} = useContext(UserContext)
+    const {userData} = useContext(UserContext)
     const history = useHistory();
     
     const foodRegister = () => history.push('/food/register')

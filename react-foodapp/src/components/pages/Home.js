@@ -81,7 +81,18 @@ export default class Home extends React.Component {
                     <img src={food.image} alt={food.foodName} className="p-3 h-20 w-20 object-cover box-content"/>
                   </Link>
                   <div className='flex pl-5 w-full'>
-                    <p className='mt-5 font-medium'>{food.foodName}</p>
+                    <div className='flex w-full'>
+                      <p className='mt-5 font-medium'>{food.foodName}</p>
+                    </div>
+                    <div className='flex w-full justify-around'>
+                      <div className='flex w-3/6'>
+                        <p className='mt-5 font-medium'>{food.price}</p>
+                      </div>
+                      <div className='flex w-full'>
+                        <p className='mt-5 font-medium'>{food.desc}</p>
+                      </div>
+
+                    </div>
                   </div>
                 </div>
               )}
@@ -90,7 +101,7 @@ export default class Home extends React.Component {
 
         </div>
 
-        <div className='flex justify-center m-1'>
+        <div className='flex justify-center p-5'>
           {this.state.prevPage && (<button onClick={this.clickPrev}>Prev</button>)}
           {this.state.nextPage && (<button className='ml-3' onClick={this.clickNext}>Next</button>)}
 

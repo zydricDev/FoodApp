@@ -8,7 +8,7 @@ export default function AuthOptions() {
     const {userData, setUserData} = useContext(UserContext)
 
     const history = useHistory();
-    const register = () => history.push('/register')
+    //const register = () => history.push('/register')
     const login = () => history.push('/login')
     const logout = () => {
         setUserData({
