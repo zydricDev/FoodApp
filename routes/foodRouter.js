@@ -33,6 +33,13 @@ router.post('/register', auth, async (req,res)=>{
         if(!feature){
             feature = false
         }
+
+        const featureBool = parseInt(feature)
+        if(featureBool === 1){
+            feature = true
+        }else{
+            feature = false
+        }
         
         const newFood = new Food({
             foodName,
