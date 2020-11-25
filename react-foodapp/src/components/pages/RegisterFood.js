@@ -89,14 +89,15 @@ export default function RegisterFood() {
                                 <select  className='border-black rounded p-2 border-2 border-gray-400' value={category} onChange={e => setCategory(e.target.value)}>
                                     <option value='none'>uncategorized</option>
                                     <option value='Asian'>Asian</option>
+                                    <option value='American'>American</option>
                                     <option value='Salads'>Salads</option>
-                                    <option value='Breakfast'>Breakfast</option>
+                                    <option value='Sandwiches'>Sandwiches</option>
                                     <option value='Vegetarian'>Vegetarian</option>
                                     <option value='Healthy'>Healthy</option>
                                     <option value='Hamburger'>Hamburger</option>
                                     <option value='Ice Cream'>Ice Cream</option>
                                     <option value='Bakery'>Bakery</option>
-                                    <option value='American'>American</option>
+                                    
                                     <option value='Japanese'>Japanese</option>
                                     <option value='Lunch'>Lunch</option>
                                     <option value='Deserts'>Deserts</option>

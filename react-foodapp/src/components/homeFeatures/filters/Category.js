@@ -1,24 +1,30 @@
 import React, {useState, useEffect} from 'react'
 import {useSpring, animated} from 'react-spring'
-
+import { useAxiosGet } from '../../../Hooks/HttpRequest'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons'
 
 import Items from '../../homeFeatures/Items'
 export default function Category() {
     const [position, setPosition] = useState(0)
-    const [url, setUrl] = useState()
-    
     const [itemCategory, setCategory] = useState('null')
     const [featured, setFeatured] = useState(false)
+    const [url, setUrl] = useState(`http://localhost:4000/food/display/${itemCategory}/${featured}`)
     
-
+    const sliderList = useAxiosGet('http://localhost:4000/category/display')
+    let menu = undefined
+    let content = undefined
     useEffect(()=>{
         if(itemCategory){
             setUrl(`http://localhost:4000/food/display/${itemCategory}/${featured}`)
         }
         
     }, [url, itemCategory, featured])
+
+
+    if (sliderList.error) {
+        content = <p>There was an error</p>
+    }
 
     const moveRight = () => {
         setPosition(position + 100)
@@ -45,28 +51,35 @@ export default function Category() {
         from: {transform: `translateX(0%)`}
     })
 
-    let menu = 
-        <animated.div style={props}>
-            <div className='w-full'>
-                <div className='ml-3 hover:bg-black text-center inline-block'>
-                    <button onClick={ () => { filterFunction('Asian') } }>
-                        <img src='https://post.greatist.com/wp-content/uploads/sites/3/2020/02/322868_1100-1100x628.jpg' className='rounded-full w-40 h-40 object-cover' />
-                        <p>Asian</p>
-                    </button>
+    try{
+        if(sliderList.data){
+            
+            menu = 
+            <animated.div style={props}>
+                <div className='w-full'>
+                    <div>
+                        {sliderList.data.map((menuType,index) =>
+                            <div key={index} className='ml-3 text-center inline-block'>
+                                <button onClick={() => { filterFunction(menuType.newCategoryType) }}>
+                                    <img src={menuType.img} className='rounded-full w-40 h-40 object-cover hover:bg-black' />
+                                    <p>{menuType.newCategoryType}</p>
+                                </button>
+                            </div>
+                        
+                        )}
+                        
+                    </div>
+                    
+                   
                 </div>
-                <div className='ml-3 hover:bg-black text-center inline-block'>
-                    <button onClick={ () => { filterFunction('American') } }>
-                        <img src='https://zjf683hopnivfq5d12xaooxr-wpengine.netdna-ssl.com/wp-content/uploads/2020/02/GettyImages-1199242002-1-1920x1080.jpg' className='rounded-full w-40 h-40 object-cover'></img>
-                        <p>Lunch</p>
-                    </button>
-                </div>
-               
-            </div>
-        </animated.div>
+            </animated.div>
+        }
 
-
-
-    let content = 
+    }catch(err){
+        console.log('An error has occurred')
+    }
+    
+    content = 
         <div className='w-full'>
             <div className='flex w-full p-5 border-b'>
                 <div className='flex w-full'>
@@ -85,7 +98,6 @@ export default function Category() {
 
                     <div className='flex justify-start'>
                         {
-                            position > -100 &&
                             <button onClick={moveLeft}>
                                 <FontAwesomeIcon icon={faAngleDoubleRight} className='text-5xl' />
                             </button>
@@ -98,6 +110,7 @@ export default function Category() {
                 <Items filteredLink={url} />
             </div>
         </div>
+
     return (
         content
     )
