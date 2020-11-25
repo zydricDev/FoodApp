@@ -1,23 +1,40 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {useSpring, animated} from 'react-spring'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons'
 
+import Items from '../../homeFeatures/Items'
 export default function Category() {
     const [position, setPosition] = useState(0)
+    const [url, setUrl] = useState()
     
-    const moveRight = () =>{
-        if(position > -100){
-            setPosition(0)
-        }else{
-            setPosition(position+100)
+    const [itemCategory, setCategory] = useState('null')
+    const [featured, setFeatured] = useState(false)
+    
+
+    useEffect(()=>{
+        if(itemCategory){
+            setUrl(`http://localhost:4000/food/display/${itemCategory}/${featured}`)
         }
         
-        
+    }, [url, itemCategory, featured])
+
+    const moveRight = () => {
+        setPosition(position + 100)
     }
     const moveLeft = () =>{
-        setPosition(position-100)
+        setPosition(position - 100)
+    }
+
+    const filterFunction = (filterCategory) =>{
+        
+        if(!filterCategory || (filterCategory === itemCategory) ){
+            setCategory('null')
+        }else{
+            setCategory(filterCategory)
+        }
+        
         
     }
 
@@ -28,17 +45,17 @@ export default function Category() {
         from: {transform: `translateX(0%)`}
     })
 
-    let test = 
+    let menu = 
         <animated.div style={props}>
             <div className='w-full'>
                 <div className='ml-3 hover:bg-black text-center inline-block'>
-                    <button onClick={() => { setPosition(0) }}>
+                    <button onClick={ () => { filterFunction('Asian') } }>
                         <img src='https://post.greatist.com/wp-content/uploads/sites/3/2020/02/322868_1100-1100x628.jpg' className='rounded-full w-40 h-40 object-cover' />
                         <p>Asian</p>
                     </button>
                 </div>
                 <div className='ml-3 hover:bg-black text-center inline-block'>
-                    <button onClick={() => { setPosition(-17) }}>
+                    <button onClick={ () => { filterFunction('American') } }>
                         <img src='https://zjf683hopnivfq5d12xaooxr-wpengine.netdna-ssl.com/wp-content/uploads/2020/02/GettyImages-1199242002-1-1920x1080.jpg' className='rounded-full w-40 h-40 object-cover'></img>
                         <p>Lunch</p>
                     </button>
@@ -50,32 +67,37 @@ export default function Category() {
 
 
     let content = 
-    <div className='flex w-full p-5 border-b'>
-        <div className='flex w-full'>
-            <div className='flex justify-start'>
-                {
-                    position < 0 && 
-                    <button onClick={moveRight}>
-                        <FontAwesomeIcon icon={faAngleDoubleLeft} className='text-5xl'/>
-                    </button>
-                }
+        <div className='w-full'>
+            <div className='flex w-full p-5 border-b'>
+                <div className='flex w-full'>
+                    <div className='flex justify-start'>
+                        {
+                            position < 0 &&
+                            <button onClick={moveRight}>
+                                <FontAwesomeIcon icon={faAngleDoubleLeft} className='text-5xl' />
+                            </button>
+                        }
+                    </div>
+
+                    <div className='flex w-full overflow-hidden whitespace-no-wrap'>
+                        {menu}
+                    </div>
+
+                    <div className='flex justify-start'>
+                        {
+                            position > -100 &&
+                            <button onClick={moveLeft}>
+                                <FontAwesomeIcon icon={faAngleDoubleRight} className='text-5xl' />
+                            </button>
+                        }
+                    </div>
+                </div>
+
             </div>
-            
-            <div className='flex w-full overflow-hidden whitespace-no-wrap'>
-                {test}
-            </div>
-            
-            <div className='flex justify-start'>
-                {   
-                    position > -100 && 
-                    <button onClick={moveLeft}>
-                        <FontAwesomeIcon icon={faAngleDoubleRight} className='text-5xl'/>
-                    </button>
-                }
+            <div>
+                <Items filteredLink={url} />
             </div>
         </div>
-        
-    </div>
     return (
         content
     )

@@ -3,14 +3,25 @@ function filter(model){
         try{
             let modelCategory = req.params.category
             let modelfeature = req.params.feature
+            let filtered = undefined
+
+            if (modelCategory) {
+                filtered = await model.find({
+                    category: modelCategory,
+                    feature: modelfeature
+                })
+            }
+                    
+            if(modelCategory === 'null'){
+                filtered = await model.find({
+                    feature: modelfeature
+                })
+            }
+
+
             
-            const filtered = await model.find({
-                category: modelCategory,
-                feature: modelfeature
-            })
-                       
             let page = parseInt(req.query.page)
-            let limit = 1
+            let limit = 9
 
             const result = {}
             const startIndex = (page - 1) * limit
@@ -30,7 +41,7 @@ function filter(model){
                 }
             }
 
-            result.filtered = filtered.slice(startIndex, endIndex)
+            result.result = filtered.slice(startIndex, endIndex)
             res.filter = result
 
 

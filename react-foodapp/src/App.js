@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { BrowserRouter, Switch, Route} from "react-router-dom"
 import Axios from 'axios'
 
-import Home from './components/pages/Home'
+import Mainhub from './components/pages/Mainhub'
 import Login from './components/auth/Login'
 import Register from './components/auth/Register'
 import Header from './components/layout/Header'
@@ -12,7 +12,7 @@ import RegisterFood from './components/pages/RegisterFood'
 import DeleteMe from './components/pages/DeleteMe'
 import MyStore from './components/pages/MyStore'
 import Landing from './components/pages/Landing'
-import Mainhub from './components/pages/Mainhub'
+
 
 
 
@@ -59,9 +59,9 @@ export default function App() {
             <UserContext.Provider value={{ userData, setUserData }}>
                 <Header />
                 <Switch>
-                    <Route path='/main' component={Mainhub}/>
+                    
                     <Route path='/landing' component={Landing} />
-                    <Route exact path='/' component={Home} />
+                    <Route exact path='/' component={Mainhub} />
                     <Route path='/login' component={Login} />
                     <Route path='/register' component={Register} />
                     <Route path='/food/register' component={RegisterFood} />

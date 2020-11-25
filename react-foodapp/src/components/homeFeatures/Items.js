@@ -3,21 +3,22 @@ import { useAxiosGet } from '../../Hooks/HttpRequest'
 import { Link } from 'react-router-dom';
 
 
-export default function Items() {
+export default function Items(linkProp) {
     const [url, setUrl] = useState()
-    let restaurantList = useAxiosGet(url)
     const [page, setPage] = useState(1)
 
+    const updatedLink = linkProp.filteredLink
 
+    let restaurantList = useAxiosGet(url)
     let nextPage = undefined
     let prevPage = undefined
     let content = undefined
     
-
+    
     useEffect(() =>{
-        setUrl(`http://localhost:4000/food/display?page=${page}&limit=9`)
+        setUrl(updatedLink + `?page=${page}`)
         
-    }, [page])
+    }, [page, updatedLink])
 
 
     const clickNext = () =>{
@@ -55,7 +56,7 @@ export default function Items() {
                                     </div>
                                     <div className='flex w-full justify-around'>
                                         <div className='flex w-3/6'>
-                                            <p className='mt-5 font-medium'>{item.price}</p>
+                                            <p className='mt-5 font-medium'>{item.category}</p>
                                         </div>
                                         <div className='flex w-full'>
                                             <p className='mt-5 font-medium'>{item.desc}</p>
