@@ -61,7 +61,7 @@ export default function Category() {
                         {sliderList.data.map((menuType,index) =>
                             <div key={index} className='ml-3 text-center inline-block'>
                                 <button onClick={() => { filterFunction(menuType.newCategoryType) }}>
-                                    <img src={menuType.img} className='rounded-full w-40 h-40 object-cover hover:bg-black' />
+                                    <img src={menuType.img} alt={menuType.newCategoryType} className='rounded-full w-40 h-40 object-cover opacity-50 hover:opacity-100' />
                                     <p>{menuType.newCategoryType}</p>
                                 </button>
                             </div>
