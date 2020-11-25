@@ -165,11 +165,13 @@ router.get('/:id', async(req,res)=>{
     }
 })
 
-router.get('/testing/:bart', async (req,res)=>{
+router.get('/testing/:bart/:tart', async (req,res)=>{
     try{
         const hello = req.params.bart
+        const domo = req.params.tart
         res.json({
-            hello
+            hello,
+            domo
         })
     }catch(err){
         res.status(500).json({error: err.message});

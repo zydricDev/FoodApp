@@ -7,7 +7,7 @@ function paginate(model){
                 page = 1
             }
             if(limit){
-                limit = 9
+                limit = 2
             }
             const result = {}
             const Model = await model.find()

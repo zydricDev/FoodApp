@@ -11,7 +11,7 @@ export function useAxiosGet(url) {
   useEffect(() => {
     setRequest({
       loading: true,
-      date: null,
+      data: null,
       error: false,
     })
     axios.get(url)
