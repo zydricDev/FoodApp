@@ -2,6 +2,8 @@ const router = require('express').Router();
 const Food = require('../models/foodModel');
 const auth = require('../middleware/auth');
 const paginate = require('../middleware/paginate');
+const filter = require('../middleware/filter');
+const { query } = require('express');
 
 router.post('/register', auth, async (req,res)=>{
     try{
@@ -75,6 +77,11 @@ router.delete('/delete/:id', auth, async (req,res)=>{
 router.get('/display', paginate(Food), async(req,res)=>{
     res.json(res.paginate)
 })
+
+router.get('/display/:category/:feature', filter(Food), async(req,res)=>{
+    res.json(res.filter)
+})
+
 
 router.get('/display/:id', async(req,res)=>{
     try{
@@ -165,17 +172,6 @@ router.get('/:id', async(req,res)=>{
     }
 })
 
-router.get('/testing/:bart/:tart', async (req,res)=>{
-    try{
-        const hello = req.params.bart
-        const domo = req.params.tart
-        res.json({
-            hello,
-            domo
-        })
-    }catch(err){
-        res.status(500).json({error: err.message});
-    }
-})
+
 
 module.exports = router;

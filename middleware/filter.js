@@ -1,35 +1,39 @@
-function paginate(model){
+function filter(model){
     return async (req, res, next)=>{
         try{
+            let modelCategory = req.params.category
+            let modelfeature = req.params.feature
+            
+            const filtered = await model.find({
+                category: modelCategory,
+                feature: modelfeature
+            })
+                       
             let page = parseInt(req.query.page)
-            let limit = parseInt(req.query.limit)
-            if(!page){
-                page = 1
-            }
-            if(limit){
-                limit = 9
-            }
+            let limit = 1
+
             const result = {}
-            const Model = await model.find()
             const startIndex = (page - 1) * limit
             const endIndex = (page * limit)
-    
-            if(endIndex < Model.length){
+
+            if (endIndex < filtered.length) {
                 result.next = {
                     page: page + 1,
                     limit: limit
                 }
             }
-            
-            if(startIndex > 0){
+
+            if (startIndex > 0) {
                 result.previous = {
                     page: page - 1,
                     limit: limit
                 }
             }
-            
-            result.result = Model.slice(startIndex, endIndex)
-            res.paginate = result
+
+            result.filtered = filtered.slice(startIndex, endIndex)
+            res.filter = result
+
+
             next()
                 
         }catch(err){
@@ -38,4 +42,4 @@ function paginate(model){
     }
 }
 
-module.exports = paginate;
+module.exports = filter;
