@@ -1,5 +1,6 @@
 import React from 'react'
 import Items from '../homeFeatures/Items'
+import Category from '../homeFeatures/filters/Category'
 
 export default function Mainhub() {
     return (
@@ -22,12 +23,10 @@ export default function Mainhub() {
 
             <div className="flex-col w-full">
                 <div className='flex w-full'>
-                    <Items/>
+                    <Category/>
                 </div>
 
-                <div className="flex-col w-full">
-
-                </div>
+                
             </div>
         </div>
     )

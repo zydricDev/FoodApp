@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import Axios from 'axios'
 import {useHistory} from 'react-router-dom'
 import UserContext from '../../context/UserContext'
@@ -13,22 +13,30 @@ export default function RegisterFood() {
     const [desc, setDesc] = useState()
     const [image, setImage] = useState()
     const [category, setCategory] = useState('none')
-    const [feature, setFeature] = useState(0)
+    const [feature, setFeature] = useState('0')
 
     const [error, setError] = useState()
     
 
     const userCred = useContext(UserContext)
+    
     const history = useHistory()
+
+    useEffect(() => {
+        if(userCred.userData.token && userCred.userData.user){
+            setUserDisplayName(userCred.userData.user.displayName)
+            setUserId(userCred.userData.user.id)
+        }
+        
+    }, [userCred])
+
 
     const submit = async (e) => {
         e.preventDefault()
 
         try {
             
-            if (userCred.userData.user.displayName && userCred.userData.user.id) {
-                setUserDisplayName(userCred.userData.user.displayName)
-                setUserId(userCred.userData.user.id)
+            if (userDisplayName && userId) {
                 const newFood = { foodName, userDisplayName, userId, price, desc, image, category, feature }
                 await Axios.post('http://localhost:4000/food/register', newFood, {
                     headers: { "auth-token": localStorage.getItem('auth-token') }
@@ -41,6 +49,9 @@ export default function RegisterFood() {
             err.response.data.msg && setError(err.response.data.msg)
         }
     }
+
+    
+
     return (
 
         <div className='flex justify-center mt-10'>
