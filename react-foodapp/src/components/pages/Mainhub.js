@@ -1,5 +1,5 @@
 import React from 'react'
-import Items from '../homeFeatures/Items'
+
 import Category from '../homeFeatures/filters/Category'
 
 export default function Mainhub() {
