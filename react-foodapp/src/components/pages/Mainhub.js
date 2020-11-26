@@ -10,8 +10,6 @@ export default function Mainhub() {
                 <div className='flex w-full'>
                     <Category/>
                 </div>
-
-                
             </div>
         </div>
     )

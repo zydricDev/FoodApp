@@ -35,6 +35,11 @@ export default function Category() {
         setPosition(position - 100)
     }
 
+    const clearAll = () =>{
+        filterFunction('null')
+        setFeatured(false) 
+    }
+
     const filterFunction = (filterCategory) => {
 
         if (!filterCategory || (filterCategory === itemCategory)) {
@@ -93,7 +98,7 @@ export default function Category() {
                 <div className='flex-col w-full'>
                     <div className='flex p-5 align-baseline'>
                         <p className='font-bold text-2xl'>Filters</p>
-                        <button className='ml-3 p-2' onClick={() => { filterFunction('null') }}>
+                        <button className='ml-3 p-2 focus:outline-none' onClick={clearAll}>
                             <p className='underline hover:no-underline'>Clear All</p>
                         </button>
                     </div>
@@ -112,9 +117,9 @@ export default function Category() {
                         </button>
                         {activeFeature ? null : 
                             <div className='p-5'>
-                                <div>
-                                    <input type='checkbox' checked={featured} onClick={e => setFeatured(!featured)}/>
-                                    <label className='ml-3'>Featured</label>
+                                <div className='items-center inline-flex'>
+                                    <input type='checkbox' checked={featured} onClick={e => setFeatured(!featured)} className='h-5 w-5'/>
+                                    <span className='ml-3 text-md'>Featured</span>
                                 </div>
                                 
                             </div>
@@ -154,7 +159,7 @@ export default function Category() {
                 </div>
 
                 <div className='flex w-full border-b justify-between'>
-                    <div className='p-5'>
+                    <div className='p-5 inline-flex gap-3'>
                         {itemCategory !== 'null' && (
                             <div className='bg-blue-400 py-2 px-4 rounded font-medium hover:bg-blue-300'>
                                 <button onClick={() => { filterFunction('null') }} className='focus:outline-none'>
@@ -163,6 +168,15 @@ export default function Category() {
                                 </button>
                             </div>
                         )}
+                        {featured ? 
+                            <div className='bg-blue-400 py-2 px-4 rounded font-medium hover:bg-blue-300'>
+                                <button onClick={() => { setFeatured(false) }} className='focus:outline-none'>
+                                    <p className='inline-block'>Featured</p>
+                                    <FontAwesomeIcon icon={faTimes} className='ml-3 text-1xl hover:text-white' />
+                                </button>
+                            </div> : null
+                        }
+                        
                     </div>
                     <div className='p-5'>
                         <div className=''>
