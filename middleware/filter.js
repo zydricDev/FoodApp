@@ -4,19 +4,33 @@ function filter(model){
             let modelCategory = req.params.category
             let modelfeature = req.params.feature
             let filtered = undefined
-
-            if (modelCategory) {
-                filtered = await model.find({
-                    category: modelCategory,
-                    feature: modelfeature
-                })
+            
+            if (modelCategory !== 'null' && modelfeature) {
+                if(modelfeature === 'false'){
+                    filtered = await model.find({
+                        category: modelCategory
+                    })
+                }else{
+                    filtered = await model.find({
+                        category: modelCategory,
+                        feature: modelfeature
+                    })
+                }    
             }
                     
-            if(modelCategory === 'null'){
+            if(modelCategory === 'null' && modelfeature){
                 filtered = await model.find({
                     feature: modelfeature
                 })
             }
+
+            if(modelCategory === 'null' && modelfeature === 'false'){
+                filtered = await model.find().sort({
+                    feature: -1,
+                })
+            }
+            
+            
 
 
             

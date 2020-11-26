@@ -87,7 +87,7 @@ export default function RegisterFood() {
                             <div className='mb-5 grid'>
                                 <label className='text-gray-500'>Category (required)</label>
                                 <select  className='border-black rounded p-2 border-2 border-gray-400' value={category} onChange={e => setCategory(e.target.value)}>
-                                    <option value='none'>uncategorized</option>
+                                    <option value='Uncategorized'>Uncategorized</option>
                                     <option value='Asian'>Asian</option>
                                     <option value='American'>American</option>
                                     <option value='Salads'>Salads</option>
