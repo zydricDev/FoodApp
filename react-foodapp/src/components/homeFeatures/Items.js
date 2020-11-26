@@ -53,7 +53,11 @@ export default function Items(linkProp) {
                                 <div className='flex pl-5 w-full'>
                                     <div className='flex-col w-full'>
                                         <p className='mt-5 font-medium'>{item.foodName}</p>
-                                        {item.feature && <p className='text-sm'>Featured</p>}
+                                        {item.feature &&
+                                            <div className='flex w-full'>
+                                                <p className='text-xs justify-start bg-gray-300'>Featured</p>
+                                            </div> 
+                                        }
                                     </div>
                                     <div className='flex w-full justify-around'>
                                         <div className='flex w-3/6'>
