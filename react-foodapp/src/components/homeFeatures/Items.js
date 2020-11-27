@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useAxiosGet } from '../../Hooks/HttpRequest'
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleDoubleLeft, faAngleDoubleRight, faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
+import { faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
 
 export default function Items(linkProp) {
     const [url, setUrl] = useState()
