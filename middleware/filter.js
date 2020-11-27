@@ -38,7 +38,7 @@ function filter(model){
 
             
             let page = parseInt(req.query.page)
-            let limit = 2
+            let limit = 9
 
             const result = {}
             const startIndex = (page - 1) * limit
@@ -74,7 +74,8 @@ function filter(model){
             result.possiblePages = {
                 ahead: pagesAhead,
                 before: pagesBefore,
-                current: page   
+                current: page,
+                maxPage: Math.ceil(filtered.length/limit)   
             }
             
 

@@ -78,12 +78,8 @@ export default function Category() {
                                         {menuType.newCategoryType !== itemCategory ? <p>{menuType.newCategoryType}</p> : <p className='font-bold'>{menuType.newCategoryType}</p>}
                                     </button>
                                 </div>
-
                             )}
-
                         </div>
-
-
                     </div>
                 </animated.div>
         }
