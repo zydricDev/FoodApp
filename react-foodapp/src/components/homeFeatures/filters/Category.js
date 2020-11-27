@@ -118,7 +118,7 @@ export default function Category() {
                         {activeFeature ? null : 
                             <div className='p-5'>
                                 <div className='items-center inline-flex'>
-                                    <input type='checkbox' checked={featured} onClick={e => setFeatured(!featured)} className='h-5 w-5'/>
+                                    <input type='checkbox' checked={featured} onChange={e => setFeatured(!featured)} className='h-5 w-5'/>
                                     <span className='ml-3 text-md'>Featured</span>
                                 </div>
                                 

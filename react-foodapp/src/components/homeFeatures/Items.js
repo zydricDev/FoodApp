@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { useAxiosGet } from '../../Hooks/HttpRequest'
 import { Link } from 'react-router-dom';
 
@@ -13,35 +13,42 @@ export default function Items(linkProp) {
     let nextPage = undefined
     let prevPage = undefined
     let content = undefined
-    
-    
-    useEffect(() =>{
+
+    let availablePages = undefined
+
+
+
+    useEffect(() => {
         setUrl(updatedLink + `?page=${page}`)
-        
+
     }, [page, updatedLink])
 
 
-    const clickNext = () =>{
-        if(nextPage){
-            setPage(page+1)
+    const clickNext = () => {
+        if (nextPage) {
+            setPage(page + 1)
         }
     }
-    const clickPrev = () =>{
-        if(prevPage) {    
-            setPage(page-1)
+    const clickPrev = () => {
+        if (prevPage) {
+            setPage(page - 1)
         }
     }
-    
-    
+
+
     if (restaurantList.error) {
         content = <p>There was an error</p>
     }
-    
+
     try {
         if (restaurantList.data) {
             nextPage = restaurantList.data.next
             prevPage = restaurantList.data.previous
-                  
+            availablePages = restaurantList.data.possiblePages
+
+
+
+
             content =
                 <div className='flex-col w-full'>
                     <div className="flex-col w-full">
@@ -56,7 +63,7 @@ export default function Items(linkProp) {
                                         {item.feature &&
                                             <div className='flex w-full'>
                                                 <p className='text-xs justify-start bg-gray-300'>Featured</p>
-                                            </div> 
+                                            </div>
                                         }
                                     </div>
                                     <div className='flex w-full justify-around'>
@@ -64,7 +71,7 @@ export default function Items(linkProp) {
                                             <p className='mt-5 font-medium'>{item.category}</p>
                                         </div>
                                         <div className='flex w-full'>
-                                            <p className='mt-5 font-medium'>{item.desc}</p>
+                                            <p className='mt-5 font-medium'>${item.price}</p>
                                         </div>
 
                                     </div>
@@ -73,22 +80,50 @@ export default function Items(linkProp) {
                         )}
                     </div>
                     <div className='flex justify-center w-full'>
+
                         {prevPage && (<button onClick={clickPrev}>Prev</button>)}
+
+                        {availablePages.before.map((item, index) =>
+                            <div key={index}>
+                                <div className='inline-flex gap-3 p-1'>
+                                    <button onClick={() => { setPage(item) }}>
+                                        <div className='border w-10 h-10 p-1 text-center bg-blue-300'>
+                                            <p>{item}</p>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+
+                        <div className='inline-flex gap-3 p-1'>
+                            <div className='border w-10 h-10 p-1 text-center bg-blue-800'>
+                                <p>{availablePages.current}</p>
+                            </div>
+                        </div>
+
+                        {availablePages.ahead.map((item, index) =>
+                            <div key={index}>
+                                <div className='inline-flex gap-3 p-1'>
+                                    <button onClick={() => { setPage(item) }}>
+                                        <div className='border w-10 h-10 p-1 text-center bg-blue-300'>
+                                            <p>{item}</p>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+
                         {nextPage && (<button className='ml-3' onClick={clickNext}>Next</button>)}
                     </div>
                 </div>
-            
-            
-            
-            
+
+
+
+
         }
     } catch (err) {
         content = <p>Register PLZ</p>
     }
-    
-    
-
-
 
     return (
         <>
