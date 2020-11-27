@@ -10,6 +10,9 @@ function filter(model){
                     filtered = await model.find({
                         category: modelCategory
                     })
+                    .sort({
+                        feature: -1,
+                    })
                 }else{
                     filtered = await model.find({
                         category: modelCategory,
@@ -35,7 +38,7 @@ function filter(model){
 
             
             let page = parseInt(req.query.page)
-            let limit = 9
+            let limit = 2
 
             const result = {}
             const startIndex = (page - 1) * limit
@@ -55,10 +58,30 @@ function filter(model){
                 }
             }
 
+            let pagesAhead = []
+            let pagesBefore = []
+
+            for(let i=1; i<=3; i++){
+                if( startIndex+i*limit < filtered.length ){
+                    pagesAhead.push(i+page)
+                }
+                if( startIndex-i*limit >= 0 ){
+                    pagesBefore.unshift(page-i)
+                }
+            }
+            
+            
+            result.possiblePages = {
+                ahead: pagesAhead,
+                before: pagesBefore,
+                current: page   
+            }
+            
+
             result.result = filtered.slice(startIndex, endIndex)
             res.filter = result
 
-
+            
             next()
                 
         }catch(err){
