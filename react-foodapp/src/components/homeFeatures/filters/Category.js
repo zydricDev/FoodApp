@@ -29,10 +29,20 @@ export default function Category() {
     }
 
     const moveRight = () => {
-        setPosition(position + 100)
+        
+        if(position + 100 > 0 ){
+            setPosition(0)
+        }else{
+            setPosition(position + 100)
+        }
     }
     const moveLeft = () => {
-        setPosition(position - 100)
+        if(position - 100 <= -200 ){
+            setPosition(-112)
+        }else{
+            setPosition(position - 100)
+        }
+        
     }
 
     const clearAll = () =>{
@@ -53,7 +63,7 @@ export default function Category() {
 
     const props = useSpring({
         to: async (next, cancel) => {
-            await next({ transform: `translateX(${position}%)` })
+            await next({ transform: `translateX(${position}vw)` })
         },
         from: { transform: `translateX(0%)` }
     })
@@ -67,7 +77,9 @@ export default function Category() {
                         <div>
                             {sliderList.data.map((menuType, index) =>
                                 <div key={index} className='ml-3 text-center inline-block'>
-                                    <button onClick={() => { filterFunction(menuType.newCategoryType) }} className='relative'>
+                                    <button onClick={() => { 
+                                        filterFunction(menuType.newCategoryType) 
+                                    }} className='relative'>
                                         {menuType.newCategoryType === itemCategory && (
                                             <div className='absolute top-0 right-0 h-8 w-8 z-10 rounded-full bg-blue-500 hover:bg-blue-600'>
                                                 <FontAwesomeIcon icon={faTimes} className='text-lg my-2 text-white' />
@@ -82,8 +94,6 @@ export default function Category() {
                             )}
 
                         </div>
-
-
                     </div>
                 </animated.div>
         }
@@ -132,12 +142,15 @@ export default function Category() {
 
             <div className='w-full'>
                 <div className='flex w-full p-5 border-b'>
-                    <div className='flex w-full'>
+                    <div className='flex w-full relative'>
                         <div className='flex justify-start'>
                             {
                                 position < 0 &&
-                                <button onClick={moveRight}>
-                                    <FontAwesomeIcon icon={faAngleDoubleLeft} className='text-5xl' />
+                                <button onClick={moveRight} className='focus:outline-none relative'>
+                                    <div className='bg-blue-500 rounded-full rounded-full my-5 w-10 h-10 hover:text-white hover:bg-blue-800'>
+                                        <FontAwesomeIcon icon={faAngleDoubleLeft} className='text-3xl my-1 mr-1' />
+                                    </div>
+                                    
                                 </button>
                             }
                         </div>
@@ -148,9 +161,12 @@ export default function Category() {
 
                         <div className='flex justify-start'>
                             {
-                                position > -200 &&
-                                <button onClick={moveLeft}>
-                                    <FontAwesomeIcon icon={faAngleDoubleRight} className='text-5xl' />
+                                position > -112 &&
+                                <button onClick={moveLeft} className='focus:outline-none'>
+                                    <div className='bg-blue-500 rounded-full rounded-full my-5 w-10 h-10 hover:text-white hover:bg-blue-800'>
+                                        <FontAwesomeIcon icon={faAngleDoubleRight} className='text-3xl my-1 ml-1' />
+                                    </div>
+                                    
                                 </button>
                             }
                         </div>

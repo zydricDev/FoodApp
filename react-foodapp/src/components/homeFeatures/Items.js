@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useAxiosGet } from '../../Hooks/HttpRequest'
 import { Link } from 'react-router-dom';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
 
 export default function Items(linkProp) {
     const [url, setUrl] = useState()
@@ -19,7 +20,9 @@ export default function Items(linkProp) {
 
 
     useEffect(() => {
+
         setUrl(updatedLink + `?page=${page}`)
+        
 
     }, [page, updatedLink])
 
@@ -45,10 +48,7 @@ export default function Items(linkProp) {
             nextPage = restaurantList.data.next
             prevPage = restaurantList.data.previous
             availablePages = restaurantList.data.possiblePages
-
-
-
-
+            
             content =
                 <div className='flex-col w-full'>
                     <div className="flex-col w-full">
@@ -79,15 +79,22 @@ export default function Items(linkProp) {
                             </div>
                         )}
                     </div>
+                    
                     <div className='flex justify-center w-full'>
 
-                        {prevPage && (<button onClick={clickPrev}>Prev</button>)}
+                        {prevPage && (
+                            <button onClick={clickPrev} className='focus:outline-none'>
+                                <div className='border-t border-b border-l w-12 h-12 py-2 border-black hover:bg-blue-800 items-center inline-flex justify-center'>
+                                    <FontAwesomeIcon icon={faAngleLeft} className='text-xl' />
+                                </div>
+                            </button>
+                        )}
 
                         {availablePages.before.map((item, index) =>
                             <div key={index}>
-                                <div className='inline-flex gap-3 p-1'>
+                                <div className='inline-flex py-5'>
                                     <button onClick={() => { setPage(item) }}>
-                                        <div className='border w-10 h-10 p-1 text-center bg-blue-300'>
+                                        <div className='border-t border-b border-l w-12 h-12 py-2 text-center border-black hover:bg-blue-800'>
                                             <p>{item}</p>
                                         </div>
                                     </button>
@@ -95,17 +102,17 @@ export default function Items(linkProp) {
                             </div>
                         )}
 
-                        <div className='inline-flex gap-3 p-1'>
-                            <div className='border w-10 h-10 p-1 text-center bg-blue-800'>
+                        <div className='inline-flex py-5'>
+                            <div className='border w-12 h-12 py-2 text-center bg-blue-500 border-black'>
                                 <p>{availablePages.current}</p>
                             </div>
                         </div>
 
                         {availablePages.ahead.map((item, index) =>
                             <div key={index}>
-                                <div className='inline-flex gap-3 p-1'>
+                                <div className='inline-flex py-5'>
                                     <button onClick={() => { setPage(item) }}>
-                                        <div className='border w-10 h-10 p-1 text-center bg-blue-300'>
+                                        <div className='border-t border-b border-r w-12 h-12 py-2 text-center border-black hover:bg-blue-800'>
                                             <p>{item}</p>
                                         </div>
                                     </button>
@@ -113,7 +120,16 @@ export default function Items(linkProp) {
                             </div>
                         )}
 
-                        {nextPage && (<button className='ml-3' onClick={clickNext}>Next</button>)}
+                        {nextPage && (
+                            <button onClick={clickNext} className='focus:outline-none'>
+                                <div className='border-t border-b border-r w-12 h-12 py-2 border-black hover:bg-blue-800 items-center inline-flex justify-center'>
+                                    <FontAwesomeIcon icon={faAngleRight} className='text-xl' />
+                                </div>
+                            </button>
+                        )}
+                    </div>
+                    <div className='text-center pb-5'>
+                        {page <= availablePages.maxPage ? (<p>Page {page} of {availablePages.maxPage}</p>) : null }
                     </div>
                 </div>
 
