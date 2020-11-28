@@ -42,9 +42,7 @@ export default function UserMenu(ownerId) {
                                         <p className='font-bold'>{item.foodName}</p>
                                         {item.feature && <p className='text-gray-700 bg-gray-300 rounded px-2 py-1'>Featured</p>}
                                     </div>
-                                    
                                     <p className='text-gray-700 mt-3'>{item.desc}</p>
-                                    
                                 </div>
                                 <p className='absolute right-0 mr-2 mt-2 bg-gray-t-90 py-2 px-4 rounded font-bold'>${item.price}</p>
                                 <img className='object-cover w-40 h-40' src={item.image} alt={item.foodName}/>
