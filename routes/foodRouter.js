@@ -74,8 +74,15 @@ router.delete('/delete/:id', auth, async (req,res)=>{
 
 
 
-router.get('/display', paginate(Food), async(req,res)=>{
-    res.json(res.paginate)
+router.get('/display/user/:id', async(req,res)=>{
+    try{
+        const displayAll = await Food.find({userId: req.params.id}).sort({feature: -1})
+        
+        res.json(displayAll)
+
+    }catch(err){
+        res.status(500).json({error: err.message});
+    }
 })
 
 router.get('/display/:category/:feature', filter(Food), async(req,res)=>{
@@ -94,7 +101,8 @@ router.get('/display/:id', async(req,res)=>{
             limit = 9
         }
         const result = {}
-        const displayFood = await Food.find({userId: req.params.id})
+        const displayFood = await Food.find({userId: req.params.id}).sort({ feature: -1 })
+
         const startIndex = (page - 1) * limit
         const endIndex = (page * limit)
 
@@ -111,7 +119,9 @@ router.get('/display/:id', async(req,res)=>{
                 limit: limit
             }
         }
-        
+        result.size = {
+            size: displayFood.length
+        }
         result.result = displayFood.slice(startIndex, endIndex)
         res.json(result)
             
