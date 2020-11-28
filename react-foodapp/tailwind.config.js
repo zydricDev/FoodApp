@@ -7,6 +7,7 @@ module.exports = {
     extend: {
       backgroundColor:{
         'black-t-50': 'rgba(0,0,0,0.5)',
+        'gray-t-90': 'rgba(230, 230, 230, 0.9)',
         'red-t-50': 'rgba(249, 0, 0, 0.5)',
         'red-t-75': 'rgba(249, 0, 0, 0.75)',
       },

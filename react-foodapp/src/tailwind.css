@@ -2576,6 +2576,10 @@ video {
   background-color: rgba(0,0,0,0.5);
 }
 
+.bg-gray-t-90 {
+  background-color: rgba(230, 230, 230, 0.9);
+}
+
 .bg-red-t-50 {
   background-color: rgba(249, 0, 0, 0.5);
 }
@@ -3148,6 +3152,10 @@ video {
   background-color: rgba(0,0,0,0.5);
 }
 
+.hover\:bg-gray-t-90:hover {
+  background-color: rgba(230, 230, 230, 0.9);
+}
+
 .hover\:bg-red-t-50:hover {
   background-color: rgba(249, 0, 0, 0.5);
 }
@@ -3718,6 +3726,10 @@ video {
 
 .focus\:bg-black-t-50:focus {
   background-color: rgba(0,0,0,0.5);
+}
+
+.focus\:bg-gray-t-90:focus {
+  background-color: rgba(230, 230, 230, 0.9);
 }
 
 .focus\:bg-red-t-50:focus {
@@ -21269,6 +21281,10 @@ video {
     background-color: rgba(0,0,0,0.5);
   }
 
+  .sm\:bg-gray-t-90 {
+    background-color: rgba(230, 230, 230, 0.9);
+  }
+
   .sm\:bg-red-t-50 {
     background-color: rgba(249, 0, 0, 0.5);
   }
@@ -21841,6 +21857,10 @@ video {
     background-color: rgba(0,0,0,0.5);
   }
 
+  .sm\:hover\:bg-gray-t-90:hover {
+    background-color: rgba(230, 230, 230, 0.9);
+  }
+
   .sm\:hover\:bg-red-t-50:hover {
     background-color: rgba(249, 0, 0, 0.5);
   }
@@ -22411,6 +22431,10 @@ video {
 
   .sm\:focus\:bg-black-t-50:focus {
     background-color: rgba(0,0,0,0.5);
+  }
+
+  .sm\:focus\:bg-gray-t-90:focus {
+    background-color: rgba(230, 230, 230, 0.9);
   }
 
   .sm\:focus\:bg-red-t-50:focus {
@@ -39932,6 +39956,10 @@ video {
     background-color: rgba(0,0,0,0.5);
   }
 
+  .md\:bg-gray-t-90 {
+    background-color: rgba(230, 230, 230, 0.9);
+  }
+
   .md\:bg-red-t-50 {
     background-color: rgba(249, 0, 0, 0.5);
   }
@@ -40504,6 +40532,10 @@ video {
     background-color: rgba(0,0,0,0.5);
   }
 
+  .md\:hover\:bg-gray-t-90:hover {
+    background-color: rgba(230, 230, 230, 0.9);
+  }
+
   .md\:hover\:bg-red-t-50:hover {
     background-color: rgba(249, 0, 0, 0.5);
   }
@@ -41074,6 +41106,10 @@ video {
 
   .md\:focus\:bg-black-t-50:focus {
     background-color: rgba(0,0,0,0.5);
+  }
+
+  .md\:focus\:bg-gray-t-90:focus {
+    background-color: rgba(230, 230, 230, 0.9);
   }
 
   .md\:focus\:bg-red-t-50:focus {
@@ -58595,6 +58631,10 @@ video {
     background-color: rgba(0,0,0,0.5);
   }
 
+  .lg\:bg-gray-t-90 {
+    background-color: rgba(230, 230, 230, 0.9);
+  }
+
   .lg\:bg-red-t-50 {
     background-color: rgba(249, 0, 0, 0.5);
   }
@@ -59167,6 +59207,10 @@ video {
     background-color: rgba(0,0,0,0.5);
   }
 
+  .lg\:hover\:bg-gray-t-90:hover {
+    background-color: rgba(230, 230, 230, 0.9);
+  }
+
   .lg\:hover\:bg-red-t-50:hover {
     background-color: rgba(249, 0, 0, 0.5);
   }
@@ -59737,6 +59781,10 @@ video {
 
   .lg\:focus\:bg-black-t-50:focus {
     background-color: rgba(0,0,0,0.5);
+  }
+
+  .lg\:focus\:bg-gray-t-90:focus {
+    background-color: rgba(230, 230, 230, 0.9);
   }
 
   .lg\:focus\:bg-red-t-50:focus {
@@ -77258,6 +77306,10 @@ video {
     background-color: rgba(0,0,0,0.5);
   }
 
+  .xl\:bg-gray-t-90 {
+    background-color: rgba(230, 230, 230, 0.9);
+  }
+
   .xl\:bg-red-t-50 {
     background-color: rgba(249, 0, 0, 0.5);
   }
@@ -77830,6 +77882,10 @@ video {
     background-color: rgba(0,0,0,0.5);
   }
 
+  .xl\:hover\:bg-gray-t-90:hover {
+    background-color: rgba(230, 230, 230, 0.9);
+  }
+
   .xl\:hover\:bg-red-t-50:hover {
     background-color: rgba(249, 0, 0, 0.5);
   }
@@ -78400,6 +78456,10 @@ video {
 
   .xl\:focus\:bg-black-t-50:focus {
     background-color: rgba(0,0,0,0.5);
+  }
+
+  .xl\:focus\:bg-gray-t-90:focus {
+    background-color: rgba(230, 230, 230, 0.9);
   }
 
   .xl\:focus\:bg-red-t-50:focus {

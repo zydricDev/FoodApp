@@ -158,14 +158,7 @@ router.patch('/edit/:id', async(req,res)=>{
 router.get('/:id', async(req,res)=>{
     try{
         const food = await Food.findById(req.params.id)
-        res.json({
-            foodName: food.foodName,
-            userDisplayName: food.userDisplayName,
-            userId: food.userId,
-            price: food.price,
-            desc: food.desc,
-            image: food.image
-        })
+        res.json(food)
 
     }catch(err){
         res.status(500).json({error: err.message});

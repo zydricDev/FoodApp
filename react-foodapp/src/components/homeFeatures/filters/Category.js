@@ -38,7 +38,7 @@ export default function Category() {
     }
     const moveLeft = () => {
         if(position - 100 <= -200 ){
-            setPosition(-112)
+            setPosition(-130)
         }else{
             setPosition(position - 100)
         }
@@ -161,7 +161,7 @@ export default function Category() {
 
                         <div className='flex justify-start'>
                             {
-                                position > -112 &&
+                                position > -130 &&
                                 <button onClick={moveLeft} className='focus:outline-none'>
                                     <div className='bg-blue-500 rounded-full rounded-full my-5 w-10 h-10 hover:text-white hover:bg-blue-800'>
                                         <FontAwesomeIcon icon={faAngleDoubleRight} className='text-3xl my-1 ml-1' />
