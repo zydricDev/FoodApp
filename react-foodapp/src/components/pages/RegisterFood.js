@@ -12,7 +12,7 @@ export default function RegisterFood() {
     const [price, setPrice] = useState()
     const [desc, setDesc] = useState()
     const [image, setImage] = useState()
-    const [category, setCategory] = useState('none')
+    const [category, setCategory] = useState('Uncategorized')
     const [feature, setFeature] = useState('0')
 
     const [error, setError] = useState()
