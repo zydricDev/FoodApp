@@ -24,31 +24,48 @@ export default function UserMenu(ownerId) {
     }, [url, owner])
 
     const userMenus = useAxiosGet(url)
+    const categoryList = useAxiosGet('http://localhost:4000/category/display')
 
     if(userMenus.error){
         content = <p>There was an error</p>
     }
 
-    if(userMenus.data){
+    if(userMenus.data && categoryList.data){
         
         content = 
             <div>
                 <div className='mt-5'>
-                    <div className='grid grid-cols-2 p-5 gap-5'>
-                        {userMenus.data.map((item, index) => 
-                            <div key={index} className='border flex justify-between relative transition duration-500 hover:shadow-md hover:border-gray-500 rounded'>
-                                <div className='p-2'>
-                                    <div className='inline-flex gap-3'>
-                                        <p className='font-bold'>{item.foodName}</p>
-                                        {item.feature && <p className='text-gray-700 bg-gray-300 rounded px-2 py-1'>Featured</p>}
-                                    </div>
-                                    <p className='text-gray-700 mt-3'>{item.desc}</p>
-                                </div>
-                                <p className='absolute right-0 mr-2 mt-2 bg-gray-t-90 py-2 px-4 rounded font-bold'>${item.price}</p>
-                                <img className='object-cover w-40 h-40' src={item.image} alt={item.foodName}/>
-                            </div>
-                        )} 
-                    </div>
+                    {categoryList.data.map((menuType, listIndex)=>
+                        <div key={listIndex}>
+                            {userMenus.data.find(item => item.category === menuType.newCategoryType) ? (
+                            <>
+                                <p className='text-3xl font-bold'>{menuType.newCategoryType}</p>
+                                <div className='grid grid-cols-2 p-5 gap-5'>
+                                    {userMenus.data
+                                    .filter(item => item.category === menuType.newCategoryType)
+                                    .map((item, index) => 
+                                        <div key={index} className='border flex justify-between relative transition duration-500 hover:shadow-md hover:border-gray-500 rounded'>
+                                            <div className='p-2'>
+                                                <div className='inline-flex gap-3'>
+                                                    <p className='font-bold'>{item.foodName}</p>
+                                                    
+                                                    {item.feature && <p className='text-gray-700 bg-gray-300 rounded px-2 py-1'>Featured</p>}
+                                                </div>
+                                                <p className='text-gray-700 mt-3'>{item.desc}</p>
+                                            </div>
+                                            {item.feature ? (<p className='absolute right-0 mr-2 mt-2 bg-gray-t-90 py-2 px-4 rounded font-bold'>${item.price}</p>) : (<p className='right-0 mr-2 mt-2 rounded font-bold'>${item.price}</p>)}
+                                            {item.feature && <img className='object-cover w-40 h-40' src={item.image} alt={item.foodName}/>}
+                                        </div>
+                                    )}
+                                </div> 
+                            </>
+
+                            ): null}
+                            
+                        </div>
+                    
+                    )}
+                    
                 </div>
             </div>
     }
