@@ -4,6 +4,7 @@ import UserContext from '../../context/UserContext'
 import Axios from 'axios'
 
 import ErrorNotice from '../misc/ErrorNotice'
+import Loader from '../misc/Loader'
 
 export default function MyStore() {
     const userCred = useContext(UserContext)
@@ -66,7 +67,7 @@ export default function MyStore() {
     }
 
     if (productList.error) {
-        content = <p>Loading</p>
+        content = <Loader></Loader>
     }
 
     try {
@@ -76,12 +77,12 @@ export default function MyStore() {
             
             <div className='flex h-screen'>
                 <div className='w-1/6 h-full p-5'>
-                    <div className='p-5 grid grid-cols-1 gap-5 text-center border-gray-500 border rounded'>
-                        <p className='font-bold text-xl'>My Products</p>
+                    <div className='p-2 grid grid-cols-1 gap-3 text-center border-gray-500 border rounded'>
+                        <p className='font-bold text-md'>My Products</p>
                         {productList.data.map((product, index) =>
                         <div key={index}>
-                            <button onClick={() => { selectedItem(product._id) }} className='border rounded w-full hover:bg-blue-500'>
-                                <p className='text-xl font-semibold'>{product.foodName}</p>
+                            <button onClick={() => { selectedItem(product._id) }} className='border rounded w-full hover:shadow hover:border-gray-500 duration-200 focus:outline-none'>
+                                {productSelected.data.foodName === product.foodName ? <p className='bg-blue-500 rounded'>{product.foodName}</p> : <p className='rounded'>{product.foodName}</p>}
                             </button>
                         </div>
                         )}
@@ -100,7 +101,7 @@ export default function MyStore() {
                                     <div className='border p-5 border-gray-400 rounded inline-flex gap-5 justify-around'>
                                         <button className='w-full border border-gray-500 rounded hover:shadow-md hover:border-gray-600 duration-200 focus:outline-none' onClick={editActive}>
                                             <p className='text-gray-500'>Item Featured Status</p>
-                                            <p className='font-bold text-xl'>Active</p>
+                                            <p>Active</p>
                                         </button>
                                         {editMode && 
                                             <div className='w-full'>
@@ -115,7 +116,7 @@ export default function MyStore() {
                                     <div className='border p-5 border-gray-400 rounded inline-flex gap-5 justify-around'>
                                         <button className='w-full border border-gray-500 rounded hover:shadow-md hover:border-gray-600 duration-200 focus:outline-none' onClick={editActive}>
                                             <p className='text-gray-500'>Item Featured Status</p>
-                                            <p className='font-bold text-xl'>Not Active</p>
+                                            <p>Not Active</p>
                                         </button>
                                         {editMode && 
                                             <div className='w-full'>
@@ -131,7 +132,7 @@ export default function MyStore() {
                                 <div className='border p-5 border-gray-400 rounded inline-flex gap-5 justify-around'>
                                     <button className='w-full border border-gray-500 rounded hover:shadow-md hover:border-gray-600 duration-200 focus:outline-none' onClick={editActive}>
                                         <p className='text-gray-500'>Item Category</p>
-                                        <p className='font-bold text-xl'>{productSelected.data.category}</p>
+                                        <p>{productSelected.data.category}</p>
                                     </button>
                                     {editMode && 
                                         <div className='w-full'>
@@ -158,12 +159,12 @@ export default function MyStore() {
                                 <div className='border p-5 border-gray-400 rounded inline-flex gap-5 justify-around'>
                                     <button className='w-full border border-gray-500 rounded hover:shadow-md hover:border-gray-600 duration-200 focus:outline-none'  onClick={editActive}>
                                         <p className='text-gray-500'>Item Name</p>
-                                        <p className='font-bold text-xl'>{productSelected.data.foodName}</p>
+                                        <p>{productSelected.data.foodName}</p>
                                     </button>
                                     {editMode && 
                                         <div className='w-full'>
                                             <p className='text-gray-500 ml-5'>New Name</p>
-                                            <input className='ml-5 w-5/6 focus:outline-none bg-gray-300 px-1 rounded mb-1 border-black border' value={newName} type='text' placeholder='Enter new name' onChange={e => setName(e.target.value)}/>
+                                            <input className='ml-5 w-5/6 focus:outline-none bg-gray-300 px-1 rounded mb-1 border-black border' type='text' placeholder='Enter new name' onChange={e => setName(e.target.value)}/>
                                         </div>
                                     }
                                 </div>
@@ -171,12 +172,12 @@ export default function MyStore() {
                                 <div className='border p-5 border-gray-400 rounded inline-flex gap-5 justify-around'>
                                     <button className='w-full border border-gray-500 rounded hover:shadow-md hover:border-gray-600 duration-200 focus:outline-none'  onClick={editActive}>
                                         <p className='text-gray-500'>Item Price</p>
-                                        <p className='font-bold text-xl'>${productSelected.data.price}</p>
+                                        <p>${productSelected.data.price}</p>
                                     </button>
                                     {editMode && 
                                         <div className='w-full'>
                                             <p className='text-gray-500 ml-5'>New Price</p>
-                                            <input className='ml-5 w-5/6 focus:outline-none bg-gray-300 px-1 rounded mb-1 border-black border' value={newPrice} type='number' min='0' placeholder='Enter new price' onChange={e => setPrice(e.target.value)}/>
+                                            <input className='ml-5 w-5/6 focus:outline-none bg-gray-300 px-1 rounded mb-1 border-black border' type='number' min='0' placeholder='Enter new price' onChange={e => setPrice(e.target.value)}/>
                                         </div>
                                     }
                                 </div>
@@ -184,12 +185,12 @@ export default function MyStore() {
                                 <div className='border p-5 border-gray-400 rounded inline-flex gap-5 justify-around'>
                                     <button className='w-full border border-gray-500 rounded hover:shadow-md hover:border-gray-600 duration-200 focus:outline-none'  onClick={editActive}>
                                         <p className='text-gray-500'>Item Description</p>
-                                        <p className='font-bold text-xl'>{productSelected.data.desc}</p>
+                                        <p>{productSelected.data.desc}</p>
                                     </button>
                                     {editMode && 
                                         <div className='w-full'>
                                             <p className='text-gray-500 ml-5'>New Description</p>
-                                            <input className='ml-5 w-5/6 focus:outline-none bg-gray-300 px-1 rounded mb-1 border-black border' value={newDesc} type='text' placeholder='Enter new description' onChange={e => setDesc(e.target.value)}/>
+                                            <input className='ml-5 w-5/6 focus:outline-none bg-gray-300 px-1 rounded mb-1 border-black border' type='text' placeholder='Enter new description' onChange={e => setDesc(e.target.value)}/>
                                         </div>
                                     }
                                 </div>
@@ -205,7 +206,7 @@ export default function MyStore() {
                                     {editMode && 
                                         <div className='w-full'>
                                             <p className='text-gray-500 ml-5'>New Image url</p>
-                                            <input className='ml-5 w-5/6 focus:outline-none bg-gray-300 px-1 rounded mb-1 border-black border' value={newImage} type='text' placeholder='Enter new url' onChange={e => setImage(e.target.value)}/>
+                                            <input className='ml-5 w-5/6 focus:outline-none bg-gray-300 px-1 rounded mb-1 border-black border' type='text' placeholder='Enter new url' onChange={e => setImage(e.target.value)}/>
                                         </div>
                                     }
                                 </div>
@@ -233,7 +234,7 @@ export default function MyStore() {
 
         }
     } catch (err) {
-        content = <p>Loading</p>
+        content = <Loader></Loader>
     }
 
 
