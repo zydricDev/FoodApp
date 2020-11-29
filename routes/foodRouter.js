@@ -134,7 +134,8 @@ router.get('/display/:id', async(req,res)=>{
 
 router.patch('/edit/:id', async(req,res)=>{
     try{
-        let {newName, newPrice, newDesc, newImage} = req.body;
+        let {newName, newPrice, newDesc, newImage, newFeature, newCategory} = req.body;
+        
         
         const food = await Food.findById(req.params.id)
         if(!newName){
@@ -149,12 +150,26 @@ router.patch('/edit/:id', async(req,res)=>{
         if(!newImage){
             newImage = food.image
         }
+        if(!newFeature){
+            newFeature = food.feature
+        }
+        if(!newCategory){
+            newCategory = food.category
+        }
 
+        if(newFeature === '0'){
+            newFeature = false
+        }
+        if(newFeature === '1'){
+            newFeature = true
+        }
         await food.updateOne({ 
             foodName: newName,
             price: newPrice,
             desc: newDesc,
-            image: newImage
+            image: newImage,
+            category: newCategory,
+            feature: newFeature
 
         })
         res.json(food)
@@ -167,6 +182,12 @@ router.patch('/edit/:id', async(req,res)=>{
 
 router.get('/:id', async(req,res)=>{
     try{
+        if(!req.params.id){
+            return res.status(400).json({msg: "No id"})
+        }
+        if(req.params.id === 'undefined'){
+            return res.json()
+        }
         const food = await Food.findById(req.params.id)
         res.json(food)
 
