@@ -18,7 +18,7 @@ class editedFood extends React.Component {
 
 export default function MyStore() {
     const userCred = useContext(UserContext)
-    let url = undefined
+    let url = `http://localhost:4000/food/display?page=1&limit=9`
 
     let content = null
     let pageSection = null
@@ -36,13 +36,15 @@ export default function MyStore() {
 
     if (userCred.userData.user) {
         url = `http://localhost:4000/food/display/${userCred.userData.user.id}?page=${page}&limit=9`
-    } else {
-        url = `http://localhost:4000/food/display?page=1&limit=9`
-    }
+    } 
 
     let productList = useAxiosGet(url)
 
     const canEdit = (i) => {
+        setName()
+        setPrice()
+        setDesc()
+        setImage()
         if (i === myIndex) {
             setIndex(undefined)
         } else {
@@ -64,28 +66,23 @@ export default function MyStore() {
     }
 
     try {
+    
         if (productList.data) {
             productList.data.result.map((product) => {
-
                 foodValues.push(new editedFood(
                     product.foodName,
                     product.price,
                     product.desc,
                     product.image
                 ))
-
                 return null;
             })
-        }
-
-        if (productList.data) {
 
             content =
-                <div className="flex justify-center">
-                    <div className="sm:flex-col md:grid grid-cols-3 gap-3 p-3">
+                <div className="flex">
+                    <div className="">
                         {productList.data.result.map((product, index) =>
                             <div key={index}>
-
                                 <img className="h-64 w-full object-cover" src={product.image} alt={product.foodName}></img>
                                 <div className='flex justify-center p-3'>
                                     <button onClick={() => { canEdit(index) }}>Edit</button>
@@ -111,10 +108,8 @@ export default function MyStore() {
                                         </div>
                                     </div>
                                     <div className='flex-col'>
-
                                         {myIndex === index && (
                                             <form onSubmit={() => submit(product._id)}>
-
                                                 {error && (<ErrorNotice message={error} clearError={() => setError(undefined)} />)}
                                                 <div className='flex justify-between'>
                                                     <label>Name:</label>
