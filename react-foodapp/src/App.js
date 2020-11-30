@@ -13,7 +13,7 @@ import DeleteMe from './components/pages/DeleteMe'
 import MyStore from './components/pages/MyStore'
 import Landing from './components/pages/Landing'
 
-
+import domain from './domain'
 
 
 
@@ -34,13 +34,13 @@ export default function App() {
             }
 
             const tokenRes = await Axios.post(
-                'http://localhost:4000/users/tokenIsValid',
+                `http://${domain}/users/tokenIsValid`,
                 null,
                 { headers: { 'auth-token': token } }
             )
 
             if (tokenRes.data) {
-                const userRes = await Axios.get('http://localhost:4000/users/', {
+                const userRes = await Axios.get(`http://${domain}/users/`, {
                     headers: { 'auth-token': token },
                 })
                 setUserData({
