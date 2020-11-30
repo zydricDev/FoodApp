@@ -3,10 +3,9 @@ import {Link} from 'react-router-dom'
 
 
 
-
 export default function Landing() {
     const [search, setSearch] = useState()
-
+    
     return (
         <div>
             <div className='lg:flex'>

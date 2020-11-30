@@ -5,20 +5,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDoubleLeft, faAngleDoubleRight, faTimes, faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons'
 
 import Items from '../../homeFeatures/Items'
+import domain from '../../../domain'
+
+
+
 export default function Category() {
     const [position, setPosition] = useState(0)
     const [itemCategory, setCategory] = useState('null')
     const [featured, setFeatured] = useState(false)
-    const [url, setUrl] = useState(`http://localhost:4000/food/display/${itemCategory}/${featured}`)
+    const [url, setUrl] = useState(`http://${domain}/food/display/${itemCategory}/${featured}`)
     const [activeFeature, setActiveFeature] = useState(false)
 
 
-    const sliderList = useAxiosGet('http://localhost:4000/category/display')
+    const sliderList = useAxiosGet(`http://${domain}/category/display`)
     let menu = undefined
     let content = undefined
     useEffect(() => {
         if (itemCategory) {
-            setUrl(`http://localhost:4000/food/display/${itemCategory}/${featured}`)
+            setUrl(`http://${domain}/food/display/${itemCategory}/${featured}`)
         }
 
     }, [url, itemCategory, featured])

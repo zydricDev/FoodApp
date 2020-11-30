@@ -3,6 +3,7 @@ import Axios from 'axios'
 import {useHistory} from 'react-router-dom'
 import UserContext from '../../context/UserContext'
 import ErrorNotice from '../misc/ErrorNotice'
+import domain from '../../domain'
 
 export default function Register() {
     const [email, setEmail] = useState()
@@ -21,9 +22,9 @@ export default function Register() {
         try{
             const newUser = {email, password, passwordCheck, displayName}
             
-            await Axios.post('http://localhost:4000/users/register', newUser)
+            await Axios.post(`http://${domain}/users/register`, newUser)
 
-            const loginRes = await Axios.post('http://localhost:4000/users/login',{
+            const loginRes = await Axios.post(`http://${domain}/users/login`,{
                 email, password
             })
 

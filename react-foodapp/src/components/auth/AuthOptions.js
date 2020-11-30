@@ -8,7 +8,7 @@ export default function AuthOptions() {
     const {userData, setUserData} = useContext(UserContext)
 
     const history = useHistory();
-    //const register = () => history.push('/register')
+    
     const login = () => history.push('/login')
     const logout = () => {
         setUserData({
@@ -20,7 +20,7 @@ export default function AuthOptions() {
     return (
         <nav className='flex'>
             {
-                //if userData.user true, log out else use the other buttons
+                
                 userData.user ? (
                     <div className='flex justify-center'>
                         <button className='inline-block mx-3 hover:text-white focus:outline-none' onClick={logout}>
