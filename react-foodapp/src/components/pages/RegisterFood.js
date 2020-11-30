@@ -3,7 +3,7 @@ import Axios from 'axios'
 import {useHistory} from 'react-router-dom'
 import UserContext from '../../context/UserContext'
 import ErrorNotice from '../misc/ErrorNotice'
-
+import domain from '../../domain'
 
 export default function RegisterFood() {
     const [foodName, setFoodName] = useState()
@@ -38,7 +38,7 @@ export default function RegisterFood() {
             
             if (userDisplayName && userId) {
                 const newFood = { foodName, userDisplayName, userId, price, desc, image, category, feature }
-                await Axios.post('http://localhost:4000/food/register', newFood, {
+                await Axios.post(`http://${domain}/food/register`, newFood, {
                     headers: { "auth-token": localStorage.getItem('auth-token') }
                 })
             }

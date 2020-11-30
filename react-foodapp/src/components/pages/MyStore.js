@@ -5,6 +5,7 @@ import Axios from 'axios'
 
 import ErrorNotice from '../misc/ErrorNotice'
 import Loader from '../misc/Loader'
+import domain from '../../domain'
 
 export default function MyStore() {
     const userCred = useContext(UserContext)
@@ -20,18 +21,20 @@ export default function MyStore() {
     const [newCategory, setCategory] = useState()
 
     const [editMode, setEditMode] = useState(false)
-  
+    const [sortBy, setSortBy] = useState()
+
+
     const [error, setError] = useState()
 
     const [selectedId, setSelectId] = useState()
     const [selectedUrl, setSelectUrl] = useState()
     
     useEffect(()=>{
-        setSelectUrl(`http://localhost:4000/food/${selectedId}`)
+        setSelectUrl(`http://${domain}/food/${selectedId}`)
     },[selectedId])
 
     if (userCred.userData.user) {
-        url = `http://localhost:4000/food/display/user/${userCred.userData.user.id}`
+        url = `http://${domain}/food/display/user/${userCred.userData.user.id}`
     } 
 
     let productList = useAxiosGet(url)
@@ -45,7 +48,6 @@ export default function MyStore() {
         setFeature()
         setCategory()
         setSelectId(itemId)
-
     }
 
     const editActive = () =>{
@@ -58,12 +60,11 @@ export default function MyStore() {
         if (productList.data && productSelected) {
             try {
                 const newFood = { newName, newPrice, newDesc, newImage, newFeature, newCategory }
-                await Axios.patch(`http://localhost:4000/food/edit/${item}`, newFood)
+                await Axios.patch(`http://${domain}/food/edit/${item}`, newFood)
             } catch (err) {
                 err.response.data.msg && setError(err.response.data.msg)
             }
         }
-
     }
 
     if (productList.error) {
@@ -79,6 +80,18 @@ export default function MyStore() {
                 <div className='w-1/6 h-full p-5'>
                     <div className='p-2 grid grid-cols-1 gap-3 text-center border-gray-500 border rounded'>
                         <p className='font-bold text-md'>My Products</p>
+
+                        <select className='border border-black rounded mb-5 bg-gray-300 focus:outline-none' value={sortBy} onChange={e => setSortBy(e.target.value)}>
+                            <option>--Sort by--</option>
+                            <option value='name-ascend'>Name (A-Z)</option>
+                            <option value='feature'>Featured</option>
+                            <option value='name-decend'>Name (Z-A)</option>
+                            <option value='category'>Category (A-Z)</option>
+                            <option value='price'>Price</option>
+                            
+                        </select>
+
+
                         {productList.data.map((product, index) =>
                         <div key={index}>
                             <button onClick={() => { selectedItem(product._id) }} className='border rounded w-full hover:shadow hover:border-gray-500 duration-200 focus:outline-none'>
@@ -172,7 +185,7 @@ export default function MyStore() {
                                 <div className='border p-5 border-gray-400 rounded inline-flex gap-5 justify-around'>
                                     <button className='w-full border border-gray-500 rounded hover:shadow-md hover:border-gray-600 duration-200 focus:outline-none'  onClick={editActive}>
                                         <p className='text-gray-500'>Item Price</p>
-                                        <p>${productSelected.data.price}</p>
+                                        {productSelected.data.price ? <p>${productSelected.data.price}</p> : <p></p>}
                                     </button>
                                     {editMode && 
                                         <div className='w-full'>
@@ -217,15 +230,8 @@ export default function MyStore() {
                         </div>
                         <form className='w-full flex justify-center m-5' onSubmit={()=>submit(productSelected.data._id)}>
                             <input className='mt-2 hover:bg-blue-700 text-white rounded p-2 bg-blue-600 w-1/6' type='submit' value='Update Item'/>
-                        </form>
-
-                        
+                        </form>                        
                     </div>
-                   
-                
-
-                    
-
                 </div>
             </div>
             

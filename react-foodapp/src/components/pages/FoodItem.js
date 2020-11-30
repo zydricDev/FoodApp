@@ -2,10 +2,11 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useAxiosGet } from '../../Hooks/HttpRequest';
 import UserMenu from '../itemFeatures/UserMenu';
+import domain from '../../domain'
 
 export default function FoodItem() {
     const { id } = useParams()
-    const url = `http://localhost:4000/food/${id}`
+    const url = `http://${domain}/food/${id}`
     let product = useAxiosGet(url)
     let content = null
 

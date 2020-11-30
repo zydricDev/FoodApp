@@ -2,30 +2,21 @@ import React, { useState, useEffect } from 'react'
 import { useAxiosGet } from '../../Hooks/HttpRequest'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMedal } from '@fortawesome/free-solid-svg-icons'
+import domain from '../../domain'
 
 export default function UserMenu(ownerId) {
     const owner = ownerId.propUrl
     const [url, setUrl] = useState()
-    //const [limit, setLimit] = useState(10)
+
     let content = undefined
-    /*
-    window.onscroll = function() {
-        if(((window.innerHeight + window.scrollY) >= document.body.offsetHeight) && userMenus.data) {
-            console.log(userMenus.data.size.size, limit+10)
-            if(userMenus.data.size.size > limit){
-                setLimit(limit+10)
-                
-            }
-        }
-    };
-    */
+    
     useEffect(() => {
-        setUrl(`http://localhost:4000/food/display/user/${owner}`)
-        //window.removeEventListener('scroll', () => {})
+        setUrl(`http://${domain}/food/display/user/${owner}`)
+       
     }, [url, owner])
 
     const userMenus = useAxiosGet(url)
-    const categoryList = useAxiosGet('http://localhost:4000/category/display')
+    const categoryList = useAxiosGet(`http://${domain}/category/display`)
 
     if (userMenus.error) {
         content = <p>There was an error</p>
