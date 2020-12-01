@@ -21,6 +21,11 @@ mongoose.connect(
 
 app.listen(PORT, ()=> console.log(`Server at port: ${PORT}`));
 
+app.get('/', (req, res) =>{
+    res.send('This is a test api')
+})
+
 app.use('/users',require('./routes/userRouter'));
 app.use('/food',require('./routes/foodRouter'));
 app.use('/category',require('./routes/ServerOnly/categoryRouter'));
+
