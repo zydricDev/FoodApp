@@ -12,7 +12,7 @@ export default function Register() {
     const [displayName, setDisplayName] = useState()
     const [error, setError] = useState()
 
-    //the first variables have to be the same name as the model in the database
+    
 
     const {setUserData} = useContext(UserContext)
     const history = useHistory()
@@ -42,8 +42,8 @@ export default function Register() {
     }
 
     return (
-        <div className='flex justify-center mt-10'>
-            <div className='flex-col border border-gray-400 w-2/6'>
+        <div className='flex justify-center mt-5 p-5'>
+            <div className='flex-col border border-gray-400 md:w-2/6 w-full'>
                 <div className='flex justify-center mt-2'>
                     {error && (
                         <ErrorNotice message={error} clearError={() => setError(undefined)}/>
@@ -52,7 +52,7 @@ export default function Register() {
                 <form onSubmit={submit}>
                     <div className='pb-5'>
                         
-                        <div className='grid w-2/6 p-5 w-full'>
+                        <div className='p-5 w-full'>
                             <h2 className='flex font-bold mb-5 xl:text-2xl'>Create your account</h2>
                             <div className='mb-5 grid'>
                                 <label className='text-gray-500'>Email</label>
@@ -69,7 +69,7 @@ export default function Register() {
                                 <label className='text-gray-500'>Display Name</label>
                                 <input className='border-black rounded p-2 border-2 border-gray-400' type='text' onChange={e => setDisplayName(e.target.value)}/>
                             </div>
-                            <input className='xl:text-xl hover:bg-blue-700 text-white w-full rounded p-2 bg-blue-600' type='submit' value='Register'/>
+                            <input className='xl:text-xl hover:bg-blue-700 text-white w-full rounded p-2 bg-blue-600 cursor-pointer' type='submit' value='Register'/>
                         </div>
                     </div>
                 </form>

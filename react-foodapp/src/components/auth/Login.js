@@ -34,7 +34,7 @@ export default function Login() {
     }
     return (
         <div>
-            <div className='flex justify-center my-10'>
+            <div className='flex justify-center md:my-10'>
                 {error && (
                             <ErrorNotice message={error} clearError={() => setError(undefined)}/>
                 )}
@@ -42,7 +42,7 @@ export default function Login() {
             <form onSubmit={submit}>
                 
                 <div className='flex justify-center py-10'>
-                    <div className='grid border-2 w-2/6 p-5'>
+                    <div className='grid border-2 md:w-2/6 p-5'>
                         <h2 className='flex justify-center font-bold xl:text-2xl mb-10'>Sign in with your FoodApp account</h2>
                         <div className='mb-5 grid'>
                             <label className='text-gray-500'>Email</label>

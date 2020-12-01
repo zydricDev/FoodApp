@@ -54,8 +54,8 @@ export default function RegisterFood() {
 
     return (
 
-        <div className='flex justify-center mt-10'>
-            <div className='flex-col border border-gray-400 lg:w-2/6 md:w-3/6 w-5/6'>
+        <div className='flex justify-center mt-10 px-5'>
+            <div className='flex-col border border-gray-400 lg:w-2/6 md:w-3/6 w-full'>
                 
                 {error && (
                     <ErrorNotice message={error} clearError={() => setError(undefined)}/>
@@ -114,7 +114,7 @@ export default function RegisterFood() {
                                 </select >
                             </div>
                             
-                            <input className='xl:text-xl hover:bg-blue-700 text-white w-full rounded p-2 bg-blue-600' type='submit' value='Register Item'/>
+                            <input className='xl:text-xl hover:bg-blue-700 text-white w-full rounded p-2 bg-blue-600 cursor-pointer' type='submit' value='Register Item'/>
                             
                         </div>
                     </div>

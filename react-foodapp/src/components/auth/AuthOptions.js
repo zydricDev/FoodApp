@@ -18,7 +18,7 @@ export default function AuthOptions() {
         localStorage.setItem('auth-token', '')
     }
     return (
-        <nav className='flex'>
+        <nav className='flex invisible md:visible'>
             {
                 
                 userData.user ? (
