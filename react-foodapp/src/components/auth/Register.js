@@ -69,7 +69,7 @@ export default function Register() {
                                 <label className='text-gray-500'>Display Name</label>
                                 <input className='border-black rounded p-2 border-2 border-gray-400' type='text' onChange={e => setDisplayName(e.target.value)}/>
                             </div>
-                            <input className='xl:text-xl hover:bg-blue-700 text-white w-full rounded p-2 bg-blue-600' type='submit' value='Register'/>
+                            <input className='xl:text-xl hover:bg-blue-700 text-white w-full rounded p-2 bg-blue-600 cursor-pointer' type='submit' value='Register'/>
                         </div>
                     </div>
                 </form>

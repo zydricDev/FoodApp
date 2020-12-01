@@ -114,7 +114,7 @@ export default function RegisterFood() {
                                 </select >
                             </div>
                             
-                            <input className='xl:text-xl hover:bg-blue-700 text-white w-full rounded p-2 bg-blue-600' type='submit' value='Register Item'/>
+                            <input className='xl:text-xl hover:bg-blue-700 text-white w-full rounded p-2 bg-blue-600 cursor-pointer' type='submit' value='Register Item'/>
                             
                         </div>
                     </div>

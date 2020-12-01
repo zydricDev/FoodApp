@@ -34,13 +34,13 @@ export default function App() {
             }
 
             const tokenRes = await Axios.post(
-                `http://${domain}/users/tokenIsValid`,
+                `${domain}/users/tokenIsValid`,
                 null,
                 { headers: { 'auth-token': token } }
             )
 
             if (tokenRes.data) {
-                const userRes = await Axios.get(`http://${domain}/users/`, {
+                const userRes = await Axios.get(`${domain}/users/`, {
                     headers: { 'auth-token': token },
                 })
                 setUserData({
