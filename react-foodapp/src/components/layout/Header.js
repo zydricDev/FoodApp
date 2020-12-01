@@ -1,24 +1,22 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { Link, useLocation, useHistory } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import AuthOptions from '../auth/AuthOptions'
 import LoggedInOptions from './LoggedInOptions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { useTransition, animated } from 'react-spring'
-import UserContext from '../../context/UserContext';
 
+import HeaderOptions from '../mobileOptions/HeaderOptions'
 
 export default function Header() {
     let location = useLocation()
     let content = null
     const [windowWidth, setWindowWidth] = useState()
     const [showMenu, setShowMenu] = useState(false)
-    const {userData, setUserData} = useContext(UserContext)
-    const windowLimit = 700
-    
-    const history = useHistory();
-    
-    
+
+    const windowLimit = 770
+
+
     useEffect(() => {
         setWindowWidth(window.innerWidth)
         if (windowWidth > windowLimit && showMenu === true) {
@@ -28,21 +26,13 @@ export default function Header() {
             window.removeEventListener('resize', null)
         }
 
-    }, [windowWidth, showMenu, userData])
+    }, [windowWidth, showMenu])
 
     window.addEventListener('resize', () => {
         setWindowWidth(window.innerWidth)
     })
 
-    const logout = () => {
 
-        setUserData({
-            token: undefined,
-            user: undefined
-        })
-        localStorage.setItem('auth-token', '')
-        
-    }
 
     const menuTransitions = useTransition(showMenu, null, {
         from: { opacity: 0, transform: 'translateX(-100%)' },
@@ -51,9 +41,9 @@ export default function Header() {
     })
 
     const maskTransitions = useTransition(showMenu, null, {
-        from: {position: 'absolute', opacity: 0},
-        enter: {opacity: 1},
-        leave: {opacity: 0},
+        from: { position: 'fixed', opacity: 0 },
+        enter: { opacity: 1 },
+        leave: { opacity: 0 },
     })
 
     if (location.pathname !== '/Landing') {
@@ -73,41 +63,28 @@ export default function Header() {
                     }
                 </div>
 
-            {maskTransitions.map(({ item, key, props }) =>
-                item &&
-                <animated.div
-                    key={key}
-                    style={props}
-                    className="bg-black-t-50 fixed top-0 left-0 w-full h-full z-50"
-                    onClick={() => setShowMenu(false)}
-                >
-                </animated.div>
-            )}
+                {maskTransitions.map(({ item, key, props }) =>
+                    item &&
+                    <animated.div
+                        key={key}
+                        style={props}
+                        className="bg-black-t-50 fixed top-0 left-0 w-full h-full z-50"
+                        onClick={() => setShowMenu(false)}
+                    >
+                    </animated.div>
+                )}
 
-            {menuTransitions.map(({ item, key, props }) =>
-                item &&
-                <animated.div
-                    key={key}
-                    style={props}
-                    className="fixed bg-white top-0 left-0 w-4/6 h-full z-50 shadow"
-                >
-                    <p className='text-3xl font-bold text-red-500 p-5'>Food app</p>
-                    {
-                        userData.user ? 
-                        <button onClick={logout} 
-                        className='text-left border-b border-gray-300 w-full bg-white py-2 hover:bg-blue-300 duration-200 text-xl'><p className='ml-5'>Logout</p></button>
-                        :
-                        <button onClick={() => history.push('/login')} 
-                        className='text-left border-b border-gray-300 w-full bg-white py-2 hover:bg-blue-300 duration-200 text-xl'><p className='ml-5'>Sign in</p></button>
-                    }
+                {menuTransitions.map(({ item, key, props }) =>
+                    item &&
+                    <animated.div
+                        key={key}
+                        style={props}
+                        className="fixed bg-white top-0 left-0 w-4/6 h-full z-50 shadow"
+                    >
+                        <HeaderOptions />
 
-                    
-                    
-                    
-                        
-                    
-                </animated.div>
-            )}
+                    </animated.div>
+                )}
 
 
             </header>
