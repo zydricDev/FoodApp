@@ -11,7 +11,7 @@ export default function LoggedInOptions() {
     const myStore = () => history.push('/food/myStore')
     
     return (
-        <nav className='flex ml-20'>
+        <nav className='flex ml-20 invisible md:visible'>
             {
                 userData.user ? (
                     <>

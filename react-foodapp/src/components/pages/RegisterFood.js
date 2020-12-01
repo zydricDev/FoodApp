@@ -54,8 +54,8 @@ export default function RegisterFood() {
 
     return (
 
-        <div className='flex justify-center mt-10'>
-            <div className='flex-col border border-gray-400 lg:w-2/6 md:w-3/6 w-5/6'>
+        <div className='flex justify-center mt-10 px-5'>
+            <div className='flex-col border border-gray-400 lg:w-2/6 md:w-3/6 w-full'>
                 
                 {error && (
                     <ErrorNotice message={error} clearError={() => setError(undefined)}/>
