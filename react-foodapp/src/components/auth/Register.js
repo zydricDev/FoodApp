@@ -22,9 +22,9 @@ export default function Register() {
         try{
             const newUser = {email, password, passwordCheck, displayName}
             
-            await Axios.post(`http://${domain}/users/register`, newUser)
+            await Axios.post(`${domain}/users/register`, newUser)
 
-            const loginRes = await Axios.post(`http://${domain}/users/login`,{
+            const loginRes = await Axios.post(`${domain}/users/login`,{
                 email, password
             })
 

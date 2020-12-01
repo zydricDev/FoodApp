@@ -11,12 +11,12 @@ export default function UserMenu(ownerId) {
     let content = undefined
     
     useEffect(() => {
-        setUrl(`http://${domain}/food/display/user/${owner}`)
+        setUrl(`${domain}/food/display/user/${owner}`)
        
     }, [url, owner])
 
     const userMenus = useAxiosGet(url)
-    const categoryList = useAxiosGet(`http://${domain}/category/display`)
+    const categoryList = useAxiosGet(`${domain}/category/display`)
 
     if (userMenus.error) {
         content = <p>There was an error</p>
