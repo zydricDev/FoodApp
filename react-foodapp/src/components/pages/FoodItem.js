@@ -6,7 +6,7 @@ import domain from '../../domain'
 
 export default function FoodItem() {
     const { id } = useParams()
-    const url = `http://${domain}/food/${id}`
+    const url = `${domain}/food/${id}`
     let product = useAxiosGet(url)
     let content = null
 

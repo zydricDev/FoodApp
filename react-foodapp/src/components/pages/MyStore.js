@@ -30,11 +30,11 @@ export default function MyStore() {
     const [selectedUrl, setSelectUrl] = useState()
     
     useEffect(()=>{
-        setSelectUrl(`http://${domain}/food/${selectedId}`)
+        setSelectUrl(`${domain}/food/${selectedId}`)
     },[selectedId])
 
     if (userCred.userData.user) {
-        url = `http://${domain}/food/display/user/${userCred.userData.user.id}`
+        url = `${domain}/food/display/user/${userCred.userData.user.id}`
     } 
 
     let productList = useAxiosGet(url)

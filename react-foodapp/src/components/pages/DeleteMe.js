@@ -11,7 +11,7 @@ export default function DeleteMe() {
     const submit = async (e) =>{
         e.preventDefault()
         try{
-            await Axios.delete(`http://${domain}/users/delete`, {
+            await Axios.delete(`${domain}/users/delete`, {
                 data:{id: userCred.userData.user.id}, 
                 headers:{"auth-token": localStorage.getItem('auth-token')}
             })
