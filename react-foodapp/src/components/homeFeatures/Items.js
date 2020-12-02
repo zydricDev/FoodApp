@@ -58,7 +58,7 @@ export default function Items(linkProp) {
                                     <img src={item.image} alt={item.foodName} className="p-3 h-20 w-20 object-cover box-content" />
                                 </Link>
                                 <div className='flex pl-5 w-full'>
-                                    <div className='flex-col w-full'>
+                                    <div className='flex-col sm:w-full w-3/6'>
                                         <p className='mt-5 font-medium'>{item.foodName}</p>
                                         {item.feature &&
                                             <div className='flex w-full'>
@@ -66,11 +66,11 @@ export default function Items(linkProp) {
                                             </div>
                                         }
                                     </div>
-                                    <div className='flex w-full justify-around'>
-                                        <div className='flex w-3/6'>
+                                    <div className='flex w-full sm:justify-around justify-between sm:mr-0 mr-10'>
+                                        <div className='flex sm:w-3/6'>
                                             <p className='mt-5 font-medium'>{item.category}</p>
                                         </div>
-                                        <div className='flex w-full'>
+                                        <div className='flex sm:w-full'>
                                             <p className='mt-5 font-medium'>${item.price}</p>
                                         </div>
 
