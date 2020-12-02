@@ -55,7 +55,7 @@ export default function UserMenu(ownerId) {
                             {userMenus.data.find(item => item.category === menuType.newCategoryType) ? (
                                 <>
                                     <p className='text-2xl font-bold px-5'>{menuType.newCategoryType}</p>
-                                    <div className='grid grid-cols-2 p-5 gap-5'>
+                                    <div className='grid grid-cols-1 sm:grid-cols-2 p-5 gap-5'>
                                         {userMenus.data
                                             .filter(item => item.category === menuType.newCategoryType)
                                             .map((item, index) =>
