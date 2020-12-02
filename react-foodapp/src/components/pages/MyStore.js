@@ -47,7 +47,10 @@ export default function MyStore() {
         setImage()
         setFeature()
         setCategory()
-        setSelectId(itemId)
+        if(itemId !== 'null'){
+            setSelectId(itemId)
+        }
+        
     }
 
     const editActive = () =>{
@@ -76,8 +79,8 @@ export default function MyStore() {
             
             content = 
             
-            <div className='flex h-screen'>
-                <div className='w-1/6 h-full p-5'>
+            <div className='grid grid-cols-1 lg:flex lg:grid-cols-none h-screen'>
+                <div className='lg:w-2/6 xl:w-1/6 h-full p-5'>
                     <div className='p-2 grid grid-cols-1 gap-3 text-center border-gray-500 border rounded'>
                         <p className='font-bold text-md'>My Products</p>
 
@@ -91,14 +94,15 @@ export default function MyStore() {
                             
                         </select>
 
-
-                        {productList.data.map((product, index) =>
-                        <div key={index}>
-                            <button onClick={() => { selectedItem(product._id) }} className='border rounded w-full hover:shadow hover:border-gray-500 duration-200 focus:outline-none'>
-                                {productSelected.data.foodName === product.foodName ? <p className='bg-blue-500 rounded'>{product.foodName}</p> : <p className='rounded'>{product.foodName}</p>}
-                            </button>
-                        </div>
-                        )}
+                        <select className='border border-black rounded mb-5 bg-gray-300 focus:outline-none' value={selectedId} onChange={e => selectedItem(e.target.value)}>
+                            <option value='null'>--Default---</option>
+                            {productList.data.map((product, index) =>
+                            <option key={index} value={product._id}>
+                                {product.foodName}
+                            </option>
+                            )}
+                        </select>
+                        
                     </div>
                 </div>
                 
@@ -109,9 +113,9 @@ export default function MyStore() {
                             <img src={productSelected.data.image} className='w-4/6 h-64 object-cover mt-5' alt={productSelected.data.foodName}/>
                         </div>
                         <div className='flex justify-center'>
-                            <div className='grid grid-cols-2 gap-5 mt-5 mx-5 w-full'>
+                            <div className='grid sm:grid-cols-2 grid-cols-1 gap-5 mt-5 mx-5 w-full'>
                                 {productSelected.data.feature ? 
-                                    <div className='border p-5 border-gray-400 rounded inline-flex gap-5 justify-around'>
+                                    <div className='grid grid-cols-1 border p-5 border-gray-400 rounded lg:inline-flex gap-5 justify-around'>
                                         <button className='w-full border border-gray-500 rounded hover:shadow-md hover:border-gray-600 duration-200 focus:outline-none' onClick={editActive}>
                                             <p className='text-gray-500'>Item Featured Status</p>
                                             <p>Active</p>
@@ -126,7 +130,7 @@ export default function MyStore() {
                                             </div>
                                         }
                                     </div> : 
-                                    <div className='border p-5 border-gray-400 rounded inline-flex gap-5 justify-around'>
+                                    <div className='grid grid-cols-1 border p-5 border-gray-400 rounded lg:inline-flex gap-5 justify-around'>
                                         <button className='w-full border border-gray-500 rounded hover:shadow-md hover:border-gray-600 duration-200 focus:outline-none' onClick={editActive}>
                                             <p className='text-gray-500'>Item Featured Status</p>
                                             <p>Not Active</p>
@@ -142,7 +146,7 @@ export default function MyStore() {
                                         }
                                     </div>
                                 }
-                                <div className='border p-5 border-gray-400 rounded inline-flex gap-5 justify-around'>
+                                <div className='grid grid-cols-1 border p-5 border-gray-400 rounded lg:inline-flex gap-5 justify-around'>
                                     <button className='w-full border border-gray-500 rounded hover:shadow-md hover:border-gray-600 duration-200 focus:outline-none' onClick={editActive}>
                                         <p className='text-gray-500'>Item Category</p>
                                         <p>{productSelected.data.category}</p>
@@ -169,7 +173,7 @@ export default function MyStore() {
                                         </div>
                                     }
                                 </div>
-                                <div className='border p-5 border-gray-400 rounded inline-flex gap-5 justify-around'>
+                                <div className='grid grid-cols-1 border p-5 border-gray-400 rounded lg:inline-flex gap-5 justify-around'>
                                     <button className='w-full border border-gray-500 rounded hover:shadow-md hover:border-gray-600 duration-200 focus:outline-none'  onClick={editActive}>
                                         <p className='text-gray-500'>Item Name</p>
                                         <p>{productSelected.data.foodName}</p>
@@ -182,7 +186,7 @@ export default function MyStore() {
                                     }
                                 </div>
                                 
-                                <div className='border p-5 border-gray-400 rounded inline-flex gap-5 justify-around'>
+                                <div className='grid grid-cols-1 border p-5 border-gray-400 rounded lg:inline-flex gap-5 justify-around'>
                                     <button className='w-full border border-gray-500 rounded hover:shadow-md hover:border-gray-600 duration-200 focus:outline-none'  onClick={editActive}>
                                         <p className='text-gray-500'>Item Price</p>
                                         {productSelected.data.price ? <p>${productSelected.data.price}</p> : <p></p>}
@@ -195,7 +199,7 @@ export default function MyStore() {
                                     }
                                 </div>
                                 
-                                <div className='border p-5 border-gray-400 rounded inline-flex gap-5 justify-around'>
+                                <div className='grid grid-cols-1 border p-5 border-gray-400 rounded lg:inline-flex gap-5 justify-around'>
                                     <button className='w-full border border-gray-500 rounded hover:shadow-md hover:border-gray-600 duration-200 focus:outline-none'  onClick={editActive}>
                                         <p className='text-gray-500'>Item Description</p>
                                         <p>{productSelected.data.desc}</p>
@@ -208,7 +212,7 @@ export default function MyStore() {
                                     }
                                 </div>
 
-                                <div className='border p-5 border-gray-400 rounded inline-flex gap-5 justify-around'>
+                                <div className='grid grid-cols-1 border p-5 border-gray-400 rounded lg:inline-flex gap-5 justify-around'>
                                     <button className='w-full border border-gray-500 rounded hover:shadow-md hover:border-gray-600 duration-200 focus:outline-none'  onClick={editActive}>
                                         <p className='text-gray-500'>Item Image</p>
                                         <div className='flex w-full justify-center'>
@@ -229,7 +233,7 @@ export default function MyStore() {
                             
                         </div>
                         <form className='w-full flex justify-center m-5' onSubmit={()=>submit(productSelected.data._id)}>
-                            <input className='mt-2 hover:bg-blue-700 text-white rounded p-2 bg-blue-600 w-1/6' type='submit' value='Update Item'/>
+                            <input className='mt-2 hover:bg-blue-700 text-white rounded p-2 bg-blue-600 sm:w-1/6' type='submit' value='Update Item'/>
                         </form>                        
                     </div>
                 </div>
