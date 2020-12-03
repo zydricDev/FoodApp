@@ -3,6 +3,7 @@ import { useAxiosGet } from '../../Hooks/HttpRequest'
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
+import Loader from '../misc/Loader'
 
 export default function Items(linkProp) {
     const [url, setUrl] = useState()
@@ -17,13 +18,9 @@ export default function Items(linkProp) {
 
     let availablePages = undefined
 
-
-
     useEffect(() => {
-
         setUrl(updatedLink + `?page=${page}`)
         
-
     }, [page, updatedLink])
 
 
@@ -40,7 +37,7 @@ export default function Items(linkProp) {
 
 
     if (restaurantList.error) {
-        content = <p>There was an error</p>
+        content = <Loader></Loader>
     }
 
     try {
@@ -73,7 +70,6 @@ export default function Items(linkProp) {
                                         <div className='flex sm:w-full'>
                                             <p className='mt-5 font-medium'>${item.price}</p>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -138,7 +134,7 @@ export default function Items(linkProp) {
 
         }
     } catch (err) {
-        content = <p>Register PLZ</p>
+        content = <Loader></Loader>
     }
 
     return (

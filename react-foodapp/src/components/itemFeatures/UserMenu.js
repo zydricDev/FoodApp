@@ -3,23 +3,24 @@ import { useAxiosGet } from '../../Hooks/HttpRequest'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMedal } from '@fortawesome/free-solid-svg-icons'
 import domain from '../../domain'
+import Loader from '../misc/Loader'
 
 export default function UserMenu(ownerId) {
     const owner = ownerId.propUrl
     const [url, setUrl] = useState()
 
     let content = undefined
-    
+
     useEffect(() => {
         setUrl(`${domain}/food/display/user/${owner}`)
-       
+
     }, [url, owner])
 
     const userMenus = useAxiosGet(url)
     const categoryList = useAxiosGet(`${domain}/category/display`)
 
-    if (userMenus.error) {
-        content = <p>There was an error</p>
+    if (userMenus.error || !categoryList.data) {
+        content = <Loader></Loader>
     }
 
     if (userMenus.data && categoryList.data) {
@@ -31,23 +32,23 @@ export default function UserMenu(ownerId) {
                         <p className='text-2xl font-bold pl-5'>Top Menus</p>
                         <FontAwesomeIcon icon={faMedal} className='text-2xl text-yellow-500 ml-2' />
                     </div>
-                    
+
                     <div className='grid grid-cols-2 p-5 gap-5'>
-                    {userMenus.data
-                        .filter(item => item.feature)
-                        .map((item, index) =>
-                            <div key={index} className='border flex justify-between relative transition duration-500 hover:shadow-md hover:border-gray-500 rounded relative'>
-                                <div className='p-2 absolute bottom-0'>
-                                    <div className='bg-gray-t-90 px-2 my-1 rounded'>
-                                        <p className='font-bold'>{item.foodName}</p>
-                                        <p className='font-bold'>${item.price}</p>
+                        {userMenus.data
+                            .filter(item => item.feature)
+                            .map((item, index) =>
+                                <div key={index} className='border flex justify-between relative transition duration-500 hover:shadow-md hover:border-gray-500 rounded relative'>
+                                    <div className='p-2 absolute bottom-0'>
+                                        <div className='bg-gray-t-90 px-2 my-1 rounded'>
+                                            <p className='font-bold'>{item.foodName}</p>
+                                            <p className='font-bold'>${item.price}</p>
+                                        </div>
+
                                     </div>
-                                    
+
+                                    <img className='object-cover w-full h-40' src={item.image} alt={item.foodName} />
                                 </div>
-                                
-                                <img className='object-cover w-full h-40' src={item.image} alt={item.foodName} />
-                            </div>
-                        )}
+                            )}
                     </div>
 
                     {categoryList.data.map((menuType, listIndex) =>

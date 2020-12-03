@@ -10,6 +10,11 @@ export default function Register() {
     const [password, setPassword] = useState()
     const [passwordCheck, setPasswordCheck] = useState()
     const [displayName, setDisplayName] = useState()
+    const [icon, setIcon] = useState()
+    const [address, setAddress] = useState()
+    const [zipcode, setZipcode] = useState()
+    const [phone, setPhone] = useState()
+
     const [error, setError] = useState()
 
     
@@ -20,7 +25,7 @@ export default function Register() {
     const submit = async (e) =>{
         e.preventDefault()
         try{
-            const newUser = {email, password, passwordCheck, displayName}
+            const newUser = {email, password, passwordCheck, displayName, icon, address, zipcode, phone}
             
             await Axios.post(`${domain}/users/register`, newUser)
 
@@ -66,8 +71,28 @@ export default function Register() {
                             </div>
                             
                             <div className='mb-5 grid'>
-                                <label className='text-gray-500'>Display Name</label>
+                                <label className='text-gray-500'>Display Name (optional)</label>
                                 <input className='border-black rounded p-2 border-2 border-gray-400' type='text' onChange={e => setDisplayName(e.target.value)}/>
+                            </div>
+
+                            <div className='mb-5 grid'>
+                                <label className='text-gray-500'>Icon url (optional)</label>
+                                <input className='border-black rounded p-2 border-2 border-gray-400' type='text' onChange={e => setIcon(e.target.value)}/>
+                            </div>
+
+                            <div className='mb-5 grid'>
+                                <label className='text-gray-500'>Address (optional)</label>
+                                <input className='border-black rounded p-2 border-2 border-gray-400' type='text' onChange={e => setAddress(e.target.value)}/>
+                            </div>
+
+                            <div className='mb-5 grid'>
+                                <label className='text-gray-500'>Zip Code (5-digits)</label>
+                                <input className='border-black rounded p-2 border-2 border-gray-400' type='number' onChange={e => setZipcode(e.target.value)}/>
+                            </div>
+
+                            <div className='mb-5 grid'>
+                                <label className='text-gray-500'>Phone number (optional)</label>
+                                <input className='border-black rounded p-2 border-2 border-gray-400' type='number' onChange={e => setPhone(e.target.value)}/>
                             </div>
                             <input className='xl:text-xl hover:bg-blue-700 text-white w-full rounded p-2 bg-blue-600 cursor-pointer' type='submit' value='Register'/>
                         </div>

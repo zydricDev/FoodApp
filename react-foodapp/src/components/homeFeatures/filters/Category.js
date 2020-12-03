@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes, faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons'
 import Items from '../../homeFeatures/Items'
 import domain from '../../../domain'
-
+import Loader from '../../misc/Loader'
 
 
 export default function Category() {
@@ -27,10 +27,8 @@ export default function Category() {
 
 
     if (sliderList.error) {
-        content = <p>There was an error</p>
+        content = <Loader></Loader>
     }
-
-
 
     const clearAll = () => {
         filterFunction('null')
@@ -38,20 +36,16 @@ export default function Category() {
     }
 
     const filterFunction = (filterCategory) => {
-
         if (!filterCategory || (filterCategory === itemCategory)) {
             setCategory('null')
         } else {
             setCategory(filterCategory)
         }
-
-
     }
 
 
     try {
         if (sliderList.data) {
-
             menu =
                 <div className='w-full'>
                     {sliderList.data.map((menuType, index) =>
@@ -72,9 +66,8 @@ export default function Category() {
                     )}
                 </div>
         }
-
     } catch (err) {
-        console.log('An error has occurred')
+        <Loader></Loader>
     }
 
     content =
@@ -106,12 +99,9 @@ export default function Category() {
                                     <input type='checkbox' checked={featured} onChange={e => setFeatured(!featured)} className='h-5 w-5' />
                                     <span className='ml-3 text-md'>Featured</span>
                                 </div>
-
                             </div>
                         }
-
                     </div>
-
                 </div>
             </div>
 
@@ -162,6 +152,8 @@ export default function Category() {
 
             </div>
         </div>
+
+
     return (
         content
     )
