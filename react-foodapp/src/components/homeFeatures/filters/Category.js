@@ -8,8 +8,8 @@ import domain from '../../../domain'
 import Loader from '../../misc/Loader'
 
 
-export default function Category() {
-
+export default function Category(searchProps) {
+    const [search, setSearch] = useState()
     const [itemCategory, setCategory] = useState('null')
     const [featured, setFeatured] = useState(false)
     const [url, setUrl] = useState(`${domain}/food/display/${itemCategory}/${featured}`)
@@ -22,8 +22,12 @@ export default function Category() {
         if (itemCategory) {
             setUrl(`${domain}/food/display/${itemCategory}/${featured}`)
         }
+        if(searchProps.searched && searchProps.searched !== undefined){
+            setSearch(searchProps.searched)
+            setUrl(`${domain}/food/find/${search}`)
+        }
 
-    }, [url, itemCategory, featured])
+    }, [url, itemCategory, featured, search, searchProps])
 
 
     if (sliderList.error) {
