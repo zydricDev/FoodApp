@@ -87,12 +87,12 @@ export default function Register() {
 
                             <div className='mb-5 grid'>
                                 <label className='text-gray-500'>Zip Code (optional)</label>
-                                <input className='border-black rounded p-2 border-2 border-gray-400' type='text' onChange={e => setZipcode(e.target.value)}/>
+                                <input className='border-black rounded p-2 border-2 border-gray-400' type='number' onChange={e => setZipcode(e.target.value)}/>
                             </div>
 
                             <div className='mb-5 grid'>
                                 <label className='text-gray-500'>Phone number (optional)</label>
-                                <input className='border-black rounded p-2 border-2 border-gray-400' type='text' onChange={e => setPhone(e.target.value)}/>
+                                <input className='border-black rounded p-2 border-2 border-gray-400' type='number' onChange={e => setPhone(e.target.value)}/>
                             </div>
                             <input className='xl:text-xl hover:bg-blue-700 text-white w-full rounded p-2 bg-blue-600 cursor-pointer' type='submit' value='Register'/>
                         </div>

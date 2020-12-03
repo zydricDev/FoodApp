@@ -20,7 +20,9 @@ router.post('/register', async (req,res)=>{
         if(existingUser){
             return res.status(400).json({msg: "This E-mail is already taken"});
         }
-        
+        if(zipcode.length !== 5){
+            return res.status(400).json({msg: "Zip code must be 5-digits"});
+        }
 
 
         if(!displayName){
@@ -129,4 +131,16 @@ router.get('/', auth, async (req,res)=>{
     });
 })
 
+
+router.get('/find/:id', async(req,res)=>{
+    const user = await User.findById(req.params.id);
+    res.json({
+        displayName: user.displayName,
+        address: user.address,
+        icon: user.icon,
+        zipcode: user.zipcode,
+        phone: user.phone
+
+    })
+})
 module.exports = router;

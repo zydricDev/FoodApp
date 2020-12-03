@@ -1,8 +1,9 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import { useAxiosGet } from '../../Hooks/HttpRequest';
-import UserMenu from '../itemFeatures/UserMenu';
+import React from 'react'
+import { useParams } from 'react-router-dom'
+import { useAxiosGet } from '../../Hooks/HttpRequest'
+import UserMenu from '../itemFeatures/UserMenu'
 import domain from '../../domain'
+import UserInfo from '../itemFeatures/UserInfo'
 
 export default function FoodItem() {
     const { id } = useParams()
@@ -17,7 +18,7 @@ export default function FoodItem() {
     if (product.data) {
         content =
             <div className="p-10 lg:mx-40">
-                <div className='border border-gray-400 sm:flex sm:p-10 p-5 rounded'>
+                <div className='border border-gray-400 sm:flex sm:p-10 p-5 rounded shadow-sm'>
                     <div className="flex-col w-full mr-5">
                         <div className='h-full sm:p-5 p-2'>
                             <div className='flex border w-full items-center justify-between px-5 py-1'>
@@ -34,6 +35,7 @@ export default function FoodItem() {
                     <img src={product.data.image} alt={product.data.foodName} className="object-cover box-content sm:w-1/2 sm:h-64" />
                 </div>
                 <UserMenu propUrl={product.data.userId}/>
+                <UserInfo />
             </div>
     }
 
