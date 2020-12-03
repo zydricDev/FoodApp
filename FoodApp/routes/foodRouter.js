@@ -196,6 +196,19 @@ router.get('/:id', async(req,res)=>{
     }
 })
 
+router.get('/find/:item', async(req,res) =>{
+    try{
+        
+        const searchedItem = await Food.find({
+            $text: {
+                $search: req.params.item
+            }
+        })
+        res.json(searchedItem)
 
+    }catch(err){
+        res.status(500).json({error: err.message});
+    }
+})
 
 module.exports = router;

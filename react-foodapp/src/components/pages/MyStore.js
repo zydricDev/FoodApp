@@ -232,7 +232,7 @@ export default function MyStore() {
                             </div>
                             
                         </div>
-                        <form className='w-full flex justify-center m-5' onSubmit={()=>submit(productSelected.data._id)}>
+                        <form className='w-full flex justify-center my-5' onSubmit={()=>submit(productSelected.data._id)}>
                             <input className='mt-2 hover:bg-blue-700 text-white rounded p-2 bg-blue-600 sm:w-1/6' type='submit' value='Update Item'/>
                         </form>                        
                     </div>

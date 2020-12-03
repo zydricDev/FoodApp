@@ -12,5 +12,6 @@ const foodSchema = new mongoose.Schema({
     feature: {type: Boolean},
     
 });
+foodSchema.index({ foodName: 'text', userDisplayName: 'text', category: 'text' })
 
 module.exports = Food = mongoose.model('foods', foodSchema);
