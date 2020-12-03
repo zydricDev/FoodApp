@@ -48,21 +48,24 @@ export default function Header() {
 
     if (location.pathname !== '/Landing') {
         content =
-            <header className='flex justify-between border-b shadow-sm'>
-                <div className='flex'>
-                    <Link to='/'>
-                        <h1 className='w-full sm:text-4xl py-5 text-red-500 hover:text-red-600 font-bold ml-5'>A FOOD APP</h1>
-                    </Link>
-                    <LoggedInOptions />
+        
+            <header className='w-full h-20 sm:h-full overflow-x-hidden'>
+                <div className='justify-between flex w-full'>
+                    <div className='sm:flex w-4/6'>
+                        <Link to='/'>
+                            <h1 className='md:text-xl lg:text-3xl py-5 text-red-500 hover:text-red-600 font-bold ml-5 w-full'>A FOOD APP</h1>
+                        </Link>
+                        {windowWidth > windowLimit && <LoggedInOptions />}
+                    </div>
+                    <div className='sm:flex w-1/6 '>
+                        {windowWidth > windowLimit ? <AuthOptions /> :
+                            <button className='py-5 focus:outline-none' onClick={() => { setShowMenu(true) }}>
+                                <FontAwesomeIcon icon={faBars} className='text-3xl' />
+                            </button>
+                        }
+                    </div>
                 </div>
-                <div className='flex'>
-                    {windowWidth > windowLimit ? <AuthOptions /> :
-                        <button className='py-5 mr-5 focus:outline-none' onClick={() => { setShowMenu(true) }}>
-                            <FontAwesomeIcon icon={faBars} className='text-3xl' />
-                        </button>
-                    }
-                </div>
-
+                    
                 {maskTransitions.map(({ item, key, props }) =>
                     item &&
                     <animated.div
@@ -93,7 +96,10 @@ export default function Header() {
     }
 
     return (
-        content
+        <div className='border-b shadow-md'>
+            {content}
+        </div>
+        
     )
 }
 

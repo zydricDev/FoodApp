@@ -125,7 +125,7 @@ export default function Category() {
                 </div>
 
 
-                <div className='flex w-full border-b justify-between'>
+                <div className='grid grid-cols-1 px-3 sm:p-0 sm:flex w-full border-b justify-between'>
                     <div className='p-5 sm:inline-flex gap-3 grid grid-cols-1'>
                         {itemCategory !== 'null' && (
                             <div className='bg-blue-400 py-2 px-4 rounded font-medium hover:bg-blue-300'>
