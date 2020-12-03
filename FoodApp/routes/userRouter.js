@@ -23,8 +23,7 @@ router.post('/register', async (req,res)=>{
         if(zipcode.length !== 5){
             return res.status(400).json({msg: "Zip code must be 5-digits"});
         }
-
-
+        
         if(!displayName){
             displayName = email;
         }

@@ -86,7 +86,7 @@ export default function Register() {
                             </div>
 
                             <div className='mb-5 grid'>
-                                <label className='text-gray-500'>Zip Code (optional)</label>
+                                <label className='text-gray-500'>Zip Code (5-digits)</label>
                                 <input className='border-black rounded p-2 border-2 border-gray-400' type='number' onChange={e => setZipcode(e.target.value)}/>
                             </div>
 
