@@ -6,7 +6,7 @@ const auth = require('../middleware/auth');
 
 router.post('/register', async (req,res)=>{
     try{
-        let {email, password, passwordCheck, displayName} = req.body;
+        let {email, password, passwordCheck, displayName, icon, address, zipcode, phone} = req.body;
         if(!email || !password || !passwordCheck){
             return res.status(400).json({msg: "Not all field have been entered"});
         }
@@ -20,15 +20,37 @@ router.post('/register', async (req,res)=>{
         if(existingUser){
             return res.status(400).json({msg: "This E-mail is already taken"});
         }
+        
+
+
         if(!displayName){
             displayName = email;
         }
+        if(!icon){
+            icon = 'https://semantic-ui.com/images/wireframe/image.png'
+        }
+        if(!address){
+            address = 'n/a'
+        }
+        if(!zipcode){
+            zipcode = 'n/a'
+        }
+        if(!phone){
+            phone = 'n/a'
+        }
+        
+
+
         const salt = await bcrypt.genSalt();
         const hashedPass = await bcrypt.hash(password, salt);
         const newUser = new User({
             email,
             password: hashedPass,
-            displayName
+            displayName,
+            icon, 
+            address, 
+            zipcode, 
+            phone
         });
         const savedUser = await newUser.save();
         res.json(savedUser);
