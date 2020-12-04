@@ -43,7 +43,7 @@ export default function RegisterFood() {
                 })
             }
 
-            history.push('/')
+            history.push('/home')
         } catch (err) {
             
             err.response.data.msg && setError(err.response.data.msg)

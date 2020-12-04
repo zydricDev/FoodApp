@@ -122,6 +122,57 @@ router.post('/tokenIsValid', async (req,res)=>{
     }
 });
 
+
+router.patch('/edit/:id', auth, async (req,res)=>{
+    try{
+        let {displayName, icon, address, zipcode, phone} = req.body;
+        
+
+        if(zipcode && zipcode.length !== 5){
+            return res.status(400).json({msg: "Zip code must have 5-digits"});
+        }
+
+        if(phone && phone.length !== 10){
+            return res.status(400).json({msg: "Phone must have 10-digits"});
+        }
+
+        const user = await User.findById(req.params.id)
+        if(!displayName){
+            displayName = user.displayName
+        }
+        if(!icon){
+            icon = user.icon
+        }
+        if(!address){
+            address = user.address
+        }
+        if(!zipcode){
+            zipcode = user.zipcode
+        }
+        if(!phone){
+            phone = user.phone
+        }
+        
+        await user.updateOne({ 
+            displayName: displayName,
+            icon: icon,
+            address: address,
+            zipcode: zipcode,
+            phone: phone,
+        })
+        res.json({
+            displayName: user.displayName,
+            icon: user.icon,
+            address: user.address,
+            zipcode: user.zipcode,
+            phone: user.phone 
+        })
+
+    }catch(err){
+        res.status(500).json({error: err.message});
+    }
+})
+
 router.get('/', auth, async (req,res)=>{
     const user = await User.findById(req.user);
     res.json({

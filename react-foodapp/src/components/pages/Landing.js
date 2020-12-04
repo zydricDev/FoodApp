@@ -1,13 +1,18 @@
-import React, {useState} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import {Link, useHistory} from 'react-router-dom'
-
+import UserContext from '../../context/UserContext'
 
 
 export default function Landing() {
     const history = useHistory()
-    
+    const userData = useContext(UserContext)
     const [search, setSearch] = useState()
-    
+    const [route, setRoute] = useState('/login')
+    useEffect(() => {
+        if(userData.userData.user){
+            setRoute('/home')
+        }
+    }, [userData])
 
     const submit = (item) =>{
         history.push({ 
@@ -28,7 +33,7 @@ export default function Landing() {
                         <div className='flex justify-end'>
                             <div className='flex px-10 pt-10 pb-40 font-bold text-2xl'>
                                 <p>Get Perks</p>
-                                <Link to='/login'>
+                                <Link to={route}>
                                     <p className='ml-5 hover:text-blue-900'>Sign in</p>
                                 </Link>
                             </div>

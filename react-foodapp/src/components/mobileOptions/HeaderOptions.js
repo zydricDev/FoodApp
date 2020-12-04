@@ -8,6 +8,7 @@ export default function HeaderOptions() {
 
     const foodRegister = () => history.push('/food/register')
     const myStore = () => history.push('/food/myStore')
+    const editUsr = () => history.push('/user/edit')
 
     const logout = () => {
         
@@ -22,11 +23,16 @@ export default function HeaderOptions() {
         <>
             <p className='text-3xl font-bold text-red-500 p-5'>Food app</p>
             
+            <button className='text-left border-b border-gray-300 w-full bg-white py-2 hover:bg-blue-300 duration-200 text-xl' onClick={myStore}>
+                <p className='ml-5'>My Shop</p>
+            </button>
+
             <button className='text-left border-b border-gray-300 w-full bg-white py-2 hover:bg-blue-300 duration-200 text-xl' onClick={foodRegister}>
                 <p className='ml-5'>Add Food</p>
             </button>
-            <button className='text-left border-b border-gray-300 w-full bg-white py-2 hover:bg-blue-300 duration-200 text-xl' onClick={myStore}>
-                <p className='ml-5'>View My Shop</p>
+        
+            <button className='text-left border-b border-gray-300 w-full bg-white py-2 hover:bg-blue-300 duration-200 text-xl' onClick={editUsr}>
+                <p className='ml-5'>My Account</p>
             </button>
             
             {

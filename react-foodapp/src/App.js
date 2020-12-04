@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter, Switch, Route} from "react-router-dom"
 import Axios from 'axios'
+import domain from './domain'
 
 import Mainhub from './components/pages/Mainhub'
 import Login from './components/auth/Login'
@@ -12,8 +13,10 @@ import RegisterFood from './components/pages/RegisterFood'
 import DeleteMe from './components/pages/DeleteMe'
 import MyStore from './components/pages/MyStore'
 import Landing from './components/pages/Landing'
+import UserEdit from './components/pages/UserEdit'
 
-import domain from './domain'
+
+
 
 
 
@@ -68,6 +71,7 @@ export default function App() {
                     <Route path='/food/myStore' component={MyStore} />
                     <Route path='/food/:id' component={FoodItem} />
                     <Route path='/user/delete' component={DeleteMe} />
+                    <Route path='/user/edit' component={UserEdit} />
                 </Switch>
             </UserContext.Provider>
         </BrowserRouter>
