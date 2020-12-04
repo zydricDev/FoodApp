@@ -83,8 +83,6 @@ router.get('/display/user/:id', async(req,res)=>{
     }
 })
 
-
-
 router.get('/display/all', paginateThis(Food), async (req, res) => {
     res.json(res.paginateThis)
 })

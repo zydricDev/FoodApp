@@ -1,11 +1,20 @@
 import React, {useState} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 
 
 
 export default function Landing() {
+    const history = useHistory()
+    
     const [search, setSearch] = useState()
     
+
+    const submit = (item) =>{
+        history.push({ 
+            pathname: '/home',
+            state: item
+        });
+    }
     return (
         <div>
             <div className='lg:flex'>
@@ -36,12 +45,12 @@ export default function Landing() {
                         <div className='md:flex p-10 justify-center'>
                             
                             <input className='w-full sm:mb-3 md:mb-0 md:w-5/6 focus:outline-none p-3 mb-3 border-2 border-gray-500 rounded' 
-                                placeholder='Enter street address or zip code' 
+                                placeholder='Enter Food or Shop' 
                                 type='search'
                                 onChange={e => setSearch(e.target.value)} 
                             />
 
-                            <p className='md:w-1/6 md:ml-5 text-center p-3 bg-blue-500 hover:bg-blue-900 rounded text-white font-bold'>Find Food</p>
+                            <button className='md:w-1/6 md:ml-5 text-center p-3 bg-blue-500 hover:bg-blue-700 rounded text-white font-bold focus:outline-none' onClick={()=>submit(search)}>Search</button>
 
                         </div>
 

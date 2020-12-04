@@ -60,8 +60,8 @@ export default function App() {
                 <Header />
                 <Switch>
                     
-                    <Route path='/landing' component={Landing} />
-                    <Route exact path='/' component={Mainhub} />
+                    <Route exact path='/' component={Landing} />
+                    <Route path='/home' component={Mainhub} />
                     <Route path='/login' component={Login} />
                     <Route path='/register' component={Register} />
                     <Route path='/food/register' component={RegisterFood} />
