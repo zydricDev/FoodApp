@@ -46,16 +46,21 @@ export default function Header() {
         leave: { opacity: 0 },
     })
 
-    if (location.pathname !== '/Landing') {
+    if (location.pathname !== '/') {
         content =
         
             <header className='w-full h-20 sm:h-full overflow-x-hidden'>
                 <div className='justify-between flex w-full'>
-                    <div className='sm:flex w-4/6'>
-                        <Link to='/'>
-                            <h1 className='md:text-xl lg:text-3xl py-5 text-red-500 hover:text-red-600 font-bold ml-5 w-full'>A FOOD APP</h1>
-                        </Link>
-                        {windowWidth > windowLimit && <LoggedInOptions />}
+                    <div className='sm:flex w-full'>
+                        <div className='flex w-2/6'>
+                            <Link to='/home'>
+                                <h1 className='md:text-xl lg:text-3xl py-5 text-red-500 hover:text-red-600 font-bold ml-5 w-full'>Food App</h1>
+                            </Link>
+                        </div>
+                        <div className='flex w-4/6'>
+                            {windowWidth > windowLimit && <LoggedInOptions />}
+                        </div>
+                        
                     </div>
                     <div className='sm:flex w-1/6 '>
                         {windowWidth > windowLimit ? <AuthOptions /> :

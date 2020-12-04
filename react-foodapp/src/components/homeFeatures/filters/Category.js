@@ -31,6 +31,7 @@ export default function Category(searchProps) {
     const clearAll = () => {
         filterFunction('null')
         setFeatured(false)
+        
     }
     
     const filterFunction = (filterCategory) => {

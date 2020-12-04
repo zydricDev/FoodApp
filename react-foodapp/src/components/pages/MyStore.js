@@ -63,7 +63,9 @@ export default function MyStore() {
         if (productList.data && productSelected) {
             try {
                 const newFood = { newName, newPrice, newDesc, newImage, newFeature, newCategory }
-                await Axios.patch(`http://${domain}/food/edit/${item}`, newFood)
+                await Axios.patch(`http://${domain}/food/edit/${item}`, newFood, {
+                    headers: { "auth-token": localStorage.getItem('auth-token') }
+                })
             } catch (err) {
                 err.response.data.msg && setError(err.response.data.msg)
             }

@@ -83,16 +83,13 @@ router.get('/display/user/:id', async(req,res)=>{
     }
 })
 
-
-
 router.get('/display/all', paginateThis(Food), async (req, res) => {
     res.json(res.paginateThis)
 })
 
-router.patch('/edit/:id', async(req,res)=>{
+router.patch('/edit/:id', auth, async(req,res)=>{
     try{
         let {newName, newPrice, newDesc, newImage, newFeature, newCategory} = req.body;
-        
         
         const food = await Food.findById(req.params.id)
         if(!newName){
@@ -135,6 +132,19 @@ router.patch('/edit/:id', async(req,res)=>{
         res.status(500).json({error: err.message});
     }
     
+})
+
+router.patch('/edit/user/:id', auth, async(req,res)=>{
+    try{
+        let {displayName} = req.body;
+        const food = Food.find({userId: req.params.id})
+        await food.updateOne({ 
+            userDisplayName: displayName
+        })
+        res.json({msg: "Updated All Items"})
+    }catch(err){
+        res.status(500).json({error: err.message});  
+    }
 })
 
 router.get('/find/:item', async(req,res) =>{
