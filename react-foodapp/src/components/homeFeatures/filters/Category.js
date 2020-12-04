@@ -10,41 +10,29 @@ import Loader from '../../misc/Loader'
 
 export default function Category(searchProps) {
     const [search, setSearch] = useState()
-    //changing features
     const [itemCategory, setCategory] = useState('null')
     const [featured, setFeatured] = useState(false)
-
-    //changing url
-    const [url, setUrl] = useState(`${domain}/food/display/${itemCategory}/${featured}`)
     const [activeFeature, setActiveFeature] = useState(false)
+    const [sort, setSort] = useState('Default')
 
     const sliderList = useAxiosGet(`${domain}/category/display`)
-    let menu = undefined
-    let content = undefined
+    let menu = <Loader></Loader>
+    let content = <Loader></Loader>
 
-    //changing url
     useEffect(() => {
-        if (itemCategory) {
-            setUrl(`${domain}/food/display/${itemCategory}/${featured}`)
-        }
-        if(searchProps.searched && searchProps.searched !== undefined){
-            setSearch(searchProps.searched)
-            setUrl(`${domain}/food/find/${search}`)
-        }
-
-    }, [url, itemCategory, featured, search, searchProps])
-
-
+        setSearch(searchProps.searched)
+    }, [searchProps, search])
+    
     if (sliderList.error) {
         content = <Loader></Loader>
     }
 
-    //changing this
+    
     const clearAll = () => {
         filterFunction('null')
         setFeatured(false)
     }
-    //changing this
+    
     const filterFunction = (filterCategory) => {
         if (!filterCategory || (filterCategory === itemCategory)) {
             setCategory('null')
@@ -148,20 +136,23 @@ export default function Category(searchProps) {
                     <div className='flex  py-5 pr-5'>
                         <div>
                             <p className='inline-block'>Sort:</p>
-                            <select className='border rounded border-gray-500 inline-block p-2 ml-3'>
-                                <option value='default'>Default</option>
-                                <option value='rating'>Rating</option>
-                                <option value='distance'>Distance</option>
-                                <option value='delivery fee'>Delivery Fee</option>
+                            <select className='border rounded border-gray-500 inline-block p-2 ml-3' value={sort} onChange={e => { setSort(e.target.value) }}>
+                                <option value='Default'>Default</option>
+                                <option value='Price'>Price</option>
+                                <option value='Rating'>Rating</option>
+                                <option value='Distance'>Distance</option>
+                                <option value='Delivery Fee'>Delivery Fee</option>
                             </select>
                         </div>
                     </div>
                 </div>
                         
                 <Items 
-                    filteredLink={`${domain}/food/display/all`} 
+                    filteredLink={`${domain}/food/display/all`}
+                    searchFor={search} 
                     categoryFilter={itemCategory} 
                     feature={featured}
+                    sortBy={sort}
                 />
 
             </div>

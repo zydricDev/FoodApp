@@ -4,25 +4,30 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
 import Loader from '../misc/Loader'
-
+import domain from '../../domain'
 
 export default function Items(superProps) {
     const [url, setUrl] = useState()
     const [page, setPage] = useState(1)
     
-    
-
     const updatedLink = useRef(superProps.filteredLink)
+    const querySearch = superProps.searchFor
+
     const category = superProps.categoryFilter
     const feature = superProps.feature
+    const sort = superProps.sortBy
 
 
     let restaurantList = useAxiosGet(url)
+    
+
     let nextPage = undefined
     let prevPage = undefined
-    let content = undefined
+    let content = <Loader></Loader>
     let availablePages = undefined
     
+    
+
     const filtered = (item) =>{
         if(category !== 'null' && category){
             if(item.category !== category){
@@ -36,11 +41,19 @@ export default function Items(superProps) {
         }
         return item
     }
+    const sorted = (a, b) =>{
+        if(sort === 'Price'){
+            return parseInt(a.price) - parseInt(b.price)
+        }
+        return
+    }
 
     useEffect(() => {
         setUrl(updatedLink.current + `?page=${page}`)
-        
-    }, [page])
+        if(querySearch){
+            setUrl(`${domain}/food/find/${querySearch}?page=${page}`)
+        }
+    }, [page, querySearch])
 
     
     const clickNext = () => {
@@ -70,6 +83,7 @@ export default function Items(superProps) {
                     <div className="flex-col w-full">
                         {restaurantList.data.result
                         .filter(filtered)
+                        .sort(sorted)
                         .map(item =>
                             <div key={item._id} className="flex w-full border-b border-gray-300">
                                 <Link to={`/food/${item._id}`}>
