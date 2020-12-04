@@ -4,6 +4,8 @@ const auth = require('../middleware/auth');
 const paginate = require('../middleware/paginate');
 const filter = require('../middleware/filter');
 const { query } = require('express');
+const paginateThis = require('../middleware/paginateThis')
+
 
 router.post('/register', auth, async (req,res)=>{
     try{
@@ -72,12 +74,9 @@ router.delete('/delete/:id', auth, async (req,res)=>{
     }
 })
 
-
-
 router.get('/display/user/:id', async(req,res)=>{
     try{
         const displayAll = await Food.find({userId: req.params.id}).sort({feature: -1})
-        
         res.json(displayAll)
 
     }catch(err){
@@ -85,9 +84,20 @@ router.get('/display/user/:id', async(req,res)=>{
     }
 })
 
+
+
+
+//changing this
 router.get('/display/:category/:feature', filter(Food), async(req,res)=>{
     res.json(res.filter)
 })
+
+
+router.get('/display/all', paginateThis(Food), async (req, res) => {
+    res.json(res.paginateThis)
+})
+
+
 
 
 router.get('/display/:id', async(req,res)=>{
@@ -129,8 +139,6 @@ router.get('/display/:id', async(req,res)=>{
         res.status(500).json({error: err.message});
     }
 })
-
-
 
 router.patch('/edit/:id', async(req,res)=>{
     try{
@@ -180,6 +188,65 @@ router.patch('/edit/:id', async(req,res)=>{
     
 })
 
+router.get('/find/:item', async(req,res) =>{
+    try{
+        
+        const filtered = await Food.find({
+            $text: {
+                $search: req.params.item
+            }
+        })
+
+        let page = parseInt(req.query.page)
+        let limit = 9
+
+        const result = {}
+        const startIndex = (page - 1) * limit
+        const endIndex = (page * limit)
+
+        if (endIndex < filtered.length) {
+            result.next = {
+                page: page + 1,
+                limit: limit
+            }
+        }
+
+        if (startIndex > 0) {
+            result.previous = {
+                page: page - 1,
+                limit: limit
+            }
+        }
+
+        let pagesAhead = []
+        let pagesBefore = []
+
+        for (let i = 1; i <= 3; i++) {
+            if (startIndex + i * limit < filtered.length) {
+                pagesAhead.push(i + page)
+            }
+            if (startIndex - i * limit >= 0) {
+                pagesBefore.unshift(page - i)
+            }
+        }
+
+
+        result.possiblePages = {
+            ahead: pagesAhead,
+            before: pagesBefore,
+            current: page,
+            maxPage: Math.ceil(filtered.length / limit)
+        }
+
+
+        result.result = filtered.slice(startIndex, endIndex)
+        res.json(result)
+
+    }catch(err){
+        res.status(500).json({error: err.message});
+    }
+})
+
 router.get('/:id', async(req,res)=>{
     try{
         if(!req.params.id){
@@ -196,19 +263,5 @@ router.get('/:id', async(req,res)=>{
     }
 })
 
-router.get('/find/:item', async(req,res) =>{
-    try{
-        
-        const searchedItem = await Food.find({
-            $text: {
-                $search: req.params.item
-            }
-        })
-        res.json(searchedItem)
-
-    }catch(err){
-        res.status(500).json({error: err.message});
-    }
-})
 
 module.exports = router;

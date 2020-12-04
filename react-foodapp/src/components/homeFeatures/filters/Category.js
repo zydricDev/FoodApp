@@ -8,33 +8,43 @@ import domain from '../../../domain'
 import Loader from '../../misc/Loader'
 
 
-export default function Category() {
-
+export default function Category(searchProps) {
+    const [search, setSearch] = useState()
+    //changing features
     const [itemCategory, setCategory] = useState('null')
     const [featured, setFeatured] = useState(false)
+
+    //changing url
     const [url, setUrl] = useState(`${domain}/food/display/${itemCategory}/${featured}`)
     const [activeFeature, setActiveFeature] = useState(false)
 
     const sliderList = useAxiosGet(`${domain}/category/display`)
     let menu = undefined
     let content = undefined
+
+    //changing url
     useEffect(() => {
         if (itemCategory) {
             setUrl(`${domain}/food/display/${itemCategory}/${featured}`)
         }
+        if(searchProps.searched && searchProps.searched !== undefined){
+            setSearch(searchProps.searched)
+            setUrl(`${domain}/food/find/${search}`)
+        }
 
-    }, [url, itemCategory, featured])
+    }, [url, itemCategory, featured, search, searchProps])
 
 
     if (sliderList.error) {
         content = <Loader></Loader>
     }
 
+    //changing this
     const clearAll = () => {
         filterFunction('null')
         setFeatured(false)
     }
-
+    //changing this
     const filterFunction = (filterCategory) => {
         if (!filterCategory || (filterCategory === itemCategory)) {
             setCategory('null')
@@ -147,8 +157,12 @@ export default function Category() {
                         </div>
                     </div>
                 </div>
-
-                <Items filteredLink={url} />
+                        
+                <Items 
+                    filteredLink={`${domain}/food/display/all`} 
+                    categoryFilter={itemCategory} 
+                    feature={featured}
+                />
 
             </div>
         </div>
