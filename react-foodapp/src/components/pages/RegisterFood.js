@@ -100,7 +100,7 @@ export default function RegisterFood() {
                                     
                                     <option value='Japanese'>Japanese</option>
                                     <option value='Lunch'>Lunch</option>
-                                    <option value='Deserts'>Deserts</option>
+                                    <option value='Desserts'>Deserts</option>
                                     
                                     
                                 </select >

@@ -1,29 +1,48 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useAxiosGet } from '../../Hooks/HttpRequest'
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
 import Loader from '../misc/Loader'
 
-export default function Items(linkProp) {
+
+export default function Items(superProps) {
     const [url, setUrl] = useState()
     const [page, setPage] = useState(1)
+    
+    
 
-    const updatedLink = linkProp.filteredLink
+    const updatedLink = useRef(superProps.filteredLink)
+    const category = superProps.categoryFilter
+    const feature = superProps.feature
+
 
     let restaurantList = useAxiosGet(url)
     let nextPage = undefined
     let prevPage = undefined
     let content = undefined
-
     let availablePages = undefined
+    
+    const filtered = (item) =>{
+        if(category !== 'null' && category){
+            if(item.category !== category){
+                return
+            }
+        }
+        if(feature){
+            if(!item.feature){
+                return
+            }
+        }
+        return item
+    }
 
     useEffect(() => {
-        setUrl(updatedLink + `?page=${page}`)
+        setUrl(updatedLink.current + `?page=${page}`)
         
-    }, [page, updatedLink])
+    }, [page])
 
-
+    
     const clickNext = () => {
         if (nextPage) {
             setPage(page + 1)
@@ -49,7 +68,9 @@ export default function Items(linkProp) {
             content =
                 <div className='flex-col w-full'>
                     <div className="flex-col w-full">
-                        {restaurantList.data.result.map(item =>
+                        {restaurantList.data.result
+                        .filter(filtered)
+                        .map(item =>
                             <div key={item._id} className="flex w-full border-b border-gray-300">
                                 <Link to={`/food/${item._id}`}>
                                     <img src={item.image} alt={item.foodName} className="p-3 h-20 w-20 object-cover box-content" />

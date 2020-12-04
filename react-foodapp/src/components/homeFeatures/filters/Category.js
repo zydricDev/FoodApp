@@ -10,14 +10,19 @@ import Loader from '../../misc/Loader'
 
 export default function Category(searchProps) {
     const [search, setSearch] = useState()
+    //changing features
     const [itemCategory, setCategory] = useState('null')
     const [featured, setFeatured] = useState(false)
+
+    //changing url
     const [url, setUrl] = useState(`${domain}/food/display/${itemCategory}/${featured}`)
     const [activeFeature, setActiveFeature] = useState(false)
 
     const sliderList = useAxiosGet(`${domain}/category/display`)
     let menu = undefined
     let content = undefined
+
+    //changing url
     useEffect(() => {
         if (itemCategory) {
             setUrl(`${domain}/food/display/${itemCategory}/${featured}`)
@@ -34,11 +39,12 @@ export default function Category(searchProps) {
         content = <Loader></Loader>
     }
 
+    //changing this
     const clearAll = () => {
         filterFunction('null')
         setFeatured(false)
     }
-
+    //changing this
     const filterFunction = (filterCategory) => {
         if (!filterCategory || (filterCategory === itemCategory)) {
             setCategory('null')
@@ -151,8 +157,12 @@ export default function Category(searchProps) {
                         </div>
                     </div>
                 </div>
-
-                <Items filteredLink={url} />
+                        
+                <Items 
+                    filteredLink={`${domain}/food/display/all`} 
+                    categoryFilter={itemCategory} 
+                    feature={featured}
+                />
 
             </div>
         </div>

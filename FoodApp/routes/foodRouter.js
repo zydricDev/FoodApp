@@ -4,6 +4,8 @@ const auth = require('../middleware/auth');
 const paginate = require('../middleware/paginate');
 const filter = require('../middleware/filter');
 const { query } = require('express');
+const paginateThis = require('../middleware/paginateThis')
+
 
 router.post('/register', auth, async (req,res)=>{
     try{
@@ -72,12 +74,9 @@ router.delete('/delete/:id', auth, async (req,res)=>{
     }
 })
 
-
-
 router.get('/display/user/:id', async(req,res)=>{
     try{
         const displayAll = await Food.find({userId: req.params.id}).sort({feature: -1})
-        
         res.json(displayAll)
 
     }catch(err){
@@ -85,49 +84,20 @@ router.get('/display/user/:id', async(req,res)=>{
     }
 })
 
-router.get('/display', async(req,res)=>{
-    try{
-        let page = parseInt(req.query.page)
-        let limit = parseInt(req.query.limit)
-        if(!page){
-            page = 1
-        }
-        if(!limit){
-            limit = 9
-        }
-        const result = {}
-        const displayFood = await Food.find().sort({ feature: -1 })
 
-        const startIndex = (page - 1) * limit
-        const endIndex = (page * limit)
 
-        if(endIndex < displayFood.length){
-            result.next = {
-                page: page + 1,
-                limit: limit
-            }
-        }
-        
-        if(startIndex > 0){
-            result.previous = {
-                page: page - 1,
-                limit: limit
-            }
-        }
-        result.size = {
-            size: displayFood.length
-        }
-        result.result = displayFood.slice(startIndex, endIndex)
-        res.json(result)
 
-    }catch(err){
-        res.status(500).json({error: err.message});
-    }
-})
-
+//changing this
 router.get('/display/:category/:feature', filter(Food), async(req,res)=>{
     res.json(res.filter)
 })
+
+
+router.get('/display/all', paginateThis(Food), async (req, res) => {
+    res.json(res.paginateThis)
+})
+
+
 
 
 router.get('/display/:id', async(req,res)=>{
@@ -169,8 +139,6 @@ router.get('/display/:id', async(req,res)=>{
         res.status(500).json({error: err.message});
     }
 })
-
-
 
 router.patch('/edit/:id', async(req,res)=>{
     try{
@@ -218,22 +186,6 @@ router.patch('/edit/:id', async(req,res)=>{
         res.status(500).json({error: err.message});
     }
     
-})
-
-router.get('/:id', async(req,res)=>{
-    try{
-        if(!req.params.id){
-            return res.status(400).json({msg: "No id"})
-        }
-        if(req.params.id === 'undefined'){
-            return res.json()
-        }
-        const food = await Food.findById(req.params.id)
-        res.json(food)
-
-    }catch(err){
-        res.status(500).json({error: err.message});
-    }
 })
 
 router.get('/find/:item', async(req,res) =>{
@@ -294,5 +246,22 @@ router.get('/find/:item', async(req,res) =>{
         res.status(500).json({error: err.message});
     }
 })
+
+router.get('/:id', async(req,res)=>{
+    try{
+        if(!req.params.id){
+            return res.status(400).json({msg: "No id"})
+        }
+        if(req.params.id === 'undefined'){
+            return res.json()
+        }
+        const food = await Food.findById(req.params.id)
+        res.json(food)
+
+    }catch(err){
+        res.status(500).json({error: err.message});
+    }
+})
+
 
 module.exports = router;
