@@ -17,6 +17,9 @@ router.post('/register', async (req,res)=>{
         if(password !== passwordCheck){
             return res.status(400).json({msg: "Passwords needs to match"});
         }
+        if(address > 50){
+            return res.status(400).json({msg: "Address has reached character limit"});
+        }
         if(email){
             const valid = validFormat(email)
             if(!valid){
@@ -38,13 +41,13 @@ router.post('/register', async (req,res)=>{
             icon = 'https://semantic-ui.com/images/wireframe/image.png'
         }
         if(!address){
-            address = 'n/a'
+            address = 'Address was not set'
         }
         if(!zipcode){
-            zipcode = 'n/a'
+            zipcode = 'Zip was not set'
         }
         if(!phone){
-            phone = 'n/a'
+            phone = '0000000000'
         }
         
 
