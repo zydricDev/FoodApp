@@ -3,6 +3,7 @@ const User = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth');
+const validFormat = require('../checkEmail/validFormat');
 
 router.post('/register', async (req,res)=>{
     try{
@@ -16,9 +17,15 @@ router.post('/register', async (req,res)=>{
         if(password !== passwordCheck){
             return res.status(400).json({msg: "Passwords needs to match"});
         }
+        if(email){
+            const valid = validFormat(email)
+            if(!valid){
+                return res.status(400).json({msg: "This E-mail is not valid"});
+            }
+        }
         const existingUser = await User.findOne({email: email});
         if(existingUser){
-            return res.status(400).json({msg: "This E-mail is already taken"});
+            return res.status(400).json({msg: "This E-mail has already been taken"});
         }
         if(zipcode.length !== 5){
             return res.status(400).json({msg: "Zip code must be 5-digits"});
@@ -125,9 +132,18 @@ router.post('/tokenIsValid', async (req,res)=>{
 
 router.patch('/edit/:id', auth, async (req,res)=>{
     try{
-        let {displayName, icon, address, zipcode, phone} = req.body;
+        let {displayName, icon, address, zipcode, phone, email} = req.body;
+        if(email){
+            const valid = validFormat(email)
+            if(!valid){
+                return res.status(400).json({msg: "This E-mail is not valid"});
+            }
+        }
         
-
+        const existingUser = await User.findOne({email: email});
+        if(existingUser){
+            return res.status(400).json({msg: "This E-mail has already been taken"});
+        }
         if(zipcode && zipcode.length !== 5){
             return res.status(400).json({msg: "Zip code must have 5-digits"});
         }
@@ -152,15 +168,21 @@ router.patch('/edit/:id', auth, async (req,res)=>{
         if(!phone){
             phone = user.phone
         }
+        if(!email){
+            email = user.email
+        }
         
-        await user.updateOne({ 
+        await user.updateOne({
+            email: email, 
             displayName: displayName,
             icon: icon,
             address: address,
             zipcode: zipcode,
             phone: phone,
+            
         })
         res.json({
+            email: user.email,
             displayName: user.displayName,
             icon: user.icon,
             address: user.address,
@@ -185,6 +207,7 @@ router.get('/', auth, async (req,res)=>{
 router.get('/find/:id', async(req,res)=>{
     const user = await User.findById(req.params.id);
     res.json({
+        email: user.email,
         displayName: user.displayName,
         address: user.address,
         icon: user.icon,
