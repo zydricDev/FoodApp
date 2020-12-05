@@ -79,16 +79,16 @@ export default function UserEdit() {
 
                 <div className='flex w-full justify-center'>
 
-                    <div className='flex w-4/6 mt-10'>
-                        <div className='flex-col py-5 px-3 w-2/6'>
+                    <div className='sm:flex grid grid-cols-1 w-full mt-10 sm:w-4/6'>
+                        <div className='flex-col py-5 px-3 w-full sm:w-2/6'>
                             <button className='w-full' onClick={() => setAccDetails(!accDetails)}>
                                 {accDetails ? <p className='py-3 px-5 w-full bg-gray-700 font-semibold text-left text-white'>Account Details</p> : <p className='py-3 px-5 w-full hover:bg-gray-500'>Account Details</p>}
                             </button>
-                            <p className='py-3 px-5 hover:bg-gray-500 w-full'>Account Details</p>
-                            <p className='py-3 px-5 hover:bg-gray-500 w-full'>Account Details</p>
+                            <p className='py-3 px-5 hover:bg-gray-500 w-full'>TBA</p>
+                            <p className='py-3 px-5 hover:bg-gray-500 w-full'>TBA</p>
                         </div>
 
-                        {accDetails && <div className='flex w-full py-5 px-3 grid grid-cols-1 gap-2'>
+                        {accDetails && <div className='w-full py-5 px-3 grid grid-cols-1 gap-2'>
                             <div className='w-full'>
                                 <div className='border'>
                                     <div className='flex w-full justify-between border-b p-2 bg-blue-400 text-white font-semibold text-md'>
@@ -99,16 +99,16 @@ export default function UserEdit() {
                                             </button>
                                         }
                                     </div>
-                                    <div className='grid grid-cols-2 bg-blue-300'>
+                                    <div className='grid sm:grid-cols-2 grid-cols-1 bg-blue-300'>
                                         <div className='p-2 text-sm'>
                                             {editEmail ?
                                                 (<div className='flex'>
-                                                    <p className='text-gray-800 mr-2'>Change email:</p>
+                                                    <p className='text-gray-600 mr-2'>Change email:</p>
                                                     <input type="email" onChange={e => { setEmail(e.target.value) }} className='px-2 bg-blue-500 rounded' />
                                                 </div>)
                                                 :
                                                 (<div className='flex'>
-                                                    <p className='text-gray-800 mr-2'>Email address:</p>
+                                                    <p className='text-gray-600 mr-2'>Email address:</p>
                                                     <p>{currentData.data.email}</p>
                                                 </div>)
                                             }
@@ -133,7 +133,7 @@ export default function UserEdit() {
                                                 <p className='text-blue-500 hover:text-white'>Manage your phone number</p>
                                             </button>
                                             <div className='flex'>
-                                                <p className='text-gray-800 mr-2'>Phone:</p>
+                                                <p className='text-gray-600 mr-2'>Phone:</p>
                                                 {editPhone ?
                                                     <input min='0' type='number' onChange={e => { setPhone(e.target.value) }} className='px-2 bg-blue-500 rounded' />
                                                     :
@@ -158,16 +158,16 @@ export default function UserEdit() {
                                             </button>
                                         }
                                     </div>
-                                    <div className='grid grid-cols-2 bg-blue-300'>
+                                    <div className='grid sm:grid-cols-2 grid-cols-1 bg-blue-300'>
                                         <div className='p-2 text-sm'>
                                             {editAddress ?
                                                 (<div className='flex'>
-                                                    <p className='text-gray-800 mr-2'>Change address:</p>
+                                                    <p className='text-gray-600 mr-2'>Change address:</p>
                                                     <input type='text' onChange={e => { setAddress(e.target.value) }} className='px-2 bg-blue-500 rounded' />
                                                 </div>)
                                                 :
                                                 (<div className='flex'>
-                                                    <p className='text-gray-800 mr-2'>Address:</p>
+                                                    <p className='text-gray-600 mr-2'>Address:</p>
                                                     <p>{currentData.data.address}</p>
                                                 </div>)
                                             }
@@ -183,7 +183,7 @@ export default function UserEdit() {
 
                                         <div className='p-2 text-sm'>
                                             <div className='flex'>
-                                                <p className='text-gray-800 mr-2'>Zipcode:</p>
+                                                <p className='text-gray-600 mr-2'>Zipcode:</p>
                                                 {editZip ?
                                                     <input min='0' type='number' onChange={e => { setZipcode(e.target.value) }} className='px-2 bg-blue-500 rounded' />
                                                     :
@@ -216,16 +216,16 @@ export default function UserEdit() {
                                             </button>
                                         }
                                     </div>
-                                    <div className='grid grid-cols-2 bg-blue-300'>
+                                    <div className='grid sm:grid-cols-2 grid-cols-1 bg-blue-300'>
                                         <div className='p-2 text-sm'>
                                             {editIcon ?
                                                 (<div className='flex'>
-                                                    <p className='text-gray-800 mr-2'>Change Icon (url):</p>
+                                                    <p className='text-gray-600 mr-2'>Change Icon (url):</p>
                                                     <input type='text' onChange={e => { setIcon(e.target.value) }} className='px-2 bg-blue-500 rounded' />
                                                 </div>)
                                                 :
                                                 (<div className='flex'>
-                                                    <img className='h-32 w-32 rounded-full' src={currentData.data.icon} alt={currentData.data.displayName} />
+                                                    <img className='h-32 w-32 rounded-full object-cover' src={currentData.data.icon} alt={currentData.data.displayName} />
                                                 </div>)
                                             }
                                             <button
@@ -240,7 +240,7 @@ export default function UserEdit() {
 
                                         <div className='p-2 text-sm'>
                                             <div className='flex'>
-                                                {editDisplayName ? <p className='text-gray-800 mr-2'>Change display name:</p> : <p className='text-gray-800 mr-2'>Display name:</p>}
+                                                {editDisplayName ? <p className='text-gray-600 mr-2'>Change display name:</p> : <p className='text-gray-800 mr-2'>Display name:</p>}
                                                 {editDisplayName ?
                                                     <input type='text' onChange={e => { setName(e.target.value) }} className='px-2 bg-blue-500 rounded' />
                                                     :

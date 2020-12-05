@@ -20,9 +20,10 @@ export default function UserInfo(propUrl) {
             </div>
             <div className='flex w-full justify-between p-5'>
                 <div className='w-3/6'>
-                    <p className='text-white'>{usrInfo.data.address}</p>
-                    <p className='border-b border-gray-400 py-2 text-white'>{usrInfo.data.zipcode}</p>
-                    <p className='border-b border-gray-400 py-2 text-white'>Phone: {usrInfo.data.phone}</p>
+                    <p className='text-white'>{usrInfo.data.address}, {usrInfo.data.zipcode}</p>
+                    <p className='border-b border-gray-400 py-2 text-white'>
+                        Phone: ({usrInfo.data.phone.substring(0,3)})-{usrInfo.data.phone.substring(3,6)}-{usrInfo.data.phone.substring(6,10)}
+                    </p>
                     
                 </div>
                 <div className='w-5/6 px-5'>
