@@ -149,7 +149,6 @@ export default function Category(searchProps) {
                 </div>
                         
                 <Items 
-                    filteredLink={`${domain}/food/display/all`}
                     searchFor={search} 
                     categoryFilter={itemCategory} 
                     feature={featured}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useReducer, useRef } from 'react'
 import { useAxiosGet } from '../../Hooks/HttpRequest'
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -7,28 +7,51 @@ import Loader from '../misc/Loader'
 import domain from '../../domain'
 
 export default function Items(superProps) {
-    const [url, setUrl] = useState()
-    const [page, setPage] = useState(1)
-    
-    const updatedLink = useRef(superProps.filteredLink)
-    const querySearch = superProps.searchFor
+    const restaurantList = useAxiosGet(`${domain}/food/display/test`)
+    const limit = 9
+    const initialPage = {page: 1, lower:0, upper:9}
 
+    function goTo(toPage){
+        return {page:toPage, lower:(toPage-1)*limit, upper:toPage*limit}
+    }
+
+    function reducer(state, action){
+        const max = Math.ceil(restaurantList.data.length / limit)
+        
+        switch(action.type){
+            case 'prev':
+                if(state.page-1 > 0){
+                    return {page:state.page - 1, lower:state.lower - limit, upper:state.upper - limit}
+                }
+                return {page:state.page, lower:state.lower, upper:state.upper}
+
+            case 'next':
+                if(state.page + 1 <= max){
+                    return {page:state.page + 1, lower:state.lower + limit, upper:state.upper + limit}
+                }
+                return {page:state.page, lower:state.lower, upper:state.upper}
+            case 'skip':
+                
+                return goTo(action.payload)
+            default:
+                break
+                
+        }
+    
+    }
+    const [state, dispatch] = useReducer(reducer, initialPage);
+    
+    //const querySearch = superProps.searchFor
     const category = superProps.categoryFilter
     const feature = superProps.feature
     const sort = superProps.sortBy
-
-
-    let restaurantList = useAxiosGet(url)
     
-
-    let nextPage = undefined
-    let prevPage = undefined
     let content = <Loader></Loader>
-    let availablePages = undefined
     
     
 
     const filtered = (item) =>{
+        
         if(category !== 'null' && category){
             if(item.category !== category){
                 return
@@ -48,44 +71,50 @@ export default function Items(superProps) {
         return
     }
 
-    useEffect(() => {
-        setUrl(updatedLink.current + `?page=${page}`)
-        if(querySearch){
-            setUrl(`${domain}/food/find/${querySearch}?page=${page}`)
-        }
-    }, [page, querySearch])
-
-    
-    const clickNext = () => {
-        if (nextPage) {
-            setPage(page + 1)
-        }
-    }
-    const clickPrev = () => {
-        if (prevPage) {
-            setPage(page - 1)
-        }
-    }
-
-
     if (restaurantList.error) {
         content = <Loader></Loader>
     }
 
+    let pagesAhead = []
+    let pagesBefore = []
+    let maxPage = undefined
     try {
+        
+
+        
         if (restaurantList.data) {
-            nextPage = restaurantList.data.next
-            prevPage = restaurantList.data.previous
-            availablePages = restaurantList.data.possiblePages
+            pagesAhead = []
+            pagesBefore = []
+            maxPage = Math.ceil(restaurantList.data.filter(filtered).length / limit)
+            if(state.page > maxPage){
+                state.page = 1
+                state.upper = limit
+                state.lower = 0
+            }
+
+            for(let i=1; i<=3; i++){
+                if(state.page+i <= maxPage){
+                    pagesAhead.push(state.page+i)
+                }
+                if(state.page-i > 0){
+                    pagesBefore.unshift(state.page-i)
+                }
+            }
             
+
             content =
                 <div className='flex-col w-full'>
+                    
+                    <button onClick={() => dispatch({type: 'prev'})}>------</button>
+                    <button onClick={() => dispatch({type: 'next'})}>++++++</button>
+
                     <div className="flex-col w-full">
-                        {restaurantList.data.result
+                        {restaurantList.data
                         .filter(filtered)
                         .sort(sorted)
-                        .map(item =>
-                            <div key={item._id} className="flex w-full border-b border-gray-300">
+                        .slice(state.lower,state.upper)
+                        .map((item, index) =>
+                            <div key={index} className="flex w-full border-b border-gray-300">
                                 <Link to={`/food/${item._id}`}>
                                     <img src={item.image} alt={item.foodName} className="p-3 h-20 w-20 object-cover box-content" />
                                 </Link>
@@ -110,21 +139,22 @@ export default function Items(superProps) {
                             </div>
                         )}
                     </div>
-                    
                     <div className='flex justify-center w-full'>
-
-                        {prevPage && (
-                            <button onClick={clickPrev} className='focus:outline-none'>
+                        
+                        {(state.page > 1) && (
+                            <button onClick={() => dispatch({type: 'prev'})} className='focus:outline-none'>
                                 <div className='border-t border-b border-l w-12 h-12 py-2 border-black hover:bg-blue-800 items-center inline-flex justify-center'>
                                     <FontAwesomeIcon icon={faAngleLeft} className='text-xl' />
                                 </div>
                             </button>
                         )}
 
-                        {availablePages.before.map((item, index) =>
+
+                        {pagesBefore.map((item, index) =>
                             <div key={index}>
+                                
                                 <div className='inline-flex py-5'>
-                                    <button onClick={() => { setPage(item) }}>
+                                    <button onClick={()=> dispatch({type: 'skip', payload: item})}>
                                         <div className='border-t border-b border-l w-12 h-12 py-2 text-center border-black hover:bg-blue-800'>
                                             <p>{item}</p>
                                         </div>
@@ -132,17 +162,21 @@ export default function Items(superProps) {
                                 </div>
                             </div>
                         )}
+                        
+
+                        
 
                         <div className='inline-flex py-5'>
                             <div className='border w-12 h-12 py-2 text-center bg-blue-500 border-black'>
-                                <p>{availablePages.current}</p>
+                                <p>{state.page}</p>
                             </div>
                         </div>
 
-                        {availablePages.ahead.map((item, index) =>
+                        
+                        {pagesAhead.map((item, index) =>
                             <div key={index}>
                                 <div className='inline-flex py-5'>
-                                    <button onClick={() => { setPage(item) }}>
+                                    <button onClick={()=> dispatch({type: 'skip', payload: item})}>
                                         <div className='border-t border-b border-r w-12 h-12 py-2 text-center border-black hover:bg-blue-800'>
                                             <p>{item}</p>
                                         </div>
@@ -150,9 +184,11 @@ export default function Items(superProps) {
                                 </div>
                             </div>
                         )}
+                        
 
-                        {nextPage && (
-                            <button onClick={clickNext} className='focus:outline-none'>
+
+                        {(state.page < Math.ceil(restaurantList.data.filter(filtered).length / limit)) && (
+                            <button onClick={() => dispatch({type: 'next'})} className='focus:outline-none'>
                                 <div className='border-t border-b border-r w-12 h-12 py-2 border-black hover:bg-blue-800 items-center inline-flex justify-center'>
                                     <FontAwesomeIcon icon={faAngleRight} className='text-xl' />
                                 </div>
@@ -160,8 +196,9 @@ export default function Items(superProps) {
                         )}
                     </div>
                     <div className='text-center pb-5'>
-                        {page <= availablePages.maxPage ? (<p>Page {page} of {availablePages.maxPage}</p>) : null }
+                        <p>Page {state.page} of {Math.ceil(restaurantList.data.filter(filtered).length / limit)}</p>
                     </div>
+                    
                 </div>
 
 
@@ -178,3 +215,4 @@ export default function Items(superProps) {
         </>
     )
 }
+
