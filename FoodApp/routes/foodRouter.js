@@ -87,6 +87,12 @@ router.get('/display/all', paginateThis(Food), async (req, res) => {
     res.json(res.paginateThis)
 })
 
+router.get('/display/test', async (req, res)=>{
+    const displayData = await Food.find().sort({feature: -1})
+    res.json(displayData)
+})
+
+
 router.patch('/edit/:id', auth, async(req,res)=>{
     try{
         let {newName, newPrice, newDesc, newImage, newFeature, newCategory} = req.body;
