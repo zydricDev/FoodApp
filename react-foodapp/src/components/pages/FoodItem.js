@@ -44,7 +44,7 @@ export default function FoodItem() {
                     <Comment propUsrId={product.data.userId}/>
                 </div>
                 <div className='bg-indigo-600 flex w-full'>
-                        <UserInfo propUrl={product.data.userId}/>
+                    <UserInfo propUrl={product.data.userId}/>
                 </div>
             </>
     }

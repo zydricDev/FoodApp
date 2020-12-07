@@ -5,19 +5,18 @@ const Comment = require('../models/commentModel');
 
 
 router.post('/post', auth, async (req,res)=>{
+
+
     try{
         let{userId, recipientId, userDisplayName, icon, rating, comment} = req.body
-
         const existingComment = await Comment.findOne({
             userId: userId,
             recipientId: recipientId,
         })
         if(existingComment){
-            return res.status(400).json({msg: "user already commented on this item"});
+            return res.status(400).json({msg: "User already posted a commented on this shop"});
         }
         
-
-
         const newComment = new Comment({
             userId,
             recipientId, 
