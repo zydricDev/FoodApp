@@ -14,7 +14,8 @@ export default function Comment(propsId) {
 
     let userId = undefined
     let userDisplayName = undefined
-    let icon = 'https://images.unsplash.com/photo-1457269449834-928af64c684d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80'
+    let icon = 'https://img.favpng.com/11/4/12/stock-photography-businessperson-can-stock-photo-royalty-free-png-favpng-pDHxH9z4e2thFTyW6QzDE4m6C.jpg'
+    let url = undefined
 
     const allComments = useAxiosGet(`${domain}/comments/user/${recipientId}`)
     
@@ -26,13 +27,14 @@ export default function Comment(propsId) {
     if(currentUser.userData.user){
         userId = currentUser.userData.user.id
         userDisplayName = currentUser.userData.user.displayName
+        url = `${domain}/users/find/${userId}`
     }
-    //const getUser = useAxiosGet(`${domain}/users/find/${userId}`)
     
+    const getUser = useAxiosGet(url)
     
     let content = <Loader></Loader>
 
-    if (allComments.error) {
+    if (allComments.error || getUser.error) {
         content = <Loader></Loader>
     }
     const ratings = (value) =>{
@@ -42,13 +44,15 @@ export default function Comment(propsId) {
 
     const submit = async () =>{
         try{
+            if(getUser.data){
+                icon = getUser.data.icon
+            }
             const newComment = {userId, recipientId, userDisplayName, icon, rating, comment}
             await Axios.post(`${domain}/comments/post`, newComment, {
                 headers: { "auth-token": localStorage.getItem('auth-token') }
             })
             
         }catch(err){
-            console.log(err.response.data.msg)
             err.response.data.msg && setError(err.response.data.msg)
         }
     }
@@ -59,7 +63,7 @@ export default function Comment(propsId) {
 
     try {
         if (allComments.data) {
-
+            
             content =
                 <div className='flex-col w-full'>
                     <div className='grid grid-cols-1 w-full gap-10'>
@@ -79,7 +83,7 @@ export default function Comment(propsId) {
                                             <div className='flex w-full text-xl gap-1'>
                                                 {comment.rating === '1' && <>
                                                     <FontAwesomeIcon icon={faStar} className='text-yellow-500' />
-                                                    <FontAwesomeIcon icon={faStar} className='text-yellow-500' />
+                                                    <FontAwesomeIcon icon={faStar} className='text-gray-500' />
                                                     <FontAwesomeIcon icon={faStar} className='text-gray-500' />
                                                     <FontAwesomeIcon icon={faStar} className='text-gray-500' />
                                                     <FontAwesomeIcon icon={faStar} className='text-gray-500' />
@@ -116,7 +120,7 @@ export default function Comment(propsId) {
                                                     <FontAwesomeIcon icon={faStar} className='text-yellow-500' />
                                                 </>}
                                             </div>
-                                            <div>
+                                            <div className='break-words'>
                                                 <p>{comment.comment}</p>
                                             </div>
 
@@ -132,7 +136,7 @@ export default function Comment(propsId) {
                         
                     </div>
                     
-                    <div className='flex justify-center mt-20 mb-10'>
+                    {currentUser.userData.user && <div className='flex justify-center mt-20 mb-10'>
                         <div className='grid grid-cols-1 w-4/6 justify-center gap-5'>
                             <div className='flex items-center gap-2'>
                                 <p>Rate:</p>
@@ -171,16 +175,14 @@ export default function Comment(propsId) {
                                     <FontAwesomeIcon icon={faStar} className='text-yellow-500 cursor-pointer' onClick={()=>{ratings(4)}}/>
                                     <FontAwesomeIcon icon={faStar} className='text-yellow-500 cursor-pointer' onClick={()=>{ratings(5)}}/>
                                 </>}
-
-                                
                             </div>
-                            <textarea className='border border-gray-500 rounded p-1 focus:outline-none resize-none' rows='4' onChange={ e =>setComment(e.target.value)}/>
+                            <textarea className='border border-gray-500 rounded p-1 focus:outline-none resize-none' rows='4' onChange={ e =>setComment(e.target.value)} placeholder='Comment on this shop and also rate them!'/>
                             <form className='flex justify-center w-full' onSubmit={submit}>
-                                <input className='w-1/6 mt-2 bg-blue-500 text-xl px-5 py-1 rounded font-semibold text-white hover:bg-blue-700 cursor-pointer' type='submit' value='Submit'/>
+                                <input className='mt-2 bg-blue-500 text-xl px-5 py-1 rounded font-semibold text-white hover:bg-blue-700 cursor-pointer' type='submit' value='Submit'/>
                             </form>
                             
                         </div>
-                    </div>
+                    </div>}
                     
                 </div>
         }
