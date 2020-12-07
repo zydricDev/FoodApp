@@ -63,7 +63,7 @@ export default function MyStore() {
         if (productList.data && productSelected) {
             try {
                 const newFood = { newName, newPrice, newDesc, newImage, newFeature, newCategory }
-                await Axios.patch(`http://${domain}/food/edit/${item}`, newFood, {
+                await Axios.patch(`${domain}/food/edit/${item}`, newFood, {
                     headers: { "auth-token": localStorage.getItem('auth-token') }
                 })
             } catch (err) {
@@ -83,9 +83,7 @@ export default function MyStore() {
             
             <div className='grid grid-cols-1 lg:flex lg:grid-cols-none h-screen'>
                 <div className='lg:w-2/6 xl:w-1/6 h-full p-5'>
-                    <div className='p-2 grid grid-cols-1 gap-3 text-center border-gray-500 border rounded'>
-                        <p className='font-bold text-md'>My Products</p>
-
+                    <div className='p-2 grid grid-cols-1 gap-3'>
                         <select className='border border-black rounded mb-5 bg-gray-300 focus:outline-none' value={sortBy} onChange={e => setSortBy(e.target.value)}>
                             <option>--Sort by--</option>
                             <option value='name-ascend'>Name (A-Z)</option>
@@ -95,6 +93,7 @@ export default function MyStore() {
                             <option value='price'>Price</option>
                             
                         </select>
+                        <p className='font-bold text-md'>My Products</p>
 
                         <select className='border border-black rounded mb-5 bg-gray-300 focus:outline-none' value={selectedId} onChange={e => selectedItem(e.target.value)}>
                             <option value='null'>--Default---</option>

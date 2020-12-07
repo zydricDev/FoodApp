@@ -28,4 +28,5 @@ app.get('/', (req, res) =>{
 app.use('/users',require('./routes/userRouter'));
 app.use('/food',require('./routes/foodRouter'));
 app.use('/category',require('./routes/ServerOnly/categoryRouter'));
+app.use('/comments', require('./routes/commentRouter'))
 

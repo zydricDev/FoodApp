@@ -2,9 +2,12 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import { useAxiosGet } from '../../Hooks/HttpRequest'
 import UserMenu from '../itemFeatures/UserMenu'
-import domain from '../../domain'
 import UserInfo from '../itemFeatures/UserInfo'
+import Comment from '../itemFeatures/Comment'
+
+import domain from '../../domain'
 import Loader from '../misc/Loader'
+
 export default function FoodItem() {
     const { id } = useParams()
     const url = `${domain}/food/${id}`
@@ -36,6 +39,9 @@ export default function FoodItem() {
                         <img src={product.data.image} alt={product.data.foodName} className="object-cover box-content sm:w-1/2 sm:h-64" />
                     </div>
                     <UserMenu propUrl={product.data.userId}/>
+                </div>
+                <div className='flex w-full'>
+                    <Comment propUsrId={product.data.userId}/>
                 </div>
                 <div className='bg-indigo-600 flex w-full'>
                         <UserInfo propUrl={product.data.userId}/>
