@@ -101,7 +101,7 @@ export default function Header() {
     }
 
     return (
-        <div className='border-b shadow-md'>
+        <div className='border-b shadow-sm border-gray-400'>
             {content}
         </div>
         

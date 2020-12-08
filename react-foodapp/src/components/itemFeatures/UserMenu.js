@@ -67,7 +67,7 @@ export default function UserMenu(ownerId) {
 
                                                             {item.feature && <FontAwesomeIcon icon={faMedal} className='text-md text-yellow-500' />}
                                                         </div>
-                                                        <p className='text-gray-700 mt-3'>{item.desc}</p>
+                                                        <p className='text-gray-700 mt-3 break-all'>{item.desc}</p>
                                                     </div>
                                                     {item.feature ? (<p className='absolute right-0 mr-2 mt-2 bg-gray-t-90 py-2 px-4 rounded font-bold'>${item.price}</p>) : (<p className='right-0 mr-2 mt-2 rounded font-bold'>${item.price}</p>)}
                                                     {item.feature && <img className='object-cover w-40 h-40' src={item.image} alt={item.foodName} />}

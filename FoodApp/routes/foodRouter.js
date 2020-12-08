@@ -144,7 +144,8 @@ router.patch('/edit/user/:id', auth, async(req,res)=>{
     try{
         let {displayName} = req.body;
         const food = Food.find({userId: req.params.id})
-        await food.updateOne({ 
+      
+        await food.updateMany({ 
             userDisplayName: displayName
         })
         res.json({msg: "Updated All Items"})

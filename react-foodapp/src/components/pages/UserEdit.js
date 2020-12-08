@@ -52,13 +52,16 @@ export default function UserEdit() {
     const submit = async () => {
         try {
             const query = { displayName, icon, address, zipcode, phone, email }
-            const newDisplayName = { displayName }
+            
+            
             await Axios.patch(`${domain}/users/edit/${userId}`, query, {
                 headers: { "auth-token": localStorage.getItem('auth-token') }
             })
-            await Axios.patch(`${domain}/food/edit/user/${userId}`, newDisplayName, {
+            await Axios.patch(`${domain}/food/edit/user/${userId}`, { displayName }, {
                 headers: { "auth-token": localStorage.getItem('auth-token') }
             })
+            await Axios.patch(`${domain}/comments/user/update/${userId}`, { displayName, icon })
+
             history.push('/home')
 
         } catch (err) {
