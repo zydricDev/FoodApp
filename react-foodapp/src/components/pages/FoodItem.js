@@ -22,17 +22,17 @@ export default function FoodItem() {
         content =
             <>
                 <div className="p-10 lg:mx-40">
-                    <div className='border border-gray-400 sm:flex sm:p-10 p-5 rounded shadow-sm'>
+                    <div className='border border-gray-700 sm:flex sm:p-10 p-5 rounded shadow-sm'>
                         <div className="flex-col w-full mr-5">
                             <div className='h-full sm:p-5 p-2'>
-                                <div className='flex border w-full items-center justify-between px-5 py-1'>
+                                <div className='flex border w-full items-center justify-between px-5 py-1 rounded'>
                                     <p className="font-medium text-3xl">{product.data.foodName}</p>
                                     <p className="font-medium text-2xl">${product.data.price}</p>
                                 </div>
                                 <p className="text-gray-500 py-5">By {product.data.userDisplayName}</p>
-                                <div className='flex-col px-5 border'>
+                                <div className='flex-col px-5 border rounded'>
                                     <p className="text-gray-500">{product.data.category}</p>
-                                    <p className="text-gray-700 ">{product.data.desc}</p>
+                                    <p className="text-gray-700 break-all">{product.data.desc}</p>
                                 </div>
                             </div>
                         </div>
@@ -40,12 +40,13 @@ export default function FoodItem() {
                     </div>
                     <UserMenu propUrl={product.data.userId}/>
                 </div>
+                <div className='bg-indigo-600 flex w-full my-10 justify-center'>
+                    <UserInfo propUrl={product.data.userId}/>
+                </div>
                 <div className='flex w-full'>
                     <Comment propUsrId={product.data.userId}/>
                 </div>
-                <div className='bg-indigo-600 flex w-full mt-10'>
-                    <UserInfo propUrl={product.data.userId}/>
-                </div>
+                
             </>
     }
 

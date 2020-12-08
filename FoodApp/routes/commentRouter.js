@@ -1,12 +1,10 @@
 const router = require('express').Router();
+const Comment = require('../models/commentModel');
 const auth = require('../middleware/auth');
 
-const Comment = require('../models/commentModel');
 
 
 router.post('/post', auth, async (req,res)=>{
-
-
     try{
         let{userId, recipientId, userDisplayName, icon, rating, comment} = req.body
         
@@ -41,6 +39,41 @@ router.post('/post', auth, async (req,res)=>{
 
         const savedComment = await newComment.save();
         res.json(savedComment);
+
+    }catch(err){
+        res.status(500).json({error: err.message});
+    }
+})
+
+router.patch('/user/update/:id', async (req,res)=>{
+    try{
+        let {displayName, icon} = req.body
+        if(!displayName && !icon){
+            return res.json({msg: "No need to update"});
+        }
+        const sampleUser = await Comment.findOne({
+            userId: req.params.id
+        })
+        if(!sampleUser){
+            return res.json({msg: "No comment made by user"});
+        }
+        if(!displayName){
+            displayName = sampleUser.userDisplayName
+        }
+        if(!icon){
+            icon = sampleUser.icon
+        }
+
+        const allComments = Comment.find({
+            userId: req.params.id
+        })
+        
+        await allComments.updateMany({
+            userDisplayName: displayName,
+            icon: icon
+        })
+        res.json({msg: "Successfully updated all comments"})
+        
 
     }catch(err){
         res.status(500).json({error: err.message});
