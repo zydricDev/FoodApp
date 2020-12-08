@@ -81,44 +81,25 @@ export default function Comment(propsId) {
                                                 <p className='text-gray-700'>{comment.date.slice(0, 10)}</p>
                                             </div>
                                             <div className='flex w-full text-xl gap-1'>
-                                                {comment.rating === '1' && <>
+                                                {parseInt(comment.rating) >= 1 && 
                                                     <FontAwesomeIcon icon={faStar} className='text-yellow-500' />
+                                                }
+                                                {parseInt(comment.rating) >= 2 ?
+                                                    <FontAwesomeIcon icon={faStar} className='text-yellow-500' />: 
                                                     <FontAwesomeIcon icon={faStar} className='text-gray-500' />
+                                                }
+                                                {parseInt(comment.rating) >= 3 ?
+                                                    <FontAwesomeIcon icon={faStar} className='text-yellow-500' />: 
                                                     <FontAwesomeIcon icon={faStar} className='text-gray-500' />
+                                                }
+                                                {parseInt(comment.rating) >= 4 ?
+                                                    <FontAwesomeIcon icon={faStar} className='text-yellow-500' />: 
                                                     <FontAwesomeIcon icon={faStar} className='text-gray-500' />
+                                                }
+                                                {parseInt(comment.rating) >= 5 ?
+                                                    <FontAwesomeIcon icon={faStar} className='text-yellow-500' />: 
                                                     <FontAwesomeIcon icon={faStar} className='text-gray-500' />
-                                                </>}
-                                                {comment.rating === '2' && <>
-                                                    <FontAwesomeIcon icon={faStar} className='text-yellow-500' />
-                                                    <FontAwesomeIcon icon={faStar} className='text-yellow-500' />
-                                                    <FontAwesomeIcon icon={faStar} className='text-gray-500' />
-                                                    <FontAwesomeIcon icon={faStar} className='text-gray-500' />
-                                                    <FontAwesomeIcon icon={faStar} className='text-gray-500' />
-                                                </>}
-
-                                                {comment.rating === '3' && <>
-                                                    <FontAwesomeIcon icon={faStar} className='text-yellow-500' />
-                                                    <FontAwesomeIcon icon={faStar} className='text-yellow-500' />
-                                                    <FontAwesomeIcon icon={faStar} className='text-yellow-500' />
-                                                    <FontAwesomeIcon icon={faStar} className='text-gray-500' />
-                                                    <FontAwesomeIcon icon={faStar} className='text-gray-500' />
-                                                </>}
-
-                                                {comment.rating === '4' && <>
-                                                    <FontAwesomeIcon icon={faStar} className='text-yellow-500' />
-                                                    <FontAwesomeIcon icon={faStar} className='text-yellow-500' />
-                                                    <FontAwesomeIcon icon={faStar} className='text-yellow-500' />
-                                                    <FontAwesomeIcon icon={faStar} className='text-yellow-500' />
-                                                    <FontAwesomeIcon icon={faStar} className='text-gray-500' />
-                                                </>}
-
-                                                {comment.rating === '5' && <>
-                                                    <FontAwesomeIcon icon={faStar} className='text-yellow-500' />
-                                                    <FontAwesomeIcon icon={faStar} className='text-yellow-500' />
-                                                    <FontAwesomeIcon icon={faStar} className='text-yellow-500' />
-                                                    <FontAwesomeIcon icon={faStar} className='text-yellow-500' />
-                                                    <FontAwesomeIcon icon={faStar} className='text-yellow-500' />
-                                                </>}
+                                                }
                                             </div>
                                             <div className='break-words'>
                                                 <p>{comment.comment}</p>
@@ -140,41 +121,25 @@ export default function Comment(propsId) {
                         <div className='grid grid-cols-1 w-4/6 justify-center gap-5'>
                             <div className='flex items-center gap-2'>
                                 <p>Rate:</p>
-                                {rating === 1 && <>
+                                {rating >= 1 && 
                                     <FontAwesomeIcon icon={faStar} className='text-yellow-500 cursor-pointer' onClick={()=>{ratings(1)}}/>
-                                    <FontAwesomeIcon icon={faStar} className='text-gray-500 cursor-pointer' onClick={()=>{ratings(2)}}/>
-                                    <FontAwesomeIcon icon={faStar} className='text-gray-500 cursor-pointer' onClick={()=>{ratings(3)}}/>
-                                    <FontAwesomeIcon icon={faStar} className='text-gray-500 cursor-pointer' onClick={()=>{ratings(4)}}/>
-                                    <FontAwesomeIcon icon={faStar} className='text-gray-500 cursor-pointer' onClick={()=>{ratings(5)}}/>
-                                </>}
-                                {rating === 2 && <>
-                                    <FontAwesomeIcon icon={faStar} className='text-yellow-500 cursor-pointer' onClick={()=>{ratings(1)}}/>
+                                }
+                                {rating >=2 ? 
                                     <FontAwesomeIcon icon={faStar} className='text-yellow-500 cursor-pointer' onClick={()=>{ratings(2)}}/>
-                                    <FontAwesomeIcon icon={faStar} className='text-gray-500 cursor-pointer' onClick={()=>{ratings(3)}}/>
-                                    <FontAwesomeIcon icon={faStar} className='text-gray-500 cursor-pointer' onClick={()=>{ratings(4)}}/>
-                                    <FontAwesomeIcon icon={faStar} className='text-gray-500 cursor-pointer' onClick={()=>{ratings(5)}}/>
-                                </>}
-                                {rating === 3 && <>
-                                    <FontAwesomeIcon icon={faStar} className='text-yellow-500 cursor-pointer' onClick={()=>{ratings(1)}}/>
-                                    <FontAwesomeIcon icon={faStar} className='text-yellow-500 cursor-pointer' onClick={()=>{ratings(2)}}/>
+                                    :<FontAwesomeIcon icon={faStar} className='text-gray-500 cursor-pointer' onClick={()=>{ratings(2)}}/>
+                                }
+                                {rating >=3 ? 
                                     <FontAwesomeIcon icon={faStar} className='text-yellow-500 cursor-pointer' onClick={()=>{ratings(3)}}/>
-                                    <FontAwesomeIcon icon={faStar} className='text-gray-500 cursor-pointer' onClick={()=>{ratings(4)}}/>
-                                    <FontAwesomeIcon icon={faStar} className='text-gray-500 cursor-pointer' onClick={()=>{ratings(5)}}/>
-                                </>}
-                                {rating === 4 && <>
-                                    <FontAwesomeIcon icon={faStar} className='text-yellow-500 cursor-pointer' onClick={()=>{ratings(1)}}/>
-                                    <FontAwesomeIcon icon={faStar} className='text-yellow-500 cursor-pointer' onClick={()=>{ratings(2)}}/>
-                                    <FontAwesomeIcon icon={faStar} className='text-yellow-500 cursor-pointer' onClick={()=>{ratings(3)}}/>
+                                    :<FontAwesomeIcon icon={faStar} className='text-gray-500 cursor-pointer' onClick={()=>{ratings(3)}}/>
+                                }
+                                {rating >=4 ? 
                                     <FontAwesomeIcon icon={faStar} className='text-yellow-500 cursor-pointer' onClick={()=>{ratings(4)}}/>
-                                    <FontAwesomeIcon icon={faStar} className='text-gray-500 cursor-pointer' onClick={()=>{ratings(5)}}/>
-                                </>}
-                                {rating === 5 && <>
-                                    <FontAwesomeIcon icon={faStar} className='text-yellow-500 cursor-pointer' onClick={()=>{ratings(1)}}/>
-                                    <FontAwesomeIcon icon={faStar} className='text-yellow-500 cursor-pointer' onClick={()=>{ratings(2)}}/>
-                                    <FontAwesomeIcon icon={faStar} className='text-yellow-500 cursor-pointer' onClick={()=>{ratings(3)}}/>
-                                    <FontAwesomeIcon icon={faStar} className='text-yellow-500 cursor-pointer' onClick={()=>{ratings(4)}}/>
+                                    :<FontAwesomeIcon icon={faStar} className='text-gray-500 cursor-pointer' onClick={()=>{ratings(4)}}/>
+                                }
+                                {rating >=5 ? 
                                     <FontAwesomeIcon icon={faStar} className='text-yellow-500 cursor-pointer' onClick={()=>{ratings(5)}}/>
-                                </>}
+                                    :<FontAwesomeIcon icon={faStar} className='text-gray-500 cursor-pointer' onClick={()=>{ratings(5)}}/>
+                                }
                             </div>
                             <textarea className='border border-gray-500 rounded p-1 focus:outline-none resize-none' rows='4' onChange={ e =>setComment(e.target.value)} placeholder='Comment on this shop and also rate them!'/>
                             <form className='flex justify-center w-full' onSubmit={submit}>
@@ -197,3 +162,5 @@ export default function Comment(propsId) {
         content
     )
 }
+
+                

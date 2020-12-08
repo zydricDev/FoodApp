@@ -60,7 +60,9 @@ export default function UserEdit() {
             await Axios.patch(`${domain}/food/edit/user/${userId}`, { displayName }, {
                 headers: { "auth-token": localStorage.getItem('auth-token') }
             })
-            await Axios.patch(`${domain}/comments/user/update/${userId}`, { displayName, icon })
+            await Axios.patch(`${domain}/comments/user/update/${userId}`, { displayName, icon }, {
+                headers: { "auth-token": localStorage.getItem('auth-token') }
+            })
 
             history.push('/home')
 

@@ -45,7 +45,7 @@ router.post('/post', auth, async (req,res)=>{
     }
 })
 
-router.patch('/user/update/:id', async (req,res)=>{
+router.patch('/user/update/:id', auth, async (req,res)=>{
     try{
         let {displayName, icon} = req.body
         if(!displayName && !icon){
@@ -78,6 +78,29 @@ router.patch('/user/update/:id', async (req,res)=>{
     }catch(err){
         res.status(500).json({error: err.message});
     }
+})
+
+router.get('/user/rating/:id', async (req,res)=>{
+    const allComments = await Comment.find({
+        recipientId: req.params.id
+    })
+    if(!allComments){
+        return res.json({rating: "No ratings"});
+    }
+    let ratings = allComments.map((item)=>{
+        return item.rating
+    })
+    let sum = 0;
+    ratings.map((item)=>{
+        sum += parseInt(item)
+    })
+
+    sum = sum / ratings.length
+    
+    res.json({
+        rating: sum,
+        total: ratings.length
+    })
 })
 
 router.get('/user/:id', async (req,res)=>{
