@@ -66,7 +66,7 @@ export default function Comment(propsId) {
             
             content =
                 <div className='flex-col w-full'>
-                    <div className='grid grid-cols-1 w-full gap-10'>
+                    <div className='grid grid-cols-1 w-full gap-10 mb-20'>
                         {allComments.data
                             .sort(sorted)
                             .map((comment, index) =>
@@ -117,7 +117,7 @@ export default function Comment(propsId) {
                         
                     </div>
                     
-                    {currentUser.userData.user && <div className='flex justify-center mt-20 mb-10'>
+                    {currentUser.userData.user && <div className='flex justify-center py-5 mb-10'>
                         <div className='grid grid-cols-1 w-4/6 justify-center gap-5'>
                             <div className='flex items-center gap-2'>
                                 <p>Rate:</p>
