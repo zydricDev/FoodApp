@@ -2,7 +2,7 @@ const router = require('express').Router();
 const Food = require('../models/foodModel');
 const auth = require('../middleware/auth');
 
-const { query } = require('express');
+
 const paginateThis = require('../middleware/paginateThis')
 
 

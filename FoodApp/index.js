@@ -25,8 +25,10 @@ app.get('/', (req, res) =>{
     res.send('This is a test api')
 })
 
+app.use('/category',require('./routes/ServerOnly/categoryRouter'));
+
 app.use('/users',require('./routes/userRouter'));
 app.use('/food',require('./routes/foodRouter'));
-app.use('/category',require('./routes/ServerOnly/categoryRouter'));
-app.use('/comments', require('./routes/commentRouter'))
+app.use('/comments', require('./routes/commentRouter'));
+app.use('/map', require('./routes/mapRouter'));
 
