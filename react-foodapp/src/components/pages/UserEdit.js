@@ -1,9 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import domain from '../../domain'
 import { useAxiosGet } from '../../Hooks/HttpRequest'
 import ErrorNotice from '../misc/ErrorNotice'
 import Axios from 'axios'
+import domain from '../../domain'
 import UserContext from '../../context/UserContext'
 import Loader from '../misc/Loader'
 
