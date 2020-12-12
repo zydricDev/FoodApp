@@ -14,7 +14,7 @@ import DeleteMe from './components/pages/DeleteMe'
 import MyStore from './components/pages/MyStore'
 import Landing from './components/pages/Landing'
 import UserEdit from './components/pages/UserEdit'
-import MapDisplay from './components/pages/MapDisplay'
+
 
 
 
@@ -73,7 +73,7 @@ export default function App() {
                     <Route path='/food/:id' component={FoodItem} />
                     <Route path='/user/delete' component={DeleteMe} />
                     <Route path='/user/edit' component={UserEdit} />
-                    <Route path='/map' component={MapDisplay} />
+                    
                 </Switch>
             </UserContext.Provider>
         </BrowserRouter>
