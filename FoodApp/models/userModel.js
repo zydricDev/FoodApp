@@ -10,6 +10,8 @@ const userSchema = new mongoose.Schema({
     zipcode: {type: String},
     phone: {type: String},
     country: {type: String},
+    lat: {type: String},
+    lng: {type: String}
 });
 
 module.exports = User = mongoose.model('users', userSchema);
