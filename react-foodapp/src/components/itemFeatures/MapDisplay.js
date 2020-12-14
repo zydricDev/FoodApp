@@ -33,7 +33,7 @@ export default function MapDisplay(props) {
                         latitude: coor.data.coordinates.lat,
                         longitude: coor.data.coordinates.lng,
                         width: '100%',
-                        height: '20em',
+                        height: '30vh',
                         zoom: 14
                     })
                 }
@@ -52,6 +52,7 @@ export default function MapDisplay(props) {
                     {...viewPort}
                     mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
                     mapStyle={process.env.REACT_APP_MAPBOX_STYLE}
+                   
                     onViewportChange={viewPort =>{
                         setViewPort(viewPort)
                     }}
