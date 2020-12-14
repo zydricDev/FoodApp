@@ -14,6 +14,7 @@ import DeleteMe from './components/pages/DeleteMe'
 import MyStore from './components/pages/MyStore'
 import Landing from './components/pages/Landing'
 import UserEdit from './components/pages/UserEdit'
+import NearMeMap from './components/pages/NearMeMap'
 
 
 
@@ -68,7 +69,7 @@ export default function App() {
                     <Route path='/food/:id' component={FoodItem} />
                     <Route path='/user/delete' component={DeleteMe} />
                     <Route path='/user/edit' component={UserEdit} />
-                    
+                    <Route path='/map' component={NearMeMap} />
                 </Switch>
             </UserContext.Provider>
         </BrowserRouter>
