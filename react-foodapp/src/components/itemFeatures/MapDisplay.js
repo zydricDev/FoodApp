@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { useAxiosGet } from '../../Hooks/HttpRequest'
+import React, { useRef, useState } from 'react'
 import ReactMapGL, { Marker, Popup } from 'react-map-gl'
 import Loader from '../misc/Loader'
 
@@ -13,40 +12,16 @@ export default function MapDisplay(props) {
 
     let content = <Loader></Loader>
     const [viewPort, setViewPort] = useState({
-        latitude: undefined,
-        longitude: undefined,
-        width: '100vw',
-        height: '10vh',
+        latitude: parseFloat(props.latitude),
+        longitude: parseFloat(props.longitude),
+        width: '100%',
+        height: '30vh',
         zoom: 14
 
     })
-    const coor = useAxiosGet(props.url)
     
-    if(coor.error){
-        content = <Loader></Loader>
-    }
-    useEffect(()=>{
-        if(coor.data){
-            if(!coor.data.msg){
-                const loadData = () =>{
-                    setViewPort({
-                        latitude: coor.data.coordinates.lat,
-                        longitude: coor.data.coordinates.lng,
-                        width: '100%',
-                        height: '30vh',
-                        zoom: 14
-                    })
-                }
-                loadData()
-            }
-            
-        }
- 
-    },[coor.data])
     
-    if(coor.data){
-        if(!coor.data.msg){
-            content = 
+    content = 
             <>
                 <ReactMapGL
                     {...viewPort}
@@ -59,13 +34,13 @@ export default function MapDisplay(props) {
                     
                 >
                 <button onClick={()=>{setSelected(!selected)}}>
-                    <Marker latitude={coor.data.coordinates.lat} longitude={coor.data.coordinates.lng} offsetLeft={-10} offsetTop={-35}>
+                    <Marker latitude={parseFloat(props.latitude)} longitude={parseFloat(props.longitude)} offsetLeft={-10} offsetTop={-35}>
                         <img src='https://upload.wikimedia.org/wikipedia/commons/d/d1/Google_Maps_pin.svg' alt={name.current}/>
                     </Marker>
                 </button>
                 
                 {selected && 
-                <Popup latitude={coor.data.coordinates.lat} longitude={coor.data.coordinates.lng} onClose={()=>{setSelected(false)}} offsetLeft={20}>
+                <Popup latitude={parseFloat(props.latitude)} longitude={parseFloat(props.longitude)} onClose={()=>{setSelected(false)}} offsetLeft={20}>
                     <div className='px-5 text-center w-40'>
                         <img src={icon.current} className='w-full h-20 object-cover' alt={name.current}/>
                         <p className='font-medium text-xl'>{name.current}</p>
@@ -75,11 +50,9 @@ export default function MapDisplay(props) {
                 </Popup>}
                 </ReactMapGL>     
             </>
-        }else{
-            content = null
-        }
-        
-    }
+
+            
+
 
     return (
         content

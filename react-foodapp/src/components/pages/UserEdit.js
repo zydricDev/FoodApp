@@ -24,7 +24,7 @@ export default function UserEdit() {
     const [address, setAddress] = useState()
     const [zipcode, setZipcode] = useState()
     const [phone, setPhone] = useState()
-    const [country, setCountry] = useState('usa') 
+    const [country, setCountry] = useState() 
 
 
     const [editEmail, setEditEmail] = useState(false)
@@ -33,7 +33,7 @@ export default function UserEdit() {
     const [editZip, setEditZip] = useState(false)
     const [editIcon, setEditIcon] = useState(false)
     const [editDisplayName, setEditDisplayName] = useState(false)
-
+    const [editCountry, setEditCountry] = useState(false)
 
     let content = <Loader></Loader>
     let url = undefined
@@ -159,7 +159,7 @@ export default function UserEdit() {
                                 <div className='border'>
                                     <div className='flex w-full justify-between border-b p-2 bg-blue-400 text-white font-semibold text-md'>
                                         <p>ADDRESS INFO</p>
-                                        {(address || zipcode) &&
+                                        {(address || zipcode || country) &&
                                             <button onClick={submit}>
                                                 <p className='font-semibold px-5 rounded bg-red-500 hover:bg-red-600'>UPDATE</p>
                                             </button>
@@ -190,6 +190,27 @@ export default function UserEdit() {
 
                                         <div className='p-2 text-sm'>
                                             <div className='flex'>
+                                                <p className='text-gray-600 mr-2'>Country:</p>
+                                                {editCountry ?
+                                                    <input type='text' onChange={e => { setCountry(e.target.value) }} className='px-2 bg-blue-500 rounded' />
+                                                    :
+                                                    <div className='flex'>
+                                                        <p className='mr-1'>{currentData.data.country}</p>
+                                                    </div>
+                                                }
+                                            </div>
+                                            <button
+                                                className='focus:outline-none'
+                                                onClick={() => {
+                                                    setEditCountry(!editCountry)
+                                                    setCountry()
+                                                }}>
+                                                <p className='text-blue-500 hover:text-white'>Change country</p>
+                                            </button>
+                                        </div>
+                                        
+                                        <div className='p-2 text-sm'>
+                                            <div className='flex'>
                                                 <p className='text-gray-600 mr-2'>Zipcode:</p>
                                                 {editZip ?
                                                     <input min='0' type='number' onChange={e => { setZipcode(e.target.value) }} className='px-2 bg-blue-500 rounded' />
@@ -207,8 +228,9 @@ export default function UserEdit() {
                                                 }}>
                                                 <p className='text-blue-500 hover:text-white'>Change my zipcode</p>
                                             </button>
-
                                         </div>
+
+
                                     </div>
                                 </div>
                             </div>

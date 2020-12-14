@@ -178,6 +178,9 @@ router.patch('/edit/:id', auth, async (req,res)=>{
         if(phone && phone.length !== 10){
             return res.status(400).json({msg: "Phone must have 10-digits"});
         }
+        if(country){
+            country = country.toUpperCase()
+        }
 
         const user = await User.findById(req.params.id)
         if(!displayName){
@@ -186,14 +189,12 @@ router.patch('/edit/:id', auth, async (req,res)=>{
         if(!icon){
             icon = user.icon
         }
-        if((zipcode && !address) || (!zipcode && address)){
-            return res.status(400).json({msg: "Address and zipcode must be filled when changing addresses"});
-        }
-        if(!address && !zipcode){
+        if(!address){
             address = user.address
+        }
+        if(!zipcode){
             zipcode = user.zipcode
         }
-        
         if(!country){
             country = user.country
         }
@@ -259,8 +260,10 @@ router.get('/find/:id', async(req,res)=>{
         address: user.address,
         icon: user.icon,
         zipcode: user.zipcode,
-        phone: user.phone
-
+        phone: user.phone,
+        country: user.country,
+        lat: user.lat,
+        lng: user.lng
     })
 })
 module.exports = router;
