@@ -77,7 +77,8 @@ export default function UserInfo(propUrl) {
                     phone={usrInfo.data.phone}
                     url={`${domain}/map/display/${usrInfo.data.address} ${usrInfo.data.zipcode}`}
                     latitude = {usrInfo.data.lat}
-                    longitude = {usrInfo.data.lng} 
+                    longitude = {usrInfo.data.lng}
+                    
                     />
                 </div>
             </div>

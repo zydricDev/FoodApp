@@ -243,14 +243,65 @@ router.patch('/edit/:id', auth, async (req,res)=>{
     }
 })
 
-router.get('/', auth, async (req,res)=>{
-    const user = await User.findById(req.user);
-    res.json({
-        displayName: user.displayName,
-        id: user._id
-    });
-})
+router.post('/map', async (req, res)=>{
+    let {query, country, miles} = req.body;
+    if(!query && !country){
+        return res.status(400).json({msg: "Enter an address and country"})
+    }
+    if(country.length != 3 || /[^a-zA-Z]+$/.test(country)){
+        return res.status(400).json({msg: "Country Abbreviations must be 3 letters (ISO-3166-1 ALPHA-3 code)"});
+    }
+    if(!miles || miles <= 0){
+        return res.status(400).json({msg: "Miles field is empty"});
+    }
+    country = country.toUpperCase()
 
+    const fullAddress = (`${query}`).replace(/\s/g, '+').replace(/,/g, '%2C').replace(/&/g, '%26')
+    const result = mapApi(fullAddress)
+    const response = await fetch(result)
+    const json = await response.json()
+    if(json.info.statuscode !== 0 || json.results[0].locations.length !== 1){
+        return res.status(400).json({msg: `${query} is not a valid address`});
+    }
+    const lat = json.results[0].locations[0].displayLatLng.lat
+    const lng = json.results[0].locations[0].displayLatLng.lng
+
+
+    const range = 0.006*parseInt(miles)
+    const users = await User.find({
+        country: country
+    })
+
+    let results = []
+    users.filter(function (item){
+        if(
+            parseFloat(item.lat) <= parseFloat(lat)+range &&
+            parseFloat(item.lat) >= parseFloat(lat)-range && 
+            parseFloat(item.lng) <= parseFloat(lng)+range &&
+            parseFloat(item.lng) >= parseFloat(lng)-range)
+            {
+                return results.push({
+                    'id': item._id,
+                    'name': item.displayName,
+                    'icon': item.icon,
+                    'address': item.address,
+                    'zipcode': item.zipcode,
+                    'phone': item.phone,
+                    'lat': item.lat,
+                    'lng': item.lng
+                })
+            }
+        return
+    })
+    let all = {}
+    all.origin = {
+        latitude: lat,
+        longitude: lng
+    }
+    all.areaSearch = results
+    
+    res.json(all)
+})
 
 router.get('/find/:id', async(req,res)=>{
     const user = await User.findById(req.params.id);
@@ -266,4 +317,14 @@ router.get('/find/:id', async(req,res)=>{
         lng: user.lng
     })
 })
+
+router.get('/', auth, async (req,res)=>{
+    const user = await User.findById(req.user);
+    res.json({
+        displayName: user.displayName,
+        id: user._id
+    });
+})
+
+
 module.exports = router;

@@ -2580,6 +2580,18 @@ video {
   background-color: rgba(230, 230, 230, 0.9);
 }
 
+.bg-gray-t-50 {
+  background-color: rgba(230, 230, 230, 0.5);
+}
+
+.bg-gray-t-40 {
+  background-color: rgba(230, 230, 230, 0.4);
+}
+
+.bg-gray-t-30 {
+  background-color: rgba(230, 230, 230, 0.3);
+}
+
 .bg-red-t-50 {
   background-color: rgba(249, 0, 0, 0.5);
 }
@@ -3156,6 +3168,18 @@ video {
   background-color: rgba(230, 230, 230, 0.9);
 }
 
+.hover\:bg-gray-t-50:hover {
+  background-color: rgba(230, 230, 230, 0.5);
+}
+
+.hover\:bg-gray-t-40:hover {
+  background-color: rgba(230, 230, 230, 0.4);
+}
+
+.hover\:bg-gray-t-30:hover {
+  background-color: rgba(230, 230, 230, 0.3);
+}
+
 .hover\:bg-red-t-50:hover {
   background-color: rgba(249, 0, 0, 0.5);
 }
@@ -3730,6 +3754,18 @@ video {
 
 .focus\:bg-gray-t-90:focus {
   background-color: rgba(230, 230, 230, 0.9);
+}
+
+.focus\:bg-gray-t-50:focus {
+  background-color: rgba(230, 230, 230, 0.5);
+}
+
+.focus\:bg-gray-t-40:focus {
+  background-color: rgba(230, 230, 230, 0.4);
+}
+
+.focus\:bg-gray-t-30:focus {
+  background-color: rgba(230, 230, 230, 0.3);
 }
 
 .focus\:bg-red-t-50:focus {
@@ -21304,6 +21340,18 @@ video {
     background-color: rgba(230, 230, 230, 0.9);
   }
 
+  .sm\:bg-gray-t-50 {
+    background-color: rgba(230, 230, 230, 0.5);
+  }
+
+  .sm\:bg-gray-t-40 {
+    background-color: rgba(230, 230, 230, 0.4);
+  }
+
+  .sm\:bg-gray-t-30 {
+    background-color: rgba(230, 230, 230, 0.3);
+  }
+
   .sm\:bg-red-t-50 {
     background-color: rgba(249, 0, 0, 0.5);
   }
@@ -21880,6 +21928,18 @@ video {
     background-color: rgba(230, 230, 230, 0.9);
   }
 
+  .sm\:hover\:bg-gray-t-50:hover {
+    background-color: rgba(230, 230, 230, 0.5);
+  }
+
+  .sm\:hover\:bg-gray-t-40:hover {
+    background-color: rgba(230, 230, 230, 0.4);
+  }
+
+  .sm\:hover\:bg-gray-t-30:hover {
+    background-color: rgba(230, 230, 230, 0.3);
+  }
+
   .sm\:hover\:bg-red-t-50:hover {
     background-color: rgba(249, 0, 0, 0.5);
   }
@@ -22454,6 +22514,18 @@ video {
 
   .sm\:focus\:bg-gray-t-90:focus {
     background-color: rgba(230, 230, 230, 0.9);
+  }
+
+  .sm\:focus\:bg-gray-t-50:focus {
+    background-color: rgba(230, 230, 230, 0.5);
+  }
+
+  .sm\:focus\:bg-gray-t-40:focus {
+    background-color: rgba(230, 230, 230, 0.4);
+  }
+
+  .sm\:focus\:bg-gray-t-30:focus {
+    background-color: rgba(230, 230, 230, 0.3);
   }
 
   .sm\:focus\:bg-red-t-50:focus {
@@ -39979,6 +40051,18 @@ video {
     background-color: rgba(230, 230, 230, 0.9);
   }
 
+  .md\:bg-gray-t-50 {
+    background-color: rgba(230, 230, 230, 0.5);
+  }
+
+  .md\:bg-gray-t-40 {
+    background-color: rgba(230, 230, 230, 0.4);
+  }
+
+  .md\:bg-gray-t-30 {
+    background-color: rgba(230, 230, 230, 0.3);
+  }
+
   .md\:bg-red-t-50 {
     background-color: rgba(249, 0, 0, 0.5);
   }
@@ -40555,6 +40639,18 @@ video {
     background-color: rgba(230, 230, 230, 0.9);
   }
 
+  .md\:hover\:bg-gray-t-50:hover {
+    background-color: rgba(230, 230, 230, 0.5);
+  }
+
+  .md\:hover\:bg-gray-t-40:hover {
+    background-color: rgba(230, 230, 230, 0.4);
+  }
+
+  .md\:hover\:bg-gray-t-30:hover {
+    background-color: rgba(230, 230, 230, 0.3);
+  }
+
   .md\:hover\:bg-red-t-50:hover {
     background-color: rgba(249, 0, 0, 0.5);
   }
@@ -41129,6 +41225,18 @@ video {
 
   .md\:focus\:bg-gray-t-90:focus {
     background-color: rgba(230, 230, 230, 0.9);
+  }
+
+  .md\:focus\:bg-gray-t-50:focus {
+    background-color: rgba(230, 230, 230, 0.5);
+  }
+
+  .md\:focus\:bg-gray-t-40:focus {
+    background-color: rgba(230, 230, 230, 0.4);
+  }
+
+  .md\:focus\:bg-gray-t-30:focus {
+    background-color: rgba(230, 230, 230, 0.3);
   }
 
   .md\:focus\:bg-red-t-50:focus {
@@ -58654,6 +58762,18 @@ video {
     background-color: rgba(230, 230, 230, 0.9);
   }
 
+  .lg\:bg-gray-t-50 {
+    background-color: rgba(230, 230, 230, 0.5);
+  }
+
+  .lg\:bg-gray-t-40 {
+    background-color: rgba(230, 230, 230, 0.4);
+  }
+
+  .lg\:bg-gray-t-30 {
+    background-color: rgba(230, 230, 230, 0.3);
+  }
+
   .lg\:bg-red-t-50 {
     background-color: rgba(249, 0, 0, 0.5);
   }
@@ -59230,6 +59350,18 @@ video {
     background-color: rgba(230, 230, 230, 0.9);
   }
 
+  .lg\:hover\:bg-gray-t-50:hover {
+    background-color: rgba(230, 230, 230, 0.5);
+  }
+
+  .lg\:hover\:bg-gray-t-40:hover {
+    background-color: rgba(230, 230, 230, 0.4);
+  }
+
+  .lg\:hover\:bg-gray-t-30:hover {
+    background-color: rgba(230, 230, 230, 0.3);
+  }
+
   .lg\:hover\:bg-red-t-50:hover {
     background-color: rgba(249, 0, 0, 0.5);
   }
@@ -59804,6 +59936,18 @@ video {
 
   .lg\:focus\:bg-gray-t-90:focus {
     background-color: rgba(230, 230, 230, 0.9);
+  }
+
+  .lg\:focus\:bg-gray-t-50:focus {
+    background-color: rgba(230, 230, 230, 0.5);
+  }
+
+  .lg\:focus\:bg-gray-t-40:focus {
+    background-color: rgba(230, 230, 230, 0.4);
+  }
+
+  .lg\:focus\:bg-gray-t-30:focus {
+    background-color: rgba(230, 230, 230, 0.3);
   }
 
   .lg\:focus\:bg-red-t-50:focus {
@@ -77329,6 +77473,18 @@ video {
     background-color: rgba(230, 230, 230, 0.9);
   }
 
+  .xl\:bg-gray-t-50 {
+    background-color: rgba(230, 230, 230, 0.5);
+  }
+
+  .xl\:bg-gray-t-40 {
+    background-color: rgba(230, 230, 230, 0.4);
+  }
+
+  .xl\:bg-gray-t-30 {
+    background-color: rgba(230, 230, 230, 0.3);
+  }
+
   .xl\:bg-red-t-50 {
     background-color: rgba(249, 0, 0, 0.5);
   }
@@ -77905,6 +78061,18 @@ video {
     background-color: rgba(230, 230, 230, 0.9);
   }
 
+  .xl\:hover\:bg-gray-t-50:hover {
+    background-color: rgba(230, 230, 230, 0.5);
+  }
+
+  .xl\:hover\:bg-gray-t-40:hover {
+    background-color: rgba(230, 230, 230, 0.4);
+  }
+
+  .xl\:hover\:bg-gray-t-30:hover {
+    background-color: rgba(230, 230, 230, 0.3);
+  }
+
   .xl\:hover\:bg-red-t-50:hover {
     background-color: rgba(249, 0, 0, 0.5);
   }
@@ -78479,6 +78647,18 @@ video {
 
   .xl\:focus\:bg-gray-t-90:focus {
     background-color: rgba(230, 230, 230, 0.9);
+  }
+
+  .xl\:focus\:bg-gray-t-50:focus {
+    background-color: rgba(230, 230, 230, 0.5);
+  }
+
+  .xl\:focus\:bg-gray-t-40:focus {
+    background-color: rgba(230, 230, 230, 0.4);
+  }
+
+  .xl\:focus\:bg-gray-t-30:focus {
+    background-color: rgba(230, 230, 230, 0.3);
   }
 
   .xl\:focus\:bg-red-t-50:focus {
