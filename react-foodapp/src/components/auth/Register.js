@@ -14,7 +14,7 @@ export default function Register() {
     const [address, setAddress] = useState()
     const [zipcode, setZipcode] = useState()
     const [phone, setPhone] = useState()
-
+    const [country, setCountry] = useState()
     const [error, setError] = useState()
 
     
@@ -25,7 +25,7 @@ export default function Register() {
     const submit = async (e) =>{
         e.preventDefault()
         try{
-            const newUser = {email, password, passwordCheck, displayName, icon, address, zipcode, phone}
+            const newUser = {email, password, passwordCheck, displayName, icon, address, zipcode, phone, country}
             
             await Axios.post(`${domain}/users/register`, newUser)
 
@@ -81,13 +81,19 @@ export default function Register() {
                             </div>
 
                             <div className='mb-5 grid'>
-                                <label className='text-gray-500'>Address (optional)</label>
+                                <label className='text-gray-500'>Address</label>
                                 <input className='border-black rounded p-2 border-2 border-gray-400' type='text' onChange={e => setAddress(e.target.value)}/>
                             </div>
+                            
 
                             <div className='mb-5 grid'>
                                 <label className='text-gray-500'>Zip Code (5-digits)</label>
                                 <input className='border-black rounded p-2 border-2 border-gray-400' type='number' onChange={e => setZipcode(e.target.value)}/>
+                            </div>
+
+                            <div className='mb-5 grid'>
+                                <label className='text-gray-500'>Country Postal Abbreviation (3-letters, eg. JPN - Japan)</label>
+                                <input className='border-black rounded p-2 border-2 border-gray-400' type='text' onChange={e => setCountry(e.target.value)}/>
                             </div>
 
                             <div className='mb-5 grid'>

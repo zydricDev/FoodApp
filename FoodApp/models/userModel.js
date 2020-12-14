@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
     address: {type: String},
     zipcode: {type: String},
     phone: {type: String},
+    country: {type: String},
 });
 
 module.exports = User = mongoose.model('users', userSchema);
