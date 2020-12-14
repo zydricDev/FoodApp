@@ -3,7 +3,7 @@ const mapApi = require('../mapFunctions/mapApi')
 const fetch = require('node-fetch')
 
 router.get('/display/:location', async(req,res)=>{
-    const location = req.params.location.replace(/\s/g, '+').replace(/,/g, '%2C')
+    const location = req.params.location.replace(/\s/g, '+').replace(/,/g, '%2C').replace(/&/g, '%26')
     const result = mapApi(location)
     
     const response = await fetch(result)

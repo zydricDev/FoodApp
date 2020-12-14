@@ -2,8 +2,12 @@ const router = require('express').Router();
 const User = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const fetch = require('node-fetch');
+
+
 const auth = require('../middleware/auth');
 const validFormat = require('../checkEmail/validFormat');
+const mapApi = require('../mapFunctions/mapApi');
 
 router.post('/register', async (req,res)=>{
     try{
@@ -19,6 +23,9 @@ router.post('/register', async (req,res)=>{
         }
         if(address.length > 50){
             return res.status(400).json({msg: "Address has reached character limit"});
+        }
+        if(displayName.length > 50){
+            return res.status(400).json({msg: "Display name has reached character limit"});
         }
         if(country.length != 3 || /[^a-zA-Z]+$/.test(country)){
             return res.status(400).json({msg: "Country Postal Abbreviations must be 3 letters"});
@@ -49,8 +56,17 @@ router.post('/register', async (req,res)=>{
         if(country){
             country = country.toUpperCase()
         }
-
-
+   
+        const fullAddress = (`${address} ${zipcode}`).replace(/\s/g, '+').replace(/,/g, '%2C').replace(/&/g, '%26')
+        const result = mapApi(fullAddress)
+        const response = await fetch(result)
+        const json = await response.json()
+        if(json.info.statuscode !== 0 || json.results[0].locations.length !== 1){
+            return res.status(400).json({msg: `${address} ${zipcode} is not a valid address`});
+        }
+        lat = json.results[0].locations[0].displayLatLng.lat
+        lng = json.results[0].locations[0].displayLatLng.lng
+        
         const salt = await bcrypt.genSalt();
         const hashedPass = await bcrypt.hash(password, salt);
         const newUser = new User({
@@ -61,7 +77,9 @@ router.post('/register', async (req,res)=>{
             address, 
             zipcode, 
             phone,
-            country
+            country,
+            lat,
+            lng
         });
         const savedUser = await newUser.save();
         res.json(savedUser);
@@ -135,7 +153,7 @@ router.post('/tokenIsValid', async (req,res)=>{
 
 router.patch('/edit/:id', auth, async (req,res)=>{
     try{
-        let {displayName, icon, address, zipcode, phone, email} = req.body;
+        let {displayName, icon, address, zipcode, phone, email, country} = req.body;
         if(email){
             const valid = validFormat(email)
             if(!valid){
@@ -146,6 +164,12 @@ router.patch('/edit/:id', auth, async (req,res)=>{
         const existingUser = await User.findOne({email: email});
         if(existingUser){
             return res.status(400).json({msg: "This E-mail has already been taken"});
+        }
+        if(address && address.length > 50){
+            return res.status(400).json({msg: "Address has reached character limit"});
+        }
+        if(displayName && displayName.length > 50){
+            return res.status(400).json({msg: "Display name has reached character limit"});
         }
         if(zipcode && zipcode.length !== 5){
             return res.status(400).json({msg: "Zip code must have 5-digits"});
@@ -162,12 +186,28 @@ router.patch('/edit/:id', auth, async (req,res)=>{
         if(!icon){
             icon = user.icon
         }
-        if(!address){
-            address = user.address
+        if((zipcode && !address) || (!zipcode && address)){
+            return res.status(400).json({msg: "Address and zipcode must be filled when changing addresses"});
         }
-        if(!zipcode){
+        if(!address && !zipcode){
+            address = user.address
             zipcode = user.zipcode
         }
+        
+        if(!country){
+            country = user.country
+        }
+
+        const fullAddress = (`${address} ${zipcode}`).replace(/\s/g, '+').replace(/,/g, '%2C').replace(/&/g, '%26')
+        const result = mapApi(fullAddress)
+        const response = await fetch(result)
+        const json = await response.json()
+        if(json.info.statuscode !== 0 || json.results[0].locations.length !== 1){
+            return res.status(400).json({msg: `${address} ${zipcode} is not a valid address`});
+        }
+        const lat = json.results[0].locations[0].displayLatLng.lat
+        const lng = json.results[0].locations[0].displayLatLng.lng
+        
         if(!phone){
             phone = user.phone
         }
@@ -182,6 +222,9 @@ router.patch('/edit/:id', auth, async (req,res)=>{
             address: address,
             zipcode: zipcode,
             phone: phone,
+            country: country,
+            lat: lat,
+            lng: lng
             
         })
         res.json({
@@ -190,7 +233,8 @@ router.patch('/edit/:id', auth, async (req,res)=>{
             icon: user.icon,
             address: user.address,
             zipcode: user.zipcode,
-            phone: user.phone 
+            phone: user.phone,
+            country: user.country 
         })
 
     }catch(err){

@@ -24,6 +24,8 @@ export default function UserEdit() {
     const [address, setAddress] = useState()
     const [zipcode, setZipcode] = useState()
     const [phone, setPhone] = useState()
+    const [country, setCountry] = useState('usa') 
+
 
     const [editEmail, setEditEmail] = useState(false)
     const [editPhone, setEditPhone] = useState(false)
@@ -51,7 +53,7 @@ export default function UserEdit() {
 
     const submit = async () => {
         try {
-            const query = { displayName, icon, address, zipcode, phone, email }
+            const query = { displayName, icon, address, zipcode, phone, email, country}
             
             
             await Axios.patch(`${domain}/users/edit/${userId}`, query, {
