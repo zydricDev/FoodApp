@@ -7,8 +7,8 @@ const validFormat = require('../checkEmail/validFormat');
 
 router.post('/register', async (req,res)=>{
     try{
-        let {email, password, passwordCheck, displayName, icon, address, zipcode, phone} = req.body;
-        if(!email || !password || !passwordCheck){
+        let {email, password, passwordCheck, displayName, icon, address, zipcode, phone, country} = req.body;
+        if(!email || !password || !passwordCheck || !address || !zipcode || !country){
             return res.status(400).json({msg: "Not all field have been entered"});
         }
         if(password.length < 5){
@@ -17,8 +17,14 @@ router.post('/register', async (req,res)=>{
         if(password !== passwordCheck){
             return res.status(400).json({msg: "Passwords needs to match"});
         }
-        if(address > 50){
+        if(address.length > 50){
             return res.status(400).json({msg: "Address has reached character limit"});
+        }
+        if(country.length != 3 || /[^a-zA-Z]+$/.test(country)){
+            return res.status(400).json({msg: "Country Postal Abbreviations must be 3 letters"});
+        }
+        if(zipcode.length !== 5){
+            return res.status(400).json({msg: "Zip code must be 5-digits"});
         }
         if(email){
             const valid = validFormat(email)
@@ -30,26 +36,19 @@ router.post('/register', async (req,res)=>{
         if(existingUser){
             return res.status(400).json({msg: "This E-mail has already been taken"});
         }
-        if(zipcode.length !== 5){
-            return res.status(400).json({msg: "Zip code must be 5-digits"});
-        }
-        
         if(!displayName){
             displayName = email;
         }
         if(!icon){
             icon = 'https://semantic-ui.com/images/wireframe/image.png'
         }
-        if(!address){
-            address = 'Address was not set'
-        }
-        if(!zipcode){
-            zipcode = 'Zip was not set'
-        }
         if(!phone){
             phone = '0000000000'
         }
-        
+
+        if(country){
+            country = country.toUpperCase()
+        }
 
 
         const salt = await bcrypt.genSalt();
@@ -61,7 +60,8 @@ router.post('/register', async (req,res)=>{
             icon, 
             address, 
             zipcode, 
-            phone
+            phone,
+            country
         });
         const savedUser = await newUser.save();
         res.json(savedUser);
