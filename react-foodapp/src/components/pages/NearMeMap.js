@@ -33,10 +33,10 @@ export default function NearMeMap() {
             )} 
 
             <div className='relative'>
-                <div className='absolute z-10 m-10 grid grid-cols-1 gap-1 bg-black-t-50 p-1 rounded'>
+                <div className='absolute z-10 sm:m-10 w-full sm:w-auto grid grid-cols-1 gap-1 bg-black-t-50 p-1 rounded'>
                     
-                    <div className='flex gap-1'>
-                        <input className='px-2 py-1 w-64 border border-gray-500 rounded focus:outline-none' type='search' placeholder='Search by address' onChange={e => setQuery(e.target.value)}/>
+                    <div className='grid grid-cols-1 sm:flex gap-1'>
+                        <input className='px-2 py-1 sm:w-64 border border-gray-500 rounded focus:outline-none' type='search' placeholder='Search by address' onChange={e => setQuery(e.target.value)}/>
                         <select className='rounded focus:outline-none border-gray-500 p-1 text-gray-600' value={miles} onChange={e => setMiles(e.target.value)}>
                             <option value='500'>within miles</option>
                             <option value='5'>5 miles</option>
@@ -51,8 +51,8 @@ export default function NearMeMap() {
                             <option value='1000'>1000 miles</option>
                         </select>
                     </div>
-                    <div className='flex gap-1'>
-                        <input className='px-2 py-1 w-64 border border-gray-500 rounded focus:outline-none' type='search' placeholder='Enter Country (3-letters)' onChange={e => setCountry(e.target.value)}/>
+                    <div className='grid grid-cols-1 sm:flex gap-1'>
+                        <input className='px-2 py-1 sm:w-64 border border-gray-500 rounded focus:outline-none' type='search' placeholder='Enter Country (3-letters)' onChange={e => setCountry(e.target.value)}/>
                         <button className='bg-gray-200 px-3 rounded hover:bg-gray-400' onClick={search}>
                             <FontAwesomeIcon icon={faSearch} />
                         </button>
