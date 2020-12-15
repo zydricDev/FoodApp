@@ -18,6 +18,7 @@ export default function DisplayMap(props) {
         zoom: 2
 
     })
+    
 
     const [data, setData] = useState({
         id: undefined,
@@ -62,6 +63,10 @@ export default function DisplayMap(props) {
                 }}
                 
             >
+                <Marker latitude={parseFloat(props.allNearby.origin.latitude)} longitude={parseFloat(props.allNearby.origin.longitude)} offsetLeft={-10} offsetTop={-35}>
+                    <img src='https://www.flaticon.com/svg/static/icons/svg/1673/1673318.svg' alt='origin' className='w-10 h-10'/>
+                </Marker>
+                
                 {props.allNearby.areaSearch.map((item, index)=>(
                     <Marker key={index} latitude={parseFloat(item.lat)} longitude={parseFloat(item.lng)} offsetLeft={-10} offsetTop={-35}>
                         <button 
