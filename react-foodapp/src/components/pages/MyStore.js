@@ -31,7 +31,8 @@ export default function MyStore() {
     
     useEffect(()=>{
         setSelectUrl(`${domain}/food/${selectedId}`)
-    },[selectedId])
+        
+    },[selectedId, sortBy])
 
     if (userCred.userData.user) {
         url = `${domain}/food/display/user/${userCred.userData.user.id}`
@@ -72,6 +73,47 @@ export default function MyStore() {
         }
     }
 
+
+    const sorted = (a, b) => {
+        if (sortBy === 'price-ascend') {
+            return parseInt(a.price) - parseInt(b.price)
+        }
+        if(sortBy === 'price-descend'){
+            if(parseInt(a.price) < parseInt(b.price)) { return 1; }
+            if(parseInt(a.price) > parseInt(b.price)) { return -1; }
+            return 0;
+        }
+        
+        if(sortBy === 'name-ascend'){
+            if(a.foodName < b.foodName) { return -1; }
+            if(a.foodName > b.foodName) { return 1; }
+            return 0;
+        }
+        if(sortBy === 'name-descend'){
+            if(a.foodName < b.foodName) { return 1; }
+            if(a.foodName > b.foodName) { return -1; }
+            return 0;
+        }
+        if(sortBy === 'feature'){
+            console.log(a)
+            if(a.feature < b.feature) { return 1; }
+            if(a.feature > b.feature) { return -1; }
+            return 0;
+        }
+
+        if(sortBy === 'category-ascend'){
+            if(a.category < b.category) { return -1; }
+            if(a.category > b.category) { return 1; }
+            return 0;
+        }
+        if(sortBy === 'category-descend'){
+            if(a.category < b.category) { return 1; }
+            if(a.category > b.category) { return -1; }
+            return 0;
+        }
+        return
+    }
+
     if (productList.error) {
         content = <Loader></Loader>
     }
@@ -86,18 +128,21 @@ export default function MyStore() {
                     <div className='p-2 grid grid-cols-1 gap-3'>
                         <select className='border border-black rounded mb-5 bg-gray-300 focus:outline-none' value={sortBy} onChange={e => setSortBy(e.target.value)}>
                             <option>--Sort by--</option>
-                            <option value='name-ascend'>Name (A-Z)</option>
                             <option value='feature'>Featured</option>
-                            <option value='name-decend'>Name (Z-A)</option>
-                            <option value='category'>Category (A-Z)</option>
-                            <option value='price'>Price</option>
-                            
+                            <option value='price-ascend'>Price (Highest)</option>
+                            <option value='price-descend'>Price (Lowest)</option>
+                            <option value='name-ascend'>Name (A-Z)</option>
+                            <option value='name-descend'>Name (Z-A)</option>
+                            <option value='category-ascend'>Category (A-Z)</option>
+                            <option value='category-descend'>Category (Z-A)</option>
                         </select>
                         <p className='font-bold text-md'>My Products</p>
 
                         <select className='border border-black rounded mb-5 bg-gray-300 focus:outline-none' value={selectedId} onChange={e => selectedItem(e.target.value)}>
                             <option value='null'>--Default---</option>
-                            {productList.data.map((product, index) =>
+                            {productList.data
+                            .sort(sorted)
+                            .map((product, index) =>
                             <option key={index} value={product._id}>
                                 {product.foodName}
                             </option>
