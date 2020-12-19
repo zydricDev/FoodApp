@@ -39,7 +39,7 @@ export default function RegisterFood() {
             if (userDisplayName && userId) {
                 const newFood = { foodName, userDisplayName, userId, price, desc, image, category, feature }
                 await Axios.post(`${domain}/food/register`, newFood, {
-                    headers: { "auth-token": localStorage.getItem('auth-token') }
+                    headers: { "zdevsite.usrtkn": localStorage.getItem('zdevsite.usrtkn') }
                 })
             }
 

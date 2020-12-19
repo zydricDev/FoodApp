@@ -38,7 +38,7 @@ export default function Register() {
                 user: loginRes.data.user,
             })
 
-            localStorage.setItem('auth-token', loginRes.data.token)
+            localStorage.setItem('zdevsite.usrtkn', loginRes.data.token)
             
             history.push('/home')
         }catch(err){

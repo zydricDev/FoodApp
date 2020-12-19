@@ -132,7 +132,7 @@ router.delete('/delete', auth, async (req,res) =>{
 
 router.post('/tokenIsValid', async (req,res)=>{
     try{
-        const token = req.header('auth-token');
+        const token = req.header('zdevsite.usrtkn');
         if(!token){
             return res.json(false);
         }

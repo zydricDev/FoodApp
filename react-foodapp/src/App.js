@@ -27,21 +27,21 @@ export default function App() {
     useEffect(() => {
 
         const checkLoggedIn = async () => {
-            let token = localStorage.getItem('auth-token')
+            let token = localStorage.getItem('zdevsite.usrtkn')
             if (token === null) {
-                localStorage.setItem('auth-token', '')
+                localStorage.setItem('zdevsite.usrtkn', '')
                 token = ''
             }
 
             const tokenRes = await Axios.post(
                 `${domain}/users/tokenIsValid`,
                 null,
-                { headers: { 'auth-token': token } }
+                { headers: { 'zdevsite.usrtkn': token } }
             )
 
             if (tokenRes.data) {
                 const userRes = await Axios.get(`${domain}/users/`, {
-                    headers: { 'auth-token': token },
+                    headers: { 'zdevsite.usrtkn': token },
                 })
                 setUserData({
                     token,

@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const auth = (req, res, next) => {
     try{
-        var token = req.header('auth-token');
+        var token = req.header('zdevsite.usrtkn');
         
         if(!token){
             

@@ -16,7 +16,7 @@ export default function HeaderOptions() {
             token: undefined,
             user: undefined
         })
-        localStorage.setItem('auth-token', '')
+        localStorage.setItem('zdevsite.usrtkn', '')
         
     }
     
