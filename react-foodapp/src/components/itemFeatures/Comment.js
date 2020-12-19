@@ -49,7 +49,7 @@ export default function Comment(propsId) {
             }
             const newComment = {userId, recipientId, userDisplayName, icon, rating, comment}
             await Axios.post(`${domain}/comments/post`, newComment, {
-                headers: { "auth-token": localStorage.getItem('auth-token') }
+                headers: { "zdevsite.usrtkn": localStorage.getItem('zdevsite.usrtkn') }
             })
             
         }catch(err){

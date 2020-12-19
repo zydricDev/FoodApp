@@ -15,7 +15,7 @@ export default function AuthOptions() {
             token: undefined,
             user: undefined
         })
-        localStorage.setItem('auth-token', '')
+        localStorage.setItem('zdevsite.usrtkn', '')
     }
     return (
         <nav className='flex invisible md:visible'>

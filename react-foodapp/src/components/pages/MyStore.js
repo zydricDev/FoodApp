@@ -65,7 +65,7 @@ export default function MyStore() {
             try {
                 const newFood = { newName, newPrice, newDesc, newImage, newFeature, newCategory }
                 await Axios.patch(`${domain}/food/edit/${item}`, newFood, {
-                    headers: { "auth-token": localStorage.getItem('auth-token') }
+                    headers: { "zdevsite.usrtkn": localStorage.getItem('zdevsite.usrtkn') }
                 })
             } catch (err) {
                 err.response.data.msg && setError(err.response.data.msg)

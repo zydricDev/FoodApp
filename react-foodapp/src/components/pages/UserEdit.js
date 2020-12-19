@@ -57,13 +57,13 @@ export default function UserEdit() {
             
             
             await Axios.patch(`${domain}/users/edit/${userId}`, query, {
-                headers: { "auth-token": localStorage.getItem('auth-token') }
+                headers: { "zdevsite.usrtkn": localStorage.getItem('zdevsite.usrtkn') }
             })
             await Axios.patch(`${domain}/food/edit/user/${userId}`, { displayName }, {
-                headers: { "auth-token": localStorage.getItem('auth-token') }
+                headers: { "zdevsite.usrtkn": localStorage.getItem('zdevsite.usrtkn') }
             })
             await Axios.patch(`${domain}/comments/user/update/${userId}`, { displayName, icon }, {
-                headers: { "auth-token": localStorage.getItem('auth-token') }
+                headers: { "zdevsite.usrtkn": localStorage.getItem('zdevsite.usrtkn') }
             })
 
             history.push('/home')
