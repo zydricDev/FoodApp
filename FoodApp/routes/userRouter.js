@@ -6,6 +6,7 @@ const fetch = require('node-fetch');
 
 
 const auth = require('../middleware/auth');
+const tknParamAuth = require('../middleware/tokenParamsAuth');
 const validFormat = require('../checkEmail/validFormat');
 const mapApi = require('../mapFunctions/mapApi');
 
@@ -151,7 +152,7 @@ router.post('/tokenIsValid', async (req,res)=>{
 });
 
 
-router.patch('/edit/:id', auth, async (req,res)=>{
+router.patch('/edit/:uuid', tknParamAuth, async (req,res)=>{
     try{
         let {displayName, icon, address, zipcode, phone, email, country} = req.body;
         if(email){
@@ -182,7 +183,7 @@ router.patch('/edit/:id', auth, async (req,res)=>{
             country = country.toUpperCase()
         }
 
-        const user = await User.findById(req.params.id)
+        const user = await User.findById(req.params.uuid)
         if(!displayName){
             displayName = user.displayName
         }
