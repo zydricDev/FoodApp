@@ -207,7 +207,7 @@ export default function UserMenu(ownerId) {
                                 <img className='w-40 h-40 object-cover rounded-full' src={sellerData.data.icon} alt={sellerData.data.icon}/>
                                 <div className='bg-blue-500 w-full p-5 rounded'>
                                     <p className='text-2xl font-semibold'>{sellerState.sellerName}</p>
-                                    <p>{sellerState.sellerAddress}, {sellerData.data.zipcode}</p>
+                                    <p>{sellerState.sellerAddress}</p>
                                     <p>Phone: ({sellerData.data.phone.substring(0, 3)})-{sellerData.data.phone.substring(3, 6)}-{sellerData.data.phone.substring(6, 10)}</p>
                                 </div>
                             </div>
