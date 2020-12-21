@@ -169,7 +169,7 @@ export default function UserMenu(ownerId) {
                         <div className='p-5 grid grid-cols-1 gap-2'>
                             {error && (<ErrorNotice message={error} clearError={() => setError(undefined)} />)}
                             <img className='w-full h-40 object-cover rounded' src={selectedItem.icon} alt={selectedItem.icon}/>
-                            <div className='w-full p-5'>
+                            <div className='w-full p-5 border border-gray-400 rounded'>
                                 <p className='text-2xl font-semibold'>{selectedItem.itemName}</p>
                                 <p className='text-xl'>${selectedItem.itemPrice}</p>
                                 <p className='py-2 break-words'>{selectedItem.description}</p>

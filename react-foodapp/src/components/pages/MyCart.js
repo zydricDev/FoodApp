@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGrinBeamSweat } from '@fortawesome/free-solid-svg-icons'
 import UserContext from '../../context/UserContext'
 import ErrorNotice from '../misc/ErrorNotice'
 import domain from '../../domain'
@@ -35,8 +36,11 @@ export default function MyCart() {
             </div>
         }else{
             content = 
-            <div>
-                sad
+            <div className='bg-gray-300 w-full h-screen text-center'>
+                <div className='py-40 text-gray-500'>
+                    <FontAwesomeIcon icon={faGrinBeamSweat} className='text-5xl' />
+                    <p className='my-2'>This page is forbidden, please log-in to view this page</p>
+                </div>
             </div>
         }
         
