@@ -6,10 +6,12 @@ import { faMedal } from '@fortawesome/free-solid-svg-icons'
 import domain from '../../domain'
 import Loader from '../misc/Loader'
 import UserContext from '../../context/UserContext'
-
+import Axios from 'axios'
+import ErrorNotice from '../misc/ErrorNotice'
 
 export default function UserMenu(ownerId) {
     const userCred = useContext(UserContext)
+    const [error, setError] = useState()
     const [buyer, setBuyer] = useState()
 
     const url = `${domain}/food/display/user/${ownerId.propUrl}`
@@ -23,7 +25,7 @@ export default function UserMenu(ownerId) {
         itemPrice: undefined,
         description: undefined,
         icon: undefined,
-        estDeliver: undefined,
+        estDelivery: undefined,
         
     })
 
@@ -82,7 +84,7 @@ export default function UserMenu(ownerId) {
         setSellerState({
             sellerName: sellerData.data.displayName,
             sellerId: sellerData.data.id,
-            sellerAddress: sellerData.data.address,
+            sellerAddress: `${sellerData.data.address}, ${sellerData.data.zipcode}`,
         })
     }
 
@@ -90,16 +92,54 @@ export default function UserMenu(ownerId) {
         setBuyerState({
             buyerName: buyerData.data.displayName,
             buyerId: buyerData.data.id,
-            buyerAddress: buyerData.data.address,
+            buyerAddress: `${buyerData.data.address}, ${buyerData.data.zipcode}`,
         })
     }
-    
+
+    async function submit(){
+        try{
+            if(selectedItem.itemId && sellerState.sellerId && buyerState.buyerId){
+                const itemId = selectedItem.itemId
+                const itemPrice = selectedItem.itemPrice
+                const buyerName = buyerState.buyerName
+                const buyerId = buyerState.buyerId
+                const buyerAddress = buyerState.buyerAddress
+                const sellerName = sellerState.sellerName
+                const sellerId = sellerState.sellerId
+                const sellerAddress = sellerState.sellerAddress
+                const icon = selectedItem.icon
+                const estDeliver = selectedItem.estDelivery
+                
+                let query = {
+                    itemId,
+                    itemPrice,
+                    buyerName,
+                    buyerId,
+                    buyerAddress,
+                    sellerName,
+                    sellerId,
+                    sellerAddress,
+                    icon,
+                    estDeliver,
+                    quantity
+                }
+                
+                await Axios.post(`${domain}/precheck/store`, query, {
+                    headers: { "zdevsite.usrtkn": localStorage.getItem('zdevsite.usrtkn') }
+                })
+                setShopMenu(false) 
+                
+            }
+        }
+        catch(err){
+            err.response.data.msg && setError(err.response.data.msg)
+        }
+    }
 
 
     if (userMenus.data && categoryList.data && sellerData.data) {
-     
-        
-        content =
+        try{
+            content =
             <div>
                 {maskTransitions.map(({ item, key, props }) =>
                     item &&
@@ -107,7 +147,11 @@ export default function UserMenu(ownerId) {
                         key={key}
                         style={props}
                         className="bg-black-t-50 fixed top-0 left-0 w-full h-full z-50"
-                        onClick={() => setShopMenu(false)}
+                        onClick={() => {
+                            setShopMenu(false)
+                            setError()
+                        }}
+                       
                     >
                     </animated.div>
                 )}
@@ -120,6 +164,7 @@ export default function UserMenu(ownerId) {
                         className="fixed bg-white top-0 left-0 w-4/6 h-full z-50 shadow"
                     >
                         <div className='p-5 grid grid-cols-1 gap-2'>
+                            {error && (<ErrorNotice message={error} clearError={() => setError(undefined)} />)}
                             <img className='w-full h-40 object-cover rounded' src={selectedItem.icon} alt={selectedItem.icon}/>
                             <div className='w-full border border-gray-500 rounded p-5'>
                                 <p className='text-2xl font-semibold'>{selectedItem.itemName}</p>
@@ -153,12 +198,12 @@ export default function UserMenu(ownerId) {
                                     </div>
                                 </div>
                                 
-                                <form>
-                                    <input className='hover:bg-blue-600 cursor-pointer px-5 py-2 rounded bg-blue-500 text-white' value='Add to cart' type='submit'/>
-                                </form>
+                                
+                                <button className='hover:bg-blue-600 cursor-pointer px-5 py-2 rounded bg-blue-500 text-white' onClick={submit}>Add to cart</button>
+                                
                             </>
                             }
-                            <div className='w-full p-5 inline-flex gap-5 items-center text-white'>
+                            <div className='w-full p-5 inline-flex gap-5 items-center text-white mt-20'>
                                 <img className='w-40 h-40 object-cover rounded-full' src={sellerData.data.icon} alt={sellerData.data.icon}/>
                                 <div className='bg-blue-500 w-full p-5 rounded'>
                                     <p className='text-2xl font-semibold'>{sellerState.sellerName}</p>
@@ -189,6 +234,7 @@ export default function UserMenu(ownerId) {
                                         itemName: item.foodName,
                                         itemPrice: item.price,
                                         description: item.desc,
+                                        estDelivery: "1",
                                         icon: item.image
                                     })
                                     setShopMenu(true)
@@ -236,6 +282,12 @@ export default function UserMenu(ownerId) {
                     )}
                 </div>
             </div>
+        }
+        catch(err){
+            err.response.data.msg && setError(err.response.data.msg)
+        }
+        
+        
     }
 
 
