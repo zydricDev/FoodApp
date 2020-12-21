@@ -56,9 +56,9 @@ export default function Cart(myProps) {
             }
             
             content = 
-            <div className='w-full flex h-screen'>
-                <div className='w-2/6'>
-                    <form className='p-20 h-full'>
+            <div className='w-full grid grid-cols-1 sm:flex h-screen'>
+                <div className='sm:w-2/6'>
+                    <form className='p-5 sm:p-20 h-full'>
                         <div className='pt-5 pb-2 w-full text-2xl font-bold border-b border-black text-red-500'>
                             Food App
                         </div>
@@ -78,11 +78,11 @@ export default function Cart(myProps) {
                         <button className='bg-blue-500 py-2 px-5 rounded text-white hover:bg-blue-600 font-semibold my-5' onClick={submit}>Proceed to checkout</button>
                     </form>
                 </div>
-                <div className='w-4/6'>
+                <div className='sm:w-4/6'>
                     <form className='border-l border-b border-gray-400 shadow-md p-5 grid grid-cols-1 gap-5'>
                         {myData.data.map((item,index)=>
-                        <div key={index} className='bg-blue-500 p-5 rounded flex items-center justify-between'>
-                            <div className='text-white w-3/6 grid grid-cols-1 gap-2'>
+                        <div key={index} className='bg-blue-500 p-5 rounded grid grid-cols-1 gap-5 sm:gap-0 sm:flex items-center justify-between'>
+                            <div className='text-white sm:w-3/6 grid grid-cols-1 gap-2'>
                                 <div>
                                     <p className='font-semibold'>#ID_{item.itemId}</p>
                                     <p>#Order_{item._id}</p>
@@ -108,7 +108,7 @@ export default function Cart(myProps) {
                                 </button>
                             
                             </div>
-                            <img className='w-2/6 h-full object-cover' src={item.icon} alt={item.icon}/>
+                            <img className='sm:w-2/6 sm:h-full object-cover' src={item.icon} alt={item.icon}/>
                             
                         </div>
                         
