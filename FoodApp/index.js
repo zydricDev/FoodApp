@@ -31,4 +31,5 @@ app.use('/users',require('./routes/userRouter'));
 app.use('/food',require('./routes/foodRouter'));
 app.use('/comments', require('./routes/commentRouter'));
 app.use('/map', require('./routes/mapRouter'));
-app.use('/precheck', require('./routes/preCheckout'))
+app.use('/precheck', require('./routes/preCheckoutRouter'))
+app.use('/checkout', require('./routes/checkoutRouter'))
