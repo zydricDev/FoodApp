@@ -6,13 +6,16 @@ const tknParamAuth = require('../middleware/tokenParamsAuth')
 
 router.post('/store', auth, async (req, res)=>{
     try{
-        let {itemId, itemPrice, buyerName, buyerId, buyerAddress, sellerName, sellerId, sellerAddress, icon, estDeliver, quantity} = req.body;
+        let {itemId, itemName, itemPrice, buyerName, buyerId, buyerAddress, sellerName, sellerId, sellerAddress, icon, estDeliver, quantity} = req.body;
 
-        if(!itemId || !itemPrice || !buyerName || !buyerId || !buyerAddress || !sellerName || !sellerId || !sellerAddress || !icon || !estDeliver || !quantity){
+        if(!itemId || !itemName || !itemPrice || !buyerName || !buyerId || !buyerAddress || !sellerName || !sellerId || !sellerAddress || !icon || !estDeliver || !quantity){
             return res.status(400).json({msg: "Not all fields are filled"})
         }
         if(quantity < 0 || quantity > 20){
             return res.status(400).json({msg: "Quantity must be within 1-20"})
+        }
+        if(buyerId === sellerId){
+            return res.status(400).json({msg: "You cannot add your own items"}) 
         }
         const checkDupe = await Precheckout.findOne({
             itemId: itemId,
@@ -24,6 +27,7 @@ router.post('/store', auth, async (req, res)=>{
         }
         const precheck = new Precheckout({
             itemId,
+            itemName,
             itemPrice,
             buyerName,
             buyerId,

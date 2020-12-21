@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 
 const precheckoutSchema = new mongoose.Schema({
     itemId: {type: String, required: true},
+    itemName: {type: String},
     itemPrice: {type: String},
     buyerName: {type: String},
     buyerId: {type: String, required: true},

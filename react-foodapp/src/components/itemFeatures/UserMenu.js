@@ -99,7 +99,9 @@ export default function UserMenu(ownerId) {
     async function submit(){
         try{
             if(selectedItem.itemId && sellerState.sellerId && buyerState.buyerId){
+                
                 const itemId = selectedItem.itemId
+                const itemName = selectedItem.itemName
                 const itemPrice = selectedItem.itemPrice
                 const buyerName = buyerState.buyerName
                 const buyerId = buyerState.buyerId
@@ -112,6 +114,7 @@ export default function UserMenu(ownerId) {
                 
                 let query = {
                     itemId,
+                    itemName,
                     itemPrice,
                     buyerName,
                     buyerId,
@@ -165,7 +168,7 @@ export default function UserMenu(ownerId) {
                     >
                         <div className='p-5 grid grid-cols-1 gap-2'>
                             {error && (<ErrorNotice message={error} clearError={() => setError(undefined)} />)}
-                            <img className='w-full h-10 h-20 object-cover rounded' src={selectedItem.icon} alt={selectedItem.icon}/>
+                            <img className='w-full h-40 object-cover rounded' src={selectedItem.icon} alt={selectedItem.icon}/>
                             <div className='w-full p-5'>
                                 <p className='text-2xl font-semibold'>{selectedItem.itemName}</p>
                                 <p className='text-xl'>${selectedItem.itemPrice}</p>
