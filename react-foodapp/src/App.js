@@ -15,6 +15,7 @@ import MyStore from './components/pages/MyStore'
 import Landing from './components/pages/Landing'
 import UserEdit from './components/pages/UserEdit'
 import NearMeMap from './components/pages/NearMeMap'
+import MyCart from './components/pages/MyCart'
 
 
 
@@ -67,9 +68,11 @@ export default function App() {
                     <Route path='/food/register' component={RegisterFood} />
                     <Route path='/food/myStore' component={MyStore} />
                     <Route path='/food/:id' component={FoodItem} />
+                    <Route path='/user/cart' component={MyCart} />
                     <Route path='/user/delete' component={DeleteMe} />
                     <Route path='/user/edit' component={UserEdit} />
                     <Route path='/map' component={NearMeMap} />
+                    
                 </Switch>
             </UserContext.Provider>
         </BrowserRouter>

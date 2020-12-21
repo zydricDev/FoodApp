@@ -99,7 +99,9 @@ export default function UserMenu(ownerId) {
     async function submit(){
         try{
             if(selectedItem.itemId && sellerState.sellerId && buyerState.buyerId){
+                
                 const itemId = selectedItem.itemId
+                const itemName = selectedItem.itemName
                 const itemPrice = selectedItem.itemPrice
                 const buyerName = buyerState.buyerName
                 const buyerId = buyerState.buyerId
@@ -112,6 +114,7 @@ export default function UserMenu(ownerId) {
                 
                 let query = {
                     itemId,
+                    itemName,
                     itemPrice,
                     buyerName,
                     buyerId,
@@ -166,14 +169,15 @@ export default function UserMenu(ownerId) {
                         <div className='p-5 grid grid-cols-1 gap-2'>
                             {error && (<ErrorNotice message={error} clearError={() => setError(undefined)} />)}
                             <img className='w-full h-40 object-cover rounded' src={selectedItem.icon} alt={selectedItem.icon}/>
-                            <div className='w-full border border-gray-500 rounded p-5'>
+                            <div className='w-full p-5'>
                                 <p className='text-2xl font-semibold'>{selectedItem.itemName}</p>
-                                <p>${selectedItem.itemPrice}</p>
-                                <p>{selectedItem.description}</p>
+                                <p className='text-xl'>${selectedItem.itemPrice}</p>
+                                <p className='py-2 break-words'>{selectedItem.description}</p>
                             </div>
                             {userCred.userData.user && 
                             <>
-                                <div className='flex gap-2'>
+                                <div className='grid grid-cols-1 sm:flex gap-2 items-center'>
+                                    <span>Quantity:</span>
                                     <input className='px-2 border border-gray-500 rounded' type='number' value={quantity} onChange={e => setQuantity(e.target.value)}/>
                                     <div className='grid grid-cols-1 gap-2 text-white'>
                                         <button className='rounded px-1 bg-blue-500 font-bold hover:bg-blue-600 ' 
@@ -199,15 +203,15 @@ export default function UserMenu(ownerId) {
                                 </div>
                                 
                                 
-                                <button className='hover:bg-blue-600 cursor-pointer px-5 py-2 rounded bg-blue-500 text-white' onClick={submit}>Add to cart</button>
+                                <button className='hover:bg-blue-600 cursor-pointer px-5 py-2 rounded bg-blue-500 text-white mt-5' onClick={submit}>Add to cart</button>
                                 
                             </>
                             }
-                            <div className='w-full p-5 inline-flex gap-5 items-center text-white mt-20'>
+                            <div className='grid grid-cols-1 w-full p-5 sm:inline-flex gap-5 items-center text-white invisible sm:mt-20 sm:visible'>
                                 <img className='w-40 h-40 object-cover rounded-full' src={sellerData.data.icon} alt={sellerData.data.icon}/>
                                 <div className='bg-blue-500 w-full p-5 rounded'>
                                     <p className='text-2xl font-semibold'>{sellerState.sellerName}</p>
-                                    <p>{sellerState.sellerAddress}, {sellerData.data.zipcode}</p>
+                                    <p>{sellerState.sellerAddress}</p>
                                     <p>Phone: ({sellerData.data.phone.substring(0, 3)})-{sellerData.data.phone.substring(3, 6)}-{sellerData.data.phone.substring(6, 10)}</p>
                                 </div>
                             </div>
@@ -262,7 +266,19 @@ export default function UserMenu(ownerId) {
                                         {userMenus.data
                                             .filter(item => item.category === menuType.newCategoryType)
                                             .map((item, index) =>
-                                                <div key={index} className='border flex justify-between relative transition duration-500 hover:shadow-md hover:border-gray-500 rounded' onClick={()=>{setShopMenu(true)}}>
+                                                <div key={index} className='border flex justify-between relative transition duration-500 hover:shadow-md hover:border-gray-500 rounded' 
+                                                onClick={()=>{
+                                                    setQuantity(1)
+                                                    setSelectedItem({
+                                                        itemId: item._id,
+                                                        itemName: item.foodName,
+                                                        itemPrice: item.price,
+                                                        description: item.desc,
+                                                        estDelivery: "1",
+                                                        icon: item.image
+                                                    })
+                                                    setShopMenu(true)
+                                                }}>
                                                     <div className='p-2'>
                                                         <div className='inline-flex gap-3 items-center'>
                                                             <p className='font-bold'>{item.foodName}</p>

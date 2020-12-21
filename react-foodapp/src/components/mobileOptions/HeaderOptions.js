@@ -10,6 +10,7 @@ export default function HeaderOptions() {
     const myStore = () => history.push('/food/myStore')
     const editUsr = () => history.push('/user/edit')
     const mapNearby = () => history.push('/map')
+    const myCart = () => history.push('/user/cart')
     const logout = () => {
         
         setUserData({
@@ -28,6 +29,10 @@ export default function HeaderOptions() {
                 <>
                     <button className='text-left border-b border-gray-300 w-full bg-white py-2 hover:bg-blue-300 duration-200 text-xl' onClick={mapNearby}>
                         <p className='ml-5'>Stores Nearby</p>
+                    </button>
+
+                    <button className='text-left border-b border-gray-300 w-full bg-white py-2 hover:bg-blue-300 duration-200 text-xl' onClick={myCart}>
+                        <p className='ml-5'>My Cart</p>
                     </button>
 
                     <button className='text-left border-b border-gray-300 w-full bg-white py-2 hover:bg-blue-300 duration-200 text-xl' onClick={myStore}>
