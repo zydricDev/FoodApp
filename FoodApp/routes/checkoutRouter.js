@@ -2,16 +2,15 @@ const router = require('express').Router()
 const Checkout = require('../models/checkoutModel')
 const Precheckout = require('../models/precheckModel')
 
-const auth = require('../middleware/auth')
 const tknParamAuth = require('../middleware/tokenParamsAuth')
 
-router.post('/store/:uuid', async (req, res)=>{
+router.post('/store/:uuid', tknParamAuth, async (req, res)=>{
     try{
         
         const precheck = await Precheckout.find({
             buyerId: req.params.uuid
         })
-        if(!precheck){
+        if(!precheck || precheck.length <= 0){
             return res.status(400).json({msg: "There are no items in the cart"})
         }
         let total = 0
@@ -31,7 +30,11 @@ router.post('/store/:uuid', async (req, res)=>{
         })
 
         await check.save();
-        res.json({msg: "Item had been added"})
+
+        await Precheckout.deleteMany({
+            buyerId: req.params.uuid
+        })
+        res.json({msg: "Items are being processed"})
     }
     catch(err){
         res.status(500).json({error: err.message});

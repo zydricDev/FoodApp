@@ -28,6 +28,13 @@ export default function Cart(myProps) {
         })
     }
 
+    const submit = async () =>{
+        console.log('arf')
+        await Axios.post(`${domain}/checkout/store/${myProps.userId}`, null, {
+            headers: { "zdevsite.usrtkn": localStorage.getItem('zdevsite.usrtkn') }
+        })
+    }
+
     try{
         if(myData.data && myData.data.length === 0){
             content =
@@ -51,7 +58,7 @@ export default function Cart(myProps) {
             content = 
             <div className='w-full flex h-screen'>
                 <div className='w-2/6'>
-                    <div className='p-20 h-full'>
+                    <form className='p-20 h-full'>
                         <div className='pt-5 pb-2 w-full text-2xl font-bold border-b border-black text-red-500'>
                             Food App
                         </div>
@@ -68,8 +75,8 @@ export default function Cart(myProps) {
                                 <p>Total: ${totalPrice}</p>
                             </div>
                         </div>
-                        <button className='bg-blue-500 py-2 px-5 rounded text-white hover:bg-blue-600 font-semibold my-5'>Proceed to checkout</button>
-                    </div>
+                        <button className='bg-blue-500 py-2 px-5 rounded text-white hover:bg-blue-600 font-semibold my-5' onClick={submit}>Proceed to checkout</button>
+                    </form>
                 </div>
                 <div className='w-4/6'>
                     <form className='border-l border-b border-gray-400 shadow-md p-5 grid grid-cols-1 gap-5'>
