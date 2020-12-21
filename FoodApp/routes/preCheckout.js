@@ -10,6 +10,9 @@ router.post('/store', auth, async (req, res)=>{
         if(!itemId || !itemPrice || !buyerName || !buyerId || !buyerAddress || !sellerName || !sellerId || !sellerAddress || !icon || !estDeliver || !quantity || parseInt(quantity) <=0 ){
             return res.status(400).json({msg: "Not all fields are filled"})
         }
+        if(quantity < 0 || quantity > 20){
+            return res.status(400).json({msg: "Quantity must be within 1-20"})
+        }
         const checkDupe = await Precheckout.findOne({
             itemId: itemId,
             buyerId: buyerId,

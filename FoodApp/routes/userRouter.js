@@ -307,6 +307,7 @@ router.post('/map', async (req, res)=>{
 router.get('/find/:id', async(req,res)=>{
     const user = await User.findById(req.params.id);
     res.json({
+        id: user._id,
         email: user.email,
         displayName: user.displayName,
         address: user.address,
@@ -315,15 +316,16 @@ router.get('/find/:id', async(req,res)=>{
         phone: user.phone,
         country: user.country,
         lat: user.lat,
-        lng: user.lng
+        lng: user.lng,
+        
     })
 })
 
 router.get('/', auth, async (req,res)=>{
     const user = await User.findById(req.user);
     res.json({
-        displayName: user.displayName,
-        id: user._id
+        id: user._id,
+        displayName: user.displayName
     });
 })
 
