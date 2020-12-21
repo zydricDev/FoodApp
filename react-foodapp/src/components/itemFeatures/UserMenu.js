@@ -165,15 +165,15 @@ export default function UserMenu(ownerId) {
                     >
                         <div className='p-5 grid grid-cols-1 gap-2'>
                             {error && (<ErrorNotice message={error} clearError={() => setError(undefined)} />)}
-                            <img className='w-full h-40 object-cover rounded' src={selectedItem.icon} alt={selectedItem.icon}/>
-                            <div className='w-full border border-gray-500 rounded p-5'>
+                            <img className='w-full h-10 h-20 object-cover rounded' src={selectedItem.icon} alt={selectedItem.icon}/>
+                            <div className='w-full p-5'>
                                 <p className='text-2xl font-semibold'>{selectedItem.itemName}</p>
-                                <p>${selectedItem.itemPrice}</p>
-                                <p>{selectedItem.description}</p>
+                                <p className='text-xl'>${selectedItem.itemPrice}</p>
+                                <p className='py-2 break-words'>{selectedItem.description}</p>
                             </div>
                             {userCred.userData.user && 
                             <>
-                                <div className='flex gap-2 items-center'>
+                                <div className='grid grid-cols-1 sm:flex gap-2 items-center'>
                                     <span>Quantity:</span>
                                     <input className='px-2 border border-gray-500 rounded' type='number' value={quantity} onChange={e => setQuantity(e.target.value)}/>
                                     <div className='grid grid-cols-1 gap-2 text-white'>
@@ -204,7 +204,7 @@ export default function UserMenu(ownerId) {
                                 
                             </>
                             }
-                            <div className='w-full p-5 inline-flex gap-5 items-center text-white mt-20'>
+                            <div className='grid grid-cols-1 w-full p-5 sm:inline-flex gap-5 items-center text-white invisible sm:mt-20 sm:visible'>
                                 <img className='w-40 h-40 object-cover rounded-full' src={sellerData.data.icon} alt={sellerData.data.icon}/>
                                 <div className='bg-blue-500 w-full p-5 rounded'>
                                     <p className='text-2xl font-semibold'>{sellerState.sellerName}</p>
