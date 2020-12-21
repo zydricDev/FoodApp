@@ -173,7 +173,8 @@ export default function UserMenu(ownerId) {
                             </div>
                             {userCred.userData.user && 
                             <>
-                                <div className='flex gap-2'>
+                                <div className='flex gap-2 items-center'>
+                                    <span>Quantity:</span>
                                     <input className='px-2 border border-gray-500 rounded' type='number' value={quantity} onChange={e => setQuantity(e.target.value)}/>
                                     <div className='grid grid-cols-1 gap-2 text-white'>
                                         <button className='rounded px-1 bg-blue-500 font-bold hover:bg-blue-600 ' 
@@ -199,7 +200,7 @@ export default function UserMenu(ownerId) {
                                 </div>
                                 
                                 
-                                <button className='hover:bg-blue-600 cursor-pointer px-5 py-2 rounded bg-blue-500 text-white' onClick={submit}>Add to cart</button>
+                                <button className='hover:bg-blue-600 cursor-pointer px-5 py-2 rounded bg-blue-500 text-white mt-5' onClick={submit}>Add to cart</button>
                                 
                             </>
                             }
