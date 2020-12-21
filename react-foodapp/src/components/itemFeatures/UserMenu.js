@@ -35,12 +35,14 @@ export default function UserMenu(ownerId) {
         sellerName: undefined,
         sellerId: undefined,
         sellerAddress: undefined,
+        coor: undefined
     })
 
     const [buyerState, setBuyerState] = useState({
         buyerName: undefined,
         buyerId: undefined,
         buyerAddress: undefined,
+        coor: undefined
     })
 
     
@@ -85,6 +87,8 @@ export default function UserMenu(ownerId) {
             sellerName: sellerData.data.displayName,
             sellerId: sellerData.data.id,
             sellerAddress: `${sellerData.data.address}, ${sellerData.data.zipcode}`,
+            lat: sellerData.data.lat,
+            lng: sellerData.data.lng
         })
     }
 
@@ -93,6 +97,8 @@ export default function UserMenu(ownerId) {
             buyerName: buyerData.data.displayName,
             buyerId: buyerData.data.id,
             buyerAddress: `${buyerData.data.address}, ${buyerData.data.zipcode}`,
+            lat: buyerData.data.lat,
+            lng: buyerData.data.lng
         })
     }
 
@@ -111,7 +117,9 @@ export default function UserMenu(ownerId) {
                 const sellerAddress = sellerState.sellerAddress
                 const icon = selectedItem.icon
                 const estDeliver = selectedItem.estDelivery
-                
+                const sellerCoor = [sellerState.lat, sellerState.lng]
+                const buyerCoor = [buyerState.lat, buyerState.lng]
+
                 let query = {
                     itemId,
                     itemName,
@@ -124,7 +132,9 @@ export default function UserMenu(ownerId) {
                     sellerAddress,
                     icon,
                     estDeliver,
-                    quantity
+                    quantity,
+                    sellerCoor,
+                    buyerCoor
                 }
                 
                 await Axios.post(`${domain}/precheck/store`, query, {
@@ -169,7 +179,7 @@ export default function UserMenu(ownerId) {
                         <div className='p-5 grid grid-cols-1 gap-2'>
                             {error && (<ErrorNotice message={error} clearError={() => setError(undefined)} />)}
                             <img className='w-full h-40 object-cover rounded' src={selectedItem.icon} alt={selectedItem.icon}/>
-                            <div className='w-full p-5'>
+                            <div className='w-full p-5 border border-gray-400 rounded'>
                                 <p className='text-2xl font-semibold'>{selectedItem.itemName}</p>
                                 <p className='text-xl'>${selectedItem.itemPrice}</p>
                                 <p className='py-2 break-words'>{selectedItem.description}</p>

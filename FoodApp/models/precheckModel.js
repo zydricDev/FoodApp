@@ -14,6 +14,8 @@ const precheckoutSchema = new mongoose.Schema({
     icon: {type: String},
     estDeliver: {type: String},
     quantity: {type: String},
+    sellerCoor: {type: Array}, 
+    buyerCoor: {type: Array},
     date: {type: Date, default: Date.now}
 })
 

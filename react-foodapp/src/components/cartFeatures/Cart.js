@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import Axios from 'axios'
 import Loader from '../misc/Loader'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGrimace } from '@fortawesome/free-solid-svg-icons'
+import domain from '../../domain'
 
 export default function Cart(myProps) {
     const [myData, setMyData] = useState()
@@ -19,11 +22,20 @@ export default function Cart(myProps) {
         load()
     }, [myProps.userUrl])
     
+    const removeThis = async (itemid) =>{
+        await Axios.delete(`${domain}/precheck/delete/${myProps.userId}/${itemid}`, {
+            headers: { "zdevsite.usrtkn": localStorage.getItem('zdevsite.usrtkn') }
+        })
+    }
+
     try{
         if(myData.data && myData.data.length === 0){
             content =
-            <div>
-                Empty
+            <div className='w-full h-screen bg-gray-300'>
+                <div className='p-40 text-center text-gray-500'>
+                    <FontAwesomeIcon icon={faGrimace} className='text-5xl' />
+                    <p className='my-2 font-semibold'>Cart is empty. Check out some at the mainhub.</p>
+                </div>
             </div>
         }
         if(myData.data && myData.data.length >= 1){
@@ -56,10 +68,11 @@ export default function Cart(myProps) {
                                 <p>Total: ${totalPrice}</p>
                             </div>
                         </div>
+                        <button className='bg-blue-500 py-2 px-5 rounded text-white hover:bg-blue-600 font-semibold my-5'>Proceed to checkout</button>
                     </div>
                 </div>
                 <div className='w-4/6'>
-                    <div className='border-l border-gray-400 shadow-md p-5 grid grid-cols-1 gap-5'>
+                    <form className='border-l border-b border-gray-400 shadow-md p-5 grid grid-cols-1 gap-5'>
                         {myData.data.map((item,index)=>
                         <div key={index} className='bg-blue-500 p-5 rounded flex items-center justify-between'>
                             <div className='text-white w-3/6 grid grid-cols-1 gap-2'>
@@ -83,7 +96,9 @@ export default function Cart(myProps) {
                                     <p>Buying from: {item.sellerName}, user#{item.sellerId}</p>
                                     <p>Added in {item.date.substring(0,10)} at {item.date.substring(11,item.date.length-5)}</p>
                                 </div>
-                                
+                                <button className='bg-red-500 hover:bg-red-600 rounded text-white text-lg font-semibold p-2' onClick={()=>{removeThis(item._id)}}>
+                                    Remove
+                                </button>
                             
                             </div>
                             <img className='w-2/6 h-full object-cover' src={item.icon} alt={item.icon}/>
@@ -91,7 +106,7 @@ export default function Cart(myProps) {
                         </div>
                         
                         )}
-                    </div>
+                    </form>
                 </div>
             </div>
         }
