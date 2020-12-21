@@ -7,7 +7,8 @@ const tknParamAuth = require('../middleware/tokenParamsAuth')
 router.post('/store', auth, async (req, res)=>{
     try{
         let {itemId, itemPrice, buyerName, buyerId, buyerAddress, sellerName, sellerId, sellerAddress, icon, estDeliver, quantity} = req.body;
-        if(!itemId || !itemPrice || !buyerName || !buyerId || !buyerAddress || !sellerName || !sellerId || !sellerAddress || !icon || !estDeliver || !quantity || parseInt(quantity) <=0 ){
+
+        if(!itemId || !itemPrice || !buyerName || !buyerId || !buyerAddress || !sellerName || !sellerId || !sellerAddress || !icon || !estDeliver || !quantity){
             return res.status(400).json({msg: "Not all fields are filled"})
         }
         if(quantity < 0 || quantity > 20){
