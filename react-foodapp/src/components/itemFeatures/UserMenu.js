@@ -262,7 +262,19 @@ export default function UserMenu(ownerId) {
                                         {userMenus.data
                                             .filter(item => item.category === menuType.newCategoryType)
                                             .map((item, index) =>
-                                                <div key={index} className='border flex justify-between relative transition duration-500 hover:shadow-md hover:border-gray-500 rounded' onClick={()=>{setShopMenu(true)}}>
+                                                <div key={index} className='border flex justify-between relative transition duration-500 hover:shadow-md hover:border-gray-500 rounded' 
+                                                onClick={()=>{
+                                                    setQuantity(1)
+                                                    setSelectedItem({
+                                                        itemId: item._id,
+                                                        itemName: item.foodName,
+                                                        itemPrice: item.price,
+                                                        description: item.desc,
+                                                        estDelivery: "1",
+                                                        icon: item.image
+                                                    })
+                                                    setShopMenu(true)
+                                                }}>
                                                     <div className='p-2'>
                                                         <div className='inline-flex gap-3 items-center'>
                                                             <p className='font-bold'>{item.foodName}</p>
