@@ -13,6 +13,7 @@ const precheckoutSchema = new mongoose.Schema({
     sellerAddress: {type: String},
     icon: {type: String},
     estDeliver: {type: String},
+    distance: {type: String},
     quantity: {type: String},
     sellerCoor: {type: Array}, 
     buyerCoor: {type: Array},
