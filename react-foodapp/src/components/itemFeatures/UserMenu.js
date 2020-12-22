@@ -174,23 +174,27 @@ export default function UserMenu(ownerId) {
                     <animated.div
                         key={key}
                         style={props}
-                        className="fixed bg-white top-0 left-0 w-4/6 h-full z-50 shadow"
+                        className="fixed bg-white top-0 left-0 sm:w-1/3 w-4/6 h-full z-50 shadow"
                     >
                         <div className='p-5 grid grid-cols-1 gap-2'>
                             {error && (<ErrorNotice message={error} clearError={() => setError(undefined)} />)}
-                            <img className='w-full h-40 object-cover rounded' src={selectedItem.icon} alt={selectedItem.icon}/>
-                            <div className='w-full p-5 border border-gray-400 rounded'>
-                                <p className='text-2xl font-semibold'>{selectedItem.itemName}</p>
-                                <p className='text-xl'>${selectedItem.itemPrice}</p>
-                                <p className='py-2 break-words'>{selectedItem.description}</p>
+                            <div className='relative'>
+                                <img className='w-full h-64 object-cover rounded' src={selectedItem.icon} alt={selectedItem.icon}/>
+                                <div className='flex-col gap-5 px-5 py-1 bg-gray-t-90 m-2 rounded absolute top-0 left-0 z-10'>
+                                    <p className='font-semibold'>{selectedItem.itemName}</p>
+                                    <p>${selectedItem.itemPrice}</p>
+                                </div>
                             </div>
+                            
                             {userCred.userData.user && 
                             <>
-                                <div className='grid grid-cols-1 sm:flex gap-2 items-center'>
-                                    <span>Quantity:</span>
-                                    <input className='px-2 border border-gray-500 rounded' type='number' value={quantity} onChange={e => setQuantity(e.target.value)}/>
-                                    <div className='grid grid-cols-1 gap-2 text-white'>
-                                        <button className='rounded px-1 bg-blue-500 font-bold hover:bg-blue-600 ' 
+                                <div className='grid grid-cols-1 md:flex gap-2 w-full space-between'>
+                                    <div className='flex w-auto gap-2'>
+                                        <span>Qty</span>
+                                        <input className='w-full sm:w-16 px-2 border border-gray-500 rounded' type='number' value={quantity} onChange={e => setQuantity(e.target.value)}/>
+                                    </div>
+                                    <div className='flex gap-2 text-white w-full'>
+                                        <button className='rounded px-1 bg-blue-500 font-bold hover:bg-blue-600 w-full sm:w-10' 
                                         onClick={()=>{
                                             if(quantity < 20){
                                                 setQuantity(quantity+1)
@@ -200,7 +204,7 @@ export default function UserMenu(ownerId) {
                                             }
                                         }}>+</button>
 
-                                        <button className='rounded px-1 bg-blue-500 font-bold hover:bg-blue-600 '  
+                                        <button className='rounded px-1 bg-blue-500 font-bold hover:bg-blue-600 w-full sm:w-10'  
                                         onClick={()=>{
                                             if(quantity > 1){
                                                 setQuantity(quantity-1)
@@ -213,11 +217,11 @@ export default function UserMenu(ownerId) {
                                 </div>
                                 
                                 
-                                <button className='hover:bg-blue-600 cursor-pointer px-5 py-2 rounded bg-blue-500 text-white mt-5' onClick={submit}>Add to cart</button>
+                                <button className='hover:bg-blue-600 cursor-pointer h-10 mt-5 rounded bg-blue-500 text-white' onClick={submit}>Add to cart</button>
                                 
                             </>
                             }
-                            <div className='grid grid-cols-1 w-full p-5 sm:inline-flex gap-5 items-center text-white invisible sm:mt-20 sm:visible'>
+                            <div className='grid grid-cols-1 w-full  p-5 lg:inline-flex gap-5 items-center text-white invisible bottom-0 lg:visible'>
                                 <img className='w-40 h-40 object-cover rounded-full' src={sellerData.data.icon} alt={sellerData.data.icon}/>
                                 <div className='bg-blue-500 w-full p-5 rounded'>
                                     <p className='text-2xl font-semibold'>{sellerState.sellerName}</p>
