@@ -58,7 +58,7 @@ export default function Cart(myProps) {
             content = 
             <div className='w-full grid grid-cols-1 sm:flex h-screen'>
                 <div className='sm:w-2/6'>
-                    <form className='p-5 sm:p-20 h-full'>
+                    <form className='p-5 lg:p-10 h-full'>
                         <div className='pt-5 pb-2 w-full text-2xl font-bold border-b border-black text-red-500'>
                             Food App
                         </div>
