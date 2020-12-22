@@ -13,7 +13,7 @@ export default function UserMenu(ownerId) {
     const userCred = useContext(UserContext)
     const [error, setError] = useState()
     const [buyer, setBuyer] = useState()
-
+    const [loading, setLoading] = useState(false)
     const url = `${domain}/food/display/user/${ownerId.propUrl}`
     const seller = `${domain}/users/find/${ownerId.propUrl}`
     
@@ -25,8 +25,6 @@ export default function UserMenu(ownerId) {
         itemPrice: undefined,
         description: undefined,
         icon: undefined,
-        estDelivery: undefined,
-        
     })
 
     const [quantity, setQuantity] = useState(1)
@@ -105,7 +103,7 @@ export default function UserMenu(ownerId) {
     async function submit(){
         try{
             if(selectedItem.itemId && sellerState.sellerId && buyerState.buyerId){
-                
+                setLoading(true)
                 const itemId = selectedItem.itemId
                 const itemName = selectedItem.itemName
                 const itemPrice = selectedItem.itemPrice
@@ -116,7 +114,6 @@ export default function UserMenu(ownerId) {
                 const sellerId = sellerState.sellerId
                 const sellerAddress = sellerState.sellerAddress
                 const icon = selectedItem.icon
-                const estDeliver = selectedItem.estDelivery
                 const sellerCoor = [sellerState.lat, sellerState.lng]
                 const buyerCoor = [buyerState.lat, buyerState.lng]
 
@@ -131,7 +128,6 @@ export default function UserMenu(ownerId) {
                     sellerId,
                     sellerAddress,
                     icon,
-                    estDeliver,
                     quantity,
                     sellerCoor,
                     buyerCoor
@@ -140,11 +136,14 @@ export default function UserMenu(ownerId) {
                 await Axios.post(`${domain}/precheck/store`, query, {
                     headers: { "zdevsite.usrtkn": localStorage.getItem('zdevsite.usrtkn') }
                 })
+       
+                setLoading(false)
                 setShopMenu(false) 
                 
             }
         }
         catch(err){
+            setLoading(false)
             err.response.data.msg && setError(err.response.data.msg)
         }
     }
@@ -217,7 +216,11 @@ export default function UserMenu(ownerId) {
                                 </div>
                                 
                                 
-                                <button className='hover:bg-blue-600 cursor-pointer h-10 mt-5 rounded bg-blue-500 text-white' onClick={submit}>Add to cart</button>
+                                {!loading ? 
+                                    (<button className='hover:bg-blue-600 cursor-pointer h-10 mt-5 rounded bg-blue-500 text-white' onClick={submit}>Add to cart</button>)
+                                    :
+                                    (<Loader></Loader>)
+                                }
                                 
                             </>
                             }
@@ -252,7 +255,6 @@ export default function UserMenu(ownerId) {
                                         itemName: item.foodName,
                                         itemPrice: item.price,
                                         description: item.desc,
-                                        estDelivery: "1",
                                         icon: item.image
                                     })
                                     setShopMenu(true)
@@ -288,7 +290,6 @@ export default function UserMenu(ownerId) {
                                                         itemName: item.foodName,
                                                         itemPrice: item.price,
                                                         description: item.desc,
-                                                        estDelivery: "1",
                                                         icon: item.image
                                                     })
                                                     setShopMenu(true)

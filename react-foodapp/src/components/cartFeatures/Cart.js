@@ -29,7 +29,7 @@ export default function Cart(myProps) {
     }
 
     const submit = async () =>{
-        console.log('arf')
+        
         await Axios.post(`${domain}/checkout/store/${myProps.userId}`, null, {
             headers: { "zdevsite.usrtkn": localStorage.getItem('zdevsite.usrtkn') }
         })
@@ -98,6 +98,7 @@ export default function Cart(myProps) {
                                     <p>To: {item.buyerAddress}</p>
                                     <p>From: {item.sellerAddress}</p>
                                     <p>Estimate Delivery: {item.estDeliver}</p>
+                                    <p>Distance: {item.distance} miles or {(parseFloat(item.distance)*1.609344).toFixed(4)} kilometers</p>
                                 </div>
                                 <div>
                                     <p>Buying from: {item.sellerName}, user#{item.sellerId}</p>

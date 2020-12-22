@@ -1,14 +1,16 @@
 const router = require('express').Router()
 const Precheckout = require('../models/precheckModel')
+const fetch = require('node-fetch')
+
 const auth = require('../middleware/auth')
 const tknParamAuth = require('../middleware/tokenParamsAuth')
-
+const mapApiDirection = require('../mapFunctions/mapApiDirection')
 
 router.post('/store', auth, async (req, res)=>{
     try{
-        let {itemId, itemName, itemPrice, buyerName, buyerId, buyerAddress, sellerName, sellerId, sellerAddress, icon, estDeliver, quantity, sellerCoor, buyerCoor} = req.body;
+        let {itemId, itemName, itemPrice, buyerName, buyerId, buyerAddress, sellerName, sellerId, sellerAddress, icon, quantity, sellerCoor, buyerCoor} = req.body;
 
-        if(!itemId || !itemName || !itemPrice || !buyerName || !buyerId || !buyerAddress || !sellerName || !sellerId || !sellerAddress || !icon || !estDeliver || !quantity || !sellerCoor || !buyerCoor){
+        if(!itemId || !itemName || !itemPrice || !buyerName || !buyerId || !buyerAddress || !sellerName || !sellerId || !sellerAddress || !icon || !quantity || !sellerCoor || !buyerCoor){
             return res.status(400).json({msg: "Not all fields are filled"})
         }
         if(quantity < 0 || quantity > 20){
@@ -25,6 +27,18 @@ router.post('/store', auth, async (req, res)=>{
         if(checkDupe){
             return res.status(400).json({msg: "Item already exist in the user's cart"})
         }
+        
+        modifiedBuyerAddress = buyerAddress.replace(/\s/g, '+').replace(/,/g, '%2C').replace(/&/g, '%26')
+        modifiedSellerAddress = sellerAddress.replace(/\s/g, '+').replace(/,/g, '%2C').replace(/&/g, '%26')
+        const mapUrl = mapApiDirection(modifiedBuyerAddress, modifiedSellerAddress)
+        const response = await fetch(mapUrl)
+        const json = await response.json()
+        
+        
+        if(json.info.statuscode !== 0 ){
+            return res.json({msg: `${location} is not a valid address`});
+        }
+
         const precheck = new Precheckout({
             itemId,
             itemName,
@@ -36,7 +50,8 @@ router.post('/store', auth, async (req, res)=>{
             sellerId,
             sellerAddress,
             icon,
-            estDeliver,
+            estDeliver: json.route.formattedTime,
+            distance: json.route.distance,
             quantity,
             sellerCoor, 
             buyerCoor
