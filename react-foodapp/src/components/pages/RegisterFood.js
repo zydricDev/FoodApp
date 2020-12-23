@@ -38,7 +38,7 @@ export default function RegisterFood() {
             
             if (userDisplayName && userId) {
                 const newFood = { foodName, userDisplayName, userId, price, desc, image, category, feature }
-                await Axios.post(`${domain}/food/register`, newFood, {
+                await Axios.post(`${domain}/food/register/${userId}`, newFood, {
                     headers: { "zdevsite.usrtkn": localStorage.getItem('zdevsite.usrtkn') }
                 })
             }
@@ -54,8 +54,8 @@ export default function RegisterFood() {
 
     return (
 
-        <div className='flex justify-center mt-10 px-5'>
-            <div className='flex-col border border-gray-400 lg:w-2/6 md:w-3/6 w-full'>
+        <div className='flex justify-center py-10 px-5 bg-blue-400'>
+            <div className='flex-col border bg-white border-gray-400 lg:w-2/6 md:w-3/6 w-full rounded'>
                 
                 {error && (
                     <ErrorNotice message={error} clearError={() => setError(undefined)}/>
@@ -71,12 +71,12 @@ export default function RegisterFood() {
 
                             <div className='mb-5 grid'>
                                 <label className='text-gray-500'>Price (required)</label>
-                                <input className='border-black rounded p-2 border-2 border-gray-400' type='number' min='0' onChange={e => setPrice(e.target.value)}/>
+                                <input className='border-black rounded p-2 border-2 border-gray-400' type='number' min='0' step='0.01' onChange={e => setPrice(e.target.value)}/>
                             </div>
 
                             <div className='mb-5 grid'>
                                 <label className='text-gray-500'>Description</label>
-                                <input className='border-black rounded p-2 border-2 border-gray-400' type='text' onChange={e => setDesc(e.target.value)}/>
+                                <textarea className='border-black rounded p-2 border-2 border-gray-400 resize-none' rows='5' type='text' onChange={e => setDesc(e.target.value)}/>
                             </div>
 
                             <div className='mb-5 grid'>

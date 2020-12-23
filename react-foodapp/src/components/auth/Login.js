@@ -42,8 +42,8 @@ export default function Login() {
             <form onSubmit={submit}>
                 
                 <div className='flex justify-center py-10'>
-                    <div className='grid border-2 md:w-2/6 p-5'>
-                        <h2 className='flex justify-center font-bold xl:text-2xl mb-10'>Sign in with your FoodApp account</h2>
+                    <div className='grid border-2 md:w-2/6 p-5 rounded'>
+                        <h2 className='flex justify-center font-bold xl:text-2xl mb-10'>Sign in with your Food App account</h2>
                         <div className='mb-5 grid'>
                             <label className='text-gray-500'>Email</label>
                             <input className='border-black rounded p-2 border-2 border-gray-400' type='email' onChange={e => setEmail(e.target.value)} />

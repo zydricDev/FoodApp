@@ -39,9 +39,9 @@ export default function Cart(myProps) {
         if(myData.data && myData.data.length === 0){
             content =
             <div className='w-full h-screen bg-gray-300'>
-                <div className='p-40 text-center text-gray-500'>
+                <div className='p-40 text-center text-gray-600'>
                     <FontAwesomeIcon icon={faGrimace} className='text-5xl' />
-                    <p className='my-2 font-semibold'>Cart is empty. Check out some at the mainhub.</p>
+                    <p className='my-2 font-semibold'>Cart is empty. Check out some at the main page.</p>
                 </div>
             </div>
         }

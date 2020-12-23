@@ -4,6 +4,7 @@ import UserContext from '../../context/UserContext'
 import Axios from 'axios'
 
 import ErrorNotice from '../misc/ErrorNotice'
+import ForbiddenPage from '../misc/ForbiddenPage'
 import Loader from '../misc/Loader'
 import domain from '../../domain'
 
@@ -61,10 +62,10 @@ export default function MyStore() {
     }
 
     const submit = async (item) => {
-        if (productList.data && productSelected) {
+        if (productList.data && productSelected && userCred.userData.user) {
             try {
                 const newFood = { newName, newPrice, newDesc, newImage, newFeature, newCategory }
-                await Axios.patch(`${domain}/food/edit/${item}`, newFood, {
+                await Axios.patch(`${domain}/food/edit/${item}/${userCred.userData.user.id}`, newFood, {
                     headers: { "zdevsite.usrtkn": localStorage.getItem('zdevsite.usrtkn') }
                 })
             } catch (err) {
@@ -95,7 +96,6 @@ export default function MyStore() {
             return 0;
         }
         if(sortBy === 'feature'){
-            console.log(a)
             if(a.feature < b.feature) { return 1; }
             if(a.feature > b.feature) { return -1; }
             return 0;
@@ -118,13 +118,17 @@ export default function MyStore() {
         content = <Loader></Loader>
     }
 
+    if(!userCred.userData.user){
+        content = <ForbiddenPage></ForbiddenPage>
+    }
     try {
+        
         if (productList.data && productSelected) {
             
             content = 
             
             <div className='grid grid-cols-1 lg:flex lg:grid-cols-none h-screen'>
-                <div className='lg:w-2/6 xl:w-1/6 h-full p-5'>
+                <div className='lg:w-2/6 xl:w-1/6 h-full p-5 border-b border-r-0 lg:border-b-0 lg:border-r border-gray-400'>
                     <div className='p-2 grid grid-cols-1 gap-3'>
                         <select className='border border-black rounded mb-5 bg-gray-300 focus:outline-none' value={sortBy} onChange={e => setSortBy(e.target.value)}>
                             <option>--Sort by--</option>
@@ -155,13 +159,13 @@ export default function MyStore() {
                 <div className='w-full'>
                     {error && (<ErrorNotice message={error} clearError={() => setError(undefined)} />)}
                     <div className='flex-col w-full'>
-                        <div className='flex justify-center w-full'>
-                            <img src={productSelected.data.image} className='w-4/6 h-64 object-cover mt-5' alt={productSelected.data.foodName}/>
+                        <div className='flex justify-center w-full border-b border-gray-400'>
+                            <img src={productSelected.data.image} className='w-4/6 h-64 object-cover py-2 sm:py-5' alt={productSelected.data.foodName}/>
                         </div>
                         <div className='flex justify-center'>
-                            <div className='grid sm:grid-cols-2 grid-cols-1 gap-5 mt-5 mx-5 w-full'>
+                            <div className='grid xl:grid-cols-2 grid-cols-1 gap-5 mt-5 mx-5 w-full'>
                                 {productSelected.data.feature ? 
-                                    <div className='grid grid-cols-1 border p-5 border-gray-400 rounded lg:inline-flex gap-5 justify-around'>
+                                    <div className='grid grid-cols-1 p-5 rounded lg:inline-flex gap-5 justify-around'>
                                         <button className='w-full border border-gray-500 rounded hover:shadow-md hover:border-gray-600 duration-200 focus:outline-none' onClick={editActive}>
                                             <p className='text-gray-500'>Item Featured Status</p>
                                             <p>Active</p>
@@ -176,7 +180,7 @@ export default function MyStore() {
                                             </div>
                                         }
                                     </div> : 
-                                    <div className='grid grid-cols-1 border p-5 border-gray-400 rounded lg:inline-flex gap-5 justify-around'>
+                                    <div className='grid grid-cols-1 p-5 rounded lg:inline-flex gap-5 justify-around'>
                                         <button className='w-full border border-gray-500 rounded hover:shadow-md hover:border-gray-600 duration-200 focus:outline-none' onClick={editActive}>
                                             <p className='text-gray-500'>Item Featured Status</p>
                                             <p>Not Active</p>
@@ -192,7 +196,7 @@ export default function MyStore() {
                                         }
                                     </div>
                                 }
-                                <div className='grid grid-cols-1 border p-5 border-gray-400 rounded lg:inline-flex gap-5 justify-around'>
+                                <div className='grid grid-cols-1 p-5 rounded lg:inline-flex gap-5 justify-around'>
                                     <button className='w-full border border-gray-500 rounded hover:shadow-md hover:border-gray-600 duration-200 focus:outline-none' onClick={editActive}>
                                         <p className='text-gray-500'>Item Category</p>
                                         <p>{productSelected.data.category}</p>
@@ -219,7 +223,7 @@ export default function MyStore() {
                                         </div>
                                     }
                                 </div>
-                                <div className='grid grid-cols-1 border p-5 border-gray-400 rounded lg:inline-flex gap-5 justify-around'>
+                                <div className='grid grid-cols-1 p-5 rounded lg:inline-flex gap-5 justify-around'>
                                     <button className='w-full border border-gray-500 rounded hover:shadow-md hover:border-gray-600 duration-200 focus:outline-none'  onClick={editActive}>
                                         <p className='text-gray-500'>Item Name</p>
                                         <p>{productSelected.data.foodName}</p>
@@ -232,7 +236,7 @@ export default function MyStore() {
                                     }
                                 </div>
                                 
-                                <div className='grid grid-cols-1 border p-5 border-gray-400 rounded lg:inline-flex gap-5 justify-around'>
+                                <div className='grid grid-cols-1 p-5 rounded lg:inline-flex gap-5 justify-around'>
                                     <button className='w-full border border-gray-500 rounded hover:shadow-md hover:border-gray-600 duration-200 focus:outline-none'  onClick={editActive}>
                                         <p className='text-gray-500'>Item Price</p>
                                         {productSelected.data.price ? <p>${productSelected.data.price}</p> : <p></p>}
@@ -240,12 +244,12 @@ export default function MyStore() {
                                     {editMode && 
                                         <div className='w-full'>
                                             <p className='text-gray-500 ml-5'>New Price</p>
-                                            <input className='ml-5 w-5/6 focus:outline-none bg-gray-300 px-1 rounded mb-1 border-black border' type='number' min='0' placeholder='Enter new price' onChange={e => setPrice(e.target.value)}/>
+                                            <input className='ml-5 w-5/6 focus:outline-none bg-gray-300 px-1 rounded mb-1 border-black border' type='number' min='0' step='0.01' placeholder='Enter new price' onChange={e => setPrice(e.target.value)}/>
                                         </div>
                                     }
                                 </div>
                                 
-                                <div className='grid grid-cols-1 border p-5 border-gray-400 rounded lg:inline-flex gap-5 justify-around'>
+                                <div className='grid grid-cols-1 p-5 rounded lg:inline-flex gap-5 justify-around'>
                                     <button className='w-full border border-gray-500 rounded hover:shadow-md hover:border-gray-600 duration-200 focus:outline-none'  onClick={editActive}>
                                         <p className='text-gray-500'>Item Description</p>
                                         <p>{productSelected.data.desc}</p>
@@ -253,16 +257,16 @@ export default function MyStore() {
                                     {editMode && 
                                         <div className='w-full'>
                                             <p className='text-gray-500 ml-5'>New Description</p>
-                                            <input className='ml-5 w-5/6 focus:outline-none bg-gray-300 px-1 rounded mb-1 border-black border' type='text' placeholder='Enter new description' onChange={e => setDesc(e.target.value)}/>
+                                            <textarea className='ml-5 w-5/6 focus:outline-none bg-gray-300 px-1 rounded mb-1 border-black border resize-none' type='text' rows='5' placeholder='Enter new description' onChange={e => setDesc(e.target.value)}/>
                                         </div>
                                     }
                                 </div>
 
-                                <div className='grid grid-cols-1 border p-5 border-gray-400 rounded lg:inline-flex gap-5 justify-around'>
+                                <div className='grid grid-cols-1 p-5 rounded lg:inline-flex gap-5 justify-around'>
                                     <button className='w-full border border-gray-500 rounded hover:shadow-md hover:border-gray-600 duration-200 focus:outline-none'  onClick={editActive}>
                                         <p className='text-gray-500'>Item Image</p>
                                         <div className='flex w-full justify-center'>
-                                            <img src={productSelected.data.image} className='h-20 w-20 object-cover mb-1' alt={productSelected.data.foodName}/>
+                                            <img src={productSelected.data.image} className='h-20 w-20 sm:h-64 sm:w-64 object-cover mb-1' alt={productSelected.data.foodName}/>
                                         </div>
                                         
                                     </button>
@@ -278,7 +282,7 @@ export default function MyStore() {
                             </div>
                             
                         </div>
-                        <form className='w-full flex justify-center my-5' onSubmit={()=>submit(productSelected.data._id)}>
+                        <form className='w-full flex justify-center py-5' onSubmit={()=>submit(productSelected.data._id)}>
                             <input className='mt-2 hover:bg-blue-700 text-white rounded p-2 bg-blue-600 sm:w-1/6' type='submit' value='Update Item'/>
                         </form>                        
                     </div>
