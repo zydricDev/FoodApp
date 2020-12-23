@@ -59,12 +59,18 @@ export default function UserEdit() {
             await Axios.patch(`${domain}/users/edit/${userId}`, query, {
                 headers: { "zdevsite.usrtkn": localStorage.getItem('zdevsite.usrtkn') }
             })
+            
             await Axios.patch(`${domain}/food/edit/user/${userId}`, { displayName }, {
                 headers: { "zdevsite.usrtkn": localStorage.getItem('zdevsite.usrtkn') }
+            }).catch(()=>{
+                console.log("Current user doesn't have a registered item")
             })
             await Axios.patch(`${domain}/comments/user/update/${userId}`, { displayName, icon }, {
                 headers: { "zdevsite.usrtkn": localStorage.getItem('zdevsite.usrtkn') }
+            }).catch(()=>{
+                console.log("Current user has not made a comment")
             })
+            
 
             history.push('/home')
 

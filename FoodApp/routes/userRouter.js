@@ -155,6 +155,7 @@ router.post('/tokenIsValid', async (req,res)=>{
 router.patch('/edit/:uuid', tknParamAuth, async (req,res)=>{
     try{
         let {displayName, icon, address, zipcode, phone, email, country} = req.body;
+        
         if(email){
             const valid = validFormat(email)
             if(!valid){

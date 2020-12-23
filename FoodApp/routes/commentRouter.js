@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Comment = require('../models/commentModel');
 const auth = require('../middleware/auth');
+const tknParamAuth = require('../middleware/tokenParamsAuth');
 
 
 
@@ -45,14 +46,14 @@ router.post('/post', auth, async (req,res)=>{
     }
 })
 
-router.patch('/user/update/:id', auth, async (req,res)=>{
+router.patch('/user/update/:uuid', tknParamAuth, async (req,res)=>{
     try{
         let {displayName, icon} = req.body
         if(!displayName && !icon){
             return res.json({msg: "No need to update"});
         }
         const sampleUser = await Comment.findOne({
-            userId: req.params.id
+            userId: req.params.uuid
         })
         if(!sampleUser){
             return res.json({msg: "No comment made by user"});
@@ -65,17 +66,19 @@ router.patch('/user/update/:id', auth, async (req,res)=>{
         }
 
         const allComments = Comment.find({
-            userId: req.params.id
+            userId: req.params.uuid
         })
         
         await allComments.updateMany({
             userDisplayName: displayName,
             icon: icon
         })
+        
         res.json({msg: "Successfully updated all comments"})
         
 
     }catch(err){
+        
         res.status(500).json({error: err.message});
     }
 })

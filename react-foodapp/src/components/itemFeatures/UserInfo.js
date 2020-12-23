@@ -54,7 +54,7 @@ export default function UserInfo(propUrl) {
                                     <FontAwesomeIcon icon={faStar} className='text-white text-xl' />
                                 </>
                                 : null}
-                            {ratings >= 1 && <FontAwesomeIcon icon={faStar} className='text-yellow-500 text-xl' />}
+                            {ratings >= 1 ? <FontAwesomeIcon icon={faStar} className='text-yellow-500 text-xl' />: <FontAwesomeIcon icon={faStar} className='text-white text-xl' />}
                             {(ratings > 1 && ratings < 2) ? <FontAwesomeIcon icon={faStarHalfAlt} className='text-yellow-500 text-xl' /> : ratings >= 2 ? <FontAwesomeIcon icon={faStar} className='text-yellow-500 text-xl' /> : <FontAwesomeIcon icon={faStar} className='text-white text-xl' />}
                             {(ratings > 2 && ratings < 3) ? <FontAwesomeIcon icon={faStarHalfAlt} className='text-yellow-500 text-xl' /> : ratings >= 3 ? <FontAwesomeIcon icon={faStar} className='text-yellow-500 text-xl' /> : <FontAwesomeIcon icon={faStar} className='text-white text-xl' />}
                             {(ratings > 3 && ratings < 4) ? <FontAwesomeIcon icon={faStarHalfAlt} className='text-yellow-500 text-xl' /> : ratings >= 4 ? <FontAwesomeIcon icon={faStar} className='text-yellow-500 text-xl' /> : <FontAwesomeIcon icon={faStar} className='text-white text-xl' />}
