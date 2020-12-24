@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const Checkout = require('../models/checkoutModel')
 const Precheckout = require('../models/precheckModel')
+const UserAnalytics = require('../models/userAnalyticModel')
 
 const tknParamAuth = require('../middleware/tokenParamsAuth')
 
@@ -23,14 +24,29 @@ router.post('/store/:uuid', tknParamAuth, async (req, res)=>{
         
         const check = new Checkout({
             items: precheck,
-            totalPrice: total,
+            totalPrice: total.toFixed(2),
             userId: precheck[0].buyerId,
             userGeoLocation: [precheck[0].buyerCoor[0], precheck[0].buyerCoor[1]],
             sellerGeoLocationSet: sellerUniqueGeoSet
         })
-
         await check.save();
 
+    
+      
+        for(i=0; i<precheck.length; i++){
+            await new UserAnalytics({
+                item_id: precheck[i].itemId,
+                item_name: precheck[i].itemName,
+                item_price: precheck[i].itemPrice,
+                client_id: precheck[i].buyerName,
+                client_geo_lat: precheck[i].buyerCoor[0],
+                client_geo_lng: precheck[i].buyerCoor[1],
+                seller_id: precheck[i].sellerId,
+                seller_name: precheck[i].sellerName,
+                quantity: precheck[i].quantity,
+            }).save();
+        }
+    
         await Precheckout.deleteMany({
             buyerId: req.params.uuid
         })
@@ -41,4 +57,8 @@ router.post('/store/:uuid', tknParamAuth, async (req, res)=>{
     }
 })
 
+
+
+
 module.exports = router;
+

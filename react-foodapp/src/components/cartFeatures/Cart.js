@@ -51,8 +51,9 @@ export default function Cart(myProps) {
                 for(let i=0; i<myData.data.length; i++){
                     total += parseFloat(myData.data[i].itemPrice)*parseFloat(myData.data[i].quantity)
                 }
+                
                 setCounted(true)
-                setTotalPrice(total)
+                setTotalPrice(total.toFixed(2))
             }
             
             content = 
