@@ -2,6 +2,9 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const cors = require('cors');
+
+const schedule = require('node-schedule')
+const updateAnalytics = require('./cronJobs/updateAnalytics')
 require('dotenv').config();
 
 
@@ -19,7 +22,11 @@ mongoose.connect(
     }
 );
 
-app.listen(PORT, ()=> console.log(`Server at port: ${PORT}`));
+app.listen(PORT, ()=> {
+    console.log(`Server at port: ${PORT}`)
+    updateAnalytics()
+    
+});
 
 app.get('/', (req, res) =>{
     res.send('This is a test api')
