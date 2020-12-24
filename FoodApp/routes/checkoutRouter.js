@@ -36,14 +36,13 @@ router.post('/store/:uuid', tknParamAuth, async (req, res)=>{
         for(i=0; i<precheck.length; i++){
             await new UserAnalytics({
                 item_id: precheck[i].itemId,
-                item_name: precheck[i].itemName,
                 item_price: precheck[i].itemPrice,
-                client_id: precheck[i].buyerName,
+                client_id: precheck[i].buyerId,
                 client_geo_lat: precheck[i].buyerCoor[0],
                 client_geo_lng: precheck[i].buyerCoor[1],
                 seller_id: precheck[i].sellerId,
-                seller_name: precheck[i].sellerName,
                 quantity: precheck[i].quantity,
+                distance: precheck[i].distance,
             }).save();
         }
     
