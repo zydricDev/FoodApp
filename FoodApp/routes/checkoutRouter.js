@@ -5,6 +5,7 @@ const UserAnalytics = require('../models/userAnalyticModel')
 
 const tknParamAuth = require('../middleware/tokenParamsAuth')
 
+
 router.post('/store/:uuid', tknParamAuth, async (req, res)=>{
     try{
         
