@@ -30,33 +30,33 @@ export default function StoreReport(props) {
                 <div className='grid grid-cols-1 w-full gap-5 md:px-20 xl:px-64'>
                     {report.data.map((item, index)=> 
                     <div key={index} className='p-5 rounded bg-blue-500 text-white grid grid-cols-1 gap-2'>
-                        <div className='flex justify-between '>
+                        <div className='grid grid-cols-1 sm:flex sm:justify-between '>
                             <p>ISSUED DATE</p>
                             <p>{Date(item.last_updated)}</p>
                         </div>
                         
-                        <div className='flex justify-between border-t border-b py-5'>
+                        <div className='grid grid-cols-1 sm:flex sm:justify-between border-t border-b py-5'>
                             <p>ORDER ISSUED BY CUSTOMER</p>
                             <p>ID#{item.client_id}</p>
                         </div>
                        
-                        <div className='flex justify-between border border-white p-2 rounded bg-white text-gray-600'>
+                        <div className='grid grid-cols-1 sm:flex sm:justify-between border border-white p-2 rounded bg-white text-gray-600'>
                             <p>SUM TOTAL</p>
                             <p>${item.total_price}</p>
                         </div>
-                        <div className='flex justify-between border border-white p-2 rounded bg-white text-gray-600'>
+                        <div className='grid grid-cols-1 sm:flex sm:justify-between border border-white p-2 rounded bg-white text-gray-600'>
                             <p>Order Qty</p>
                             <p>{item.quantity}</p>
                         </div>
-                        <div className='flex justify-between border border-white p-2 rounded bg-white text-gray-600'>
+                        <div className='grid grid-cols-1 sm:flex sm:justify-between border border-white p-2 rounded bg-white text-gray-600'>
                             <p>Delivery Distance</p>
                             <p>{item.distance} miles</p>
                         </div>
-                        <div className='flex justify-between border border-white p-2 rounded bg-white text-gray-600'>
+                        <div className='grid grid-cols-1 sm:flex sm:justify-between border border-white p-2 rounded bg-white text-gray-600'>
                             <p>Geo Coordinate</p>
                             <p>({item.client_geo_lat}, {item.client_geo_lng})</p>
                         </div>
-                        <div className='flex justify-between py-5 border-t border-b'>
+                        <div className='grid grid-cols-1 sm:flex sm:justify-between py-5 border-t border-b'>
                             <p>ITEMS PURCHASED BY CUSTOMER</p>
                             <p>ID#{item.client_id}</p>
                         </div>
@@ -65,27 +65,27 @@ export default function StoreReport(props) {
                             <div key={`${number},${product.seller_id}`}>
                                 
                                 <div className='p-2 bg-blue-400 rounded grid grid-cols-1 gap-2'>
-                                    <div className='flex justify-between border-b'>
+                                    <div className='grid grid-cols-1 sm:flex justify-between border-b'>
                                         <p>PRODUCT ID#</p>
                                         <p>{product.item_id}</p>
                                     </div>
   
-                                    <div className='flex justify-between '>
+                                    <div className='grid grid-cols-1 sm:flex justify-between '>
                                         <p>PRODUCT PRICE</p>
                                         <p>${product.item_price}</p>
                                     </div>
 
-                                    <div className='flex justify-between '>
+                                    <div className='grid grid-cols-1 sm:flex justify-between '>
                                         <p>QTY</p>
                                         <p>{product.quantity}</p>
                                     </div>
 
-                                    <div className='flex justify-between border-b'>
+                                    <div className='grid grid-cols-1 sm:flex justify-between border-b'>
                                         <p>SUMMED PRICE</p>
                                         <p>${(parseFloat(product.item_price) * parseInt(product.quantity)).toFixed(2)}</p>
                                     </div>
 
-                                    <div className='flex justify-between '>
+                                    <div className='grid grid-cols-1 sm:flex justify-between '>
                                         <p>DATE OF PURCHASE</p>
                                         <p>{Date(product.entry_date)}</p>
                                     </div>
