@@ -300,7 +300,6 @@ export default function EditStoreItems() {
 
     return (
         <div>
-            <p className='p-5 border-b border-gray-400 text-2xl font-bold text-gray-500'>Edit Store</p>
             {content}
         </div>
     )
