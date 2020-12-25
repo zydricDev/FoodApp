@@ -5,9 +5,9 @@ const PurchasedBundle = require('../models/ServerOnly/purchaseBundleModel')
 
 function updateAnalytics(){
     var rule = new schedule.RecurrenceRule();
-    rule.dayOfWeek = [0, new schedule.Range(0, 6)];
-    rule.hour = 12;
-    rule.minute = 0;
+    //rule.dayOfWeek = [0, new schedule.Range(0, 6)];
+    //rule.hour = 12;
+    rule.minute = 31;
 
     schedule.scheduleJob(rule, async function (){
         const users = await User.find()
@@ -18,7 +18,7 @@ function updateAnalytics(){
         let allClients = []
         let uniqueClients = []
         
-        console.log('Database: Updating bundles scheduled every 12 hours')
+        console.log('Database: Updating bundles scheduled every 12PM')
        
         for(let i=0; i<users.length; i++){
             client = await UserAnalytics.find({

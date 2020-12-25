@@ -31,8 +31,8 @@ export default function StoreReport(props) {
                     {report.data.map((item, index)=> 
                     <div key={index} className='p-5 rounded bg-blue-500 text-white grid grid-cols-1 gap-2'>
                         <div className='grid grid-cols-1 sm:flex sm:justify-between '>
-                            <p>ISSUED DATE</p>
-                            <p>{Date(item.last_updated)}</p>
+                            <p>LAST UPDATED</p>
+                            <p>{(item.last_updated).split('T')[0]}</p>
                         </div>
                         
                         <div className='grid grid-cols-1 sm:flex sm:justify-between border-t border-b py-5'>
@@ -87,7 +87,7 @@ export default function StoreReport(props) {
 
                                     <div className='grid grid-cols-1 sm:flex justify-between '>
                                         <p>DATE OF PURCHASE</p>
-                                        <p>{Date(product.entry_date)}</p>
+                                        <p>{(product.entry_date).split('T')[0]}</p>
                                     </div>
                                 </div>
                             </div>
