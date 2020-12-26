@@ -3,8 +3,8 @@ const app = express();
 const mongoose = require('mongoose');
 const cors = require('cors');
 
-const schedule = require('node-schedule')
-const updateAnalytics = require('./cronJobs/updateAnalytics')
+const updateReceipts = require('./cronJobs/updateReceipts')
+const bundleStoreItems = require('./cronJobs/bundleStoreItems')
 require('dotenv').config();
 
 
@@ -24,8 +24,8 @@ mongoose.connect(
 
 app.listen(PORT, ()=> {
     console.log(`Server at port: ${PORT}`)
-    updateAnalytics()
-    
+    updateReceipts()
+    bundleStoreItems()
 });
 
 app.get('/', (req, res) =>{
@@ -41,3 +41,4 @@ app.use('/map', require('./routes/mapRouter'));
 app.use('/precheck', require('./routes/preCheckoutRouter'));
 app.use('/checkout', require('./routes/checkoutRouter'));
 app.use('/receipt', require('./routes/receiptRouter'));
+app.use('/analyze', require('./routes/analyticsRouter'));

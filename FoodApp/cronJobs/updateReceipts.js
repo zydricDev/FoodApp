@@ -3,18 +3,18 @@ const UserAnalytics = require('../models/userAnalyticModel')
 const User = require('../models/userModel')
 const PurchasedBundle = require('../models/ServerOnly/purchaseBundleModel')
 
-function updateAnalytics(){
+function updateReceipts(){
     var rule = new schedule.RecurrenceRule();
     //rule.dayOfWeek = [0, new schedule.Range(0, 6)];
-    //rule.hour = 12;
-    rule.minute = 31;
+    rule.hour = 12;
+    rule.minute = 0;
 
     schedule.scheduleJob(rule, async function (){
         const users = await User.find()
-        let bundled = undefined
+        
         let totalSum = 0
         let totalQuantity = 0
-        let clone = undefined
+        
         let allClients = []
         let uniqueClients = []
         
@@ -76,4 +76,4 @@ function updateAnalytics(){
     });
 }
 
-module.exports = updateAnalytics 
+module.exports = updateReceipts 
