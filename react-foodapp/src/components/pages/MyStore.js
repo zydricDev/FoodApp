@@ -3,12 +3,13 @@ import EditStoreItems from '../storeFeatures/EditStoreItems'
 import StoreReport from '../storeFeatures/StoreReport'
 import UserContext from '../../context/UserContext'
 import ForbiddenPage from '../misc/ForbiddenPage'
+import Analytics from '../storeFeatures/Analytics'
 
 
 export default function MyStore() {
     let content = <ForbiddenPage></ForbiddenPage>
     
-    const [view, setView] = useState('report')
+    const [view, setView] = useState('analytics')
     const user = useContext(UserContext)
 
     if(user.userData.user){
@@ -18,6 +19,7 @@ export default function MyStore() {
              
                 <button className='bg-blue-500 rounded px-5 py-2 hover:bg-blue-600 text-white font-semibold' onClick={()=>setView('report')}>Store Report</button>
                 <button className='bg-blue-500 rounded px-5 py-2 hover:bg-blue-600 text-white font-semibold' onClick={()=>setView('edit_items')}>Edit My Items</button>
+                <button className='bg-blue-500 rounded px-5 py-2 hover:bg-blue-600 text-white font-semibold' onClick={()=>setView('analytics')}>View Analytics</button>
             </div>
     
             {view === 'report' &&
@@ -33,7 +35,13 @@ export default function MyStore() {
                 <EditStoreItems />
             </div>
             }
-            
+
+            {view === 'analytics' && 
+            <div>
+                <p className='p-5 border-b border-gray-400 text-2xl font-bold text-gray-500'>Analytics</p>
+                <Analytics usr_id={user.userData.user.id}/>
+            </div>
+            }
             
         </div> 
     }

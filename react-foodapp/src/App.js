@@ -19,6 +19,7 @@ import MyCart from './components/pages/MyCart'
 
 
 
+
 export default function App() {
     const [userData, setUserData] = useState({
         token: undefined,
@@ -72,7 +73,6 @@ export default function App() {
                     <Route path='/user/delete' component={DeleteMe} />
                     <Route path='/user/edit' component={UserEdit} />
                     <Route path='/map' component={NearMeMap} />
-                    
                 </Switch>
             </UserContext.Provider>
         </BrowserRouter>
