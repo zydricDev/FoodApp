@@ -69,6 +69,7 @@ export default function Analytics(props) {
                     label: myData.data.totalRevenue.dataset[year].label,
                     backgroundColor: 'rgb(33, 101, 202, 0.5)',
                     borderColor: 'rgb(33, 74, 202)',
+                    
                     borderWidth: 1,
                     hoverBackgroundColor: 'rgb(33, 37, 202, 0.7)',
                     hoverBorderColor: 'rgb(33, 84, 202)',
@@ -103,11 +104,11 @@ export default function Analytics(props) {
                     {
                         label: compareData.data.averageLabel,
                         type:'line',
-                        backgroundColor: 'rgb(33, 101, 202, 0.5)',
-                        borderColor: 'rgb(33, 74, 202)',
+                        backgroundColor: 'rgb(113, 5, 193, 0.5)',
+                        borderColor: 'rgb(93, 2, 149)',
                         borderWidth: 1,
-                        hoverBackgroundColor: 'rgb(33, 37, 202, 0.7)',
-                        hoverBorderColor: 'rgb(33, 84, 202)',
+                        hoverBackgroundColor: 'rgb(113, 5, 193, 0.7)',
+                        hoverBorderColor: 'rgb(75, 1, 120)',
                         barPercentage: 0.4,
                         data: compareData.data.averageSet
                     }]
@@ -152,14 +153,15 @@ export default function Analytics(props) {
                             }} 
                         />
                     </div>
+
                     <div>
                         <Line
                             data={revenue_data}
                             width={10}
                             height={2}
                             options={{
-                                scales: {
                                 
+                                scales: {
                                 yAxes: [{
                                     ticks: {
                                         callback: function(value, index, values) {
@@ -178,6 +180,7 @@ export default function Analytics(props) {
                             <p>{myData.data.totalRevenue.dataset[year].totalRevenue}</p>
                         </div>
                     </div>
+
                     {(canCompare) ?
                     <div>
                         <div className='flex items-center'>
@@ -197,6 +200,11 @@ export default function Analytics(props) {
                             width={10}
                             height={2} 
                             options={{
+                                elements: {
+                                    line: {
+                                        tension: 0
+                                    }
+                                },
                                 scales: {
                                 
                                 yAxes: [{
