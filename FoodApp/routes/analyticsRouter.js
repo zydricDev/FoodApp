@@ -24,37 +24,46 @@ router.get('/popular/:uuid', async (req,res)=>{
     }
 
     const qtySold = {
-        label: 'Quantity sold (All Time)',
-        xAxis: [],
-        yAxis: [],
-
+        dataset: [],
     }
-    
 
-    let totalQty = 0
+    const uniqueYears = [...new Set(purchasedItems.map(e => new Date(e.entry_date).getFullYear()))]
    
-    for(let i=0; i<inventoryList.items.length; i++){
-        
-        results = purchasedItems.filter(item => JSON.stringify(item.item_id) === JSON.stringify(inventoryList.items[i]._id))
-        
-        
-        if(results.length > 0){
-            qtySold.xAxis.push(inventoryList.items[i].foodName)
-            
-            for(let n=0; n<results.length; n++){
-                totalQty += parseInt(results[n].quantity)
+    
+    let totalQty = 0
+    
+    for(let p=0; p<uniqueYears.length; p++){
+    
+        xSub = []
+        ySub = []
+
+        byYear = purchasedItems.filter(e => new Date(e.entry_date).getFullYear() === uniqueYears[p])
+        for(let i=0; i<inventoryList.items.length; i++){
+            results = byYear.filter(item => JSON.stringify(item.item_id) === JSON.stringify(inventoryList.items[i]._id))
+            if(results.length > 0){
+                xSub.push(inventoryList.items[i].foodName)
+                
+                for(let n=0; n<results.length; n++){
+                    totalQty += parseInt(results[n].quantity)
+                }
+                ySub.push(totalQty)
+                totalQty = 0
             }
-            qtySold.yAxis.push(totalQty)
-            totalQty = 0
         }
+        qtySold.dataset.push({
+            year: `Items sold in ${uniqueYears[p]}`,
+            x: xSub, 
+            y: ySub
+        })
         
-        
+    
         
     }
+ 
+  
 
     res.json({
         qtySold,
-        msg: "AR"
     })
    
 })
