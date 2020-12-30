@@ -24,6 +24,7 @@ export default function Analytics(props) {
 
     const [year, setYear] = useState(0)
     
+    
     useEffect(()=>{
         const load = async () =>{
 
@@ -125,14 +126,17 @@ export default function Analytics(props) {
             <div className='grid grid-cols-1 gap-20 '>
                 <div>
                     <div className='flex w-full p-5 font-bold gap-5 items-center text-gray-600'>
-                        <p>Analyze for year</p>
-                        {myData.data.qtySold.dataset
-                        .sort((a,b)=>{
-                            return parseInt(a.year) - parseInt(b.year)
-                        })  
-                        .map((item, index) => 
-                            <button key={index} className='bg-blue-500 font-semibold px-5 py-2 rounded text-white hover:bg-blue-600' onClick={()=>{setYear(index)}}>{item.year}</button>
-                        )}
+                        
+                        <div className='grid grid-cols-1 sm:flex gap-5 w-full'>
+                            <p>Analyze for year</p>
+                            {myData.data.qtySold.dataset
+                            .sort((a,b)=>{
+                                return parseInt(a.year) - parseInt(b.year)
+                            })  
+                            .map((item, index) => 
+                                <button key={index} className='bg-blue-500 font-semibold px-5 py-2 rounded text-white hover:bg-blue-600' onClick={()=>{setYear(index)}}>{item.year}</button>
+                            )}
+                        </div>
                     </div>
                     <YearlyChart qtyData={quantity_data} revenueData={revenue_data} total={myData.data.totalRevenue.dataset[year].totalRevenue} totalQty={myData.data.qtySold.dataset[year].total_quantity}/>
                 </div>
@@ -149,7 +153,7 @@ export default function Analytics(props) {
                                     )}
                                 </select>
                             </div>
-                            <div className='flex px-5 py-2 items-center gap-2'>
+                            <div className='flex py-2 items-center gap-2'>
                                 <p>with year</p>
                                 <select className='border border-black p-2 rounded' value={year2} onChange={e => setYear2(e.target.value)}>
                                     {availableYears.data.map((item, index) =>
