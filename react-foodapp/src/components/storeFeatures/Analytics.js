@@ -1,14 +1,18 @@
 import React, {useState, useEffect} from 'react'
+import {useHistory} from 'react-router-dom'
+
 import axios from 'axios'
-import { Bar, Line, } from 'react-chartjs-2';
+import ComparisonChart from './AnalyticsCharts/ComparisonChart'
+import YearlyChart from './AnalyticsCharts/YearlyChart'
 import Loader from '../misc/Loader'
-
-
+import NoDataPage from '../misc/NoDataPage'
 import domain from '../../domain'
+
 export default function Analytics(props) {
     let content = <Loader></Loader>
     let usr_id = props.usr_id
     let comparison_data = undefined
+    const history = useHistory()
 
     const [myData, setData] = useState()
     const [compareData, setCompareData] = useState()
@@ -20,17 +24,20 @@ export default function Analytics(props) {
 
     const [year, setYear] = useState(0)
     
+    
     useEffect(()=>{
         const load = async () =>{
-            const result = await axios.get(`${domain}/analyze/popular/${usr_id}`, {
-                headers: { "zdevsite.usrtkn": localStorage.getItem('zdevsite.usrtkn') }
-            })
-            setData(result)
 
             const availableYearResult = await axios.get(`${domain}/analyze/comparison/available/${usr_id}`, {
                 headers: { "zdevsite.usrtkn": localStorage.getItem('zdevsite.usrtkn') }
             })
+           
             setAvailableYears(availableYearResult)
+
+            const result = await axios.get(`${domain}/analyze/yearly/${usr_id}`, {
+                headers: { "zdevsite.usrtkn": localStorage.getItem('zdevsite.usrtkn') }
+            })
+            setData(result)
 
             const comparisonResult = await axios.get(`${domain}/analyze/comparison/${usr_id}?year1=${year1}&year2=${year2}`, {
                 headers: { "zdevsite.usrtkn": localStorage.getItem('zdevsite.usrtkn') }
@@ -44,11 +51,10 @@ export default function Analytics(props) {
             
         }
         load()
-    },[usr_id, year1, year2])
+    },[usr_id, year1, year2, history])
 
     try{
         if(myData.data){
-            
             const quantity_data={
                 labels: myData.data.qtySold.dataset[year].x,
                 datasets:[{
@@ -117,114 +123,48 @@ export default function Analytics(props) {
             
                 
             content = 
-            <div>
-                <div className='flex w-full p-5 border-b border-gray-400 text-2xl font-bold text-gray-500 gap-5 items-center'>
-                    <p>Purchases from Year:</p>
-                    {myData.data.qtySold.dataset
-                    .sort((a,b)=>{
-                        return parseInt(a.year) - parseInt(b.year)
-                    })  
-                    .map((item, index) => 
-                        <button key={index} className='bg-blue-500 text-white text-lg font-semibold px-5 py-2 rounded' onClick={()=>{setYear(index)}}>{item.year}</button>
-                    
-                    )}
-                    
-                
+            <div className='grid grid-cols-1 gap-20 '>
+                <div>
+                    <div className='flex w-full p-5 font-bold gap-5 items-center text-gray-600'>
+                        
+                        <div className='grid grid-cols-1 sm:flex gap-5 w-full'>
+                            <p>Analyze for year</p>
+                            {myData.data.qtySold.dataset
+                            .sort((a,b)=>{
+                                return parseInt(a.year) - parseInt(b.year)
+                            })  
+                            .map((item, index) => 
+                                <button key={index} className='bg-blue-500 font-semibold px-5 py-2 rounded text-white hover:bg-blue-600' onClick={()=>{setYear(index)}}>{item.year}</button>
+                            )}
+                        </div>
+                    </div>
+                    <YearlyChart qtyData={quantity_data} revenueData={revenue_data} total={myData.data.totalRevenue.dataset[year].totalRevenue} totalQty={myData.data.qtySold.dataset[year].total_quantity}/>
                 </div>
-                <div className='grid grid-cols-1 gap-5'>
-                    <div>
-                        <Bar 
-                            data={quantity_data}
-                            width={10}
-                            height={2} 
-                            options={{
-                                scales: {
-                                yAxes: [{
-                                    ticks: {
-                                    beginAtZero: true
-                                    },
-
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: 'Quantity'
-                                    }
-                                }]
-                                }
-                            }} 
-                        />
-                    </div>
-
-                    <div>
-                        <Line
-                            data={revenue_data}
-                            width={10}
-                            height={2}
-                            options={{
+                <div className=''>
+                    <p className='p-5  border-t border-gray-400 font-bold text-gray-600'>Revenue comparison between {year1} and {year2}</p>
+                    {(canCompare) ? 
+                    <>
+                        <div className='flex items-center w-full'>
+                            <div className='flex px-5 py-2 items-center gap-2'>
+                                <p>Compare Year</p>
+                                <select className='border border-black p-2 rounded' value={year1} onChange={e => setYear1(e.target.value)}>
+                                    {availableYears.data.map((item, index) =>
+                                        <option key={index} value={item}>{item}</option>    
+                                    )}
+                                </select>
+                            </div>
+                            <div className='flex py-2 items-center gap-2'>
+                                <p>with year</p>
+                                <select className='border border-black p-2 rounded' value={year2} onChange={e => setYear2(e.target.value)}>
+                                    {availableYears.data.map((item, index) =>
+                                        <option key={index} value={item}>{item}</option>    
+                                    )}
+                                </select>
+                            </div>
                                 
-                                scales: {
-                                yAxes: [{
-                                    ticks: {
-                                        callback: function(value, index, values) {
-                                            return '$' + value.toFixed(2);
-                                        }
-                                    },
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: 'Revenue in $ units'
-                                    }
-                                }]
-                                }
-                            }} 
-                        />
-                        <div>
-                            <p>{myData.data.totalRevenue.dataset[year].totalRevenue}</p>
                         </div>
-                    </div>
-
-                    {(canCompare) ?
-                    <div>
-                        <div className='flex items-center'>
-                            <select value={year1} onChange={e => setYear1(e.target.value)}>
-                            {availableYears.data.map((item, index) =>
-                                <option key={index} value={item}>{item}</option>    
-                            )}
-                            </select>
-                            <select value={year2} onChange={e => setYear2(e.target.value)}>
-                            {availableYears.data.map((item, index) =>
-                                <option key={index} value={item}>{item}</option>    
-                            )}
-                            </select>
-                        </div>
-                        <Bar 
-                            data={comparison_data}
-                            width={10}
-                            height={2} 
-                            options={{
-                                elements: {
-                                    line: {
-                                        tension: 0
-                                    }
-                                },
-                                scales: {
-                                
-                                yAxes: [{
-                                    ticks: {
-                                        callback: function(value, index, values) {
-                                            return '$' + value.toFixed(2);
-                                        }
-                                    },
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: 'Revenue in $ units'
-                                    }
-                                }]
-                                }
-                            }}    
-                        />
-                    </div>
-                    :
-                    null
-                    }
+                    <ComparisonChart data={comparison_data} rawData={compareData.data.comparisonSet.dataset}/>
+                    </> : null}
                 </div>
                 
                 
@@ -232,7 +172,15 @@ export default function Analytics(props) {
         }
 
     }catch(err){
-        content = <Loader></Loader>
+        
+        if(!availableYears && !myData){
+            content = <NoDataPage reason={'No items were sold to make an analysis'}></NoDataPage>
+        }
+        if(availableYears || myData){
+            content = <Loader></Loader>
+        }
+        
+        
     }
     
     return (

@@ -4,7 +4,7 @@ const ListedBundle = require('../models/listedBundleModel')
 const tknParamAuth = require('../middleware/tokenParamsAuth')
 
 
-router.get('/popular/:uuid', async (req,res)=>{
+router.get('/yearly/:uuid', async (req,res)=>{
     const inventoryList = await ListedBundle.findOne({
         owner: req.params.uuid
     })
@@ -30,31 +30,36 @@ router.get('/popular/:uuid', async (req,res)=>{
     const uniqueYears = [...new Set(purchasedItems.map(e => new Date(e.entry_date).getFullYear()))]
    
     
-    let totalQty = 0
+    
     
     for(let p=0; p<uniqueYears.length; p++){
     
         xSub = []
         ySub = []
-
+        qtySub = 0
+        totalQty = 0
         byYear = purchasedItems.filter(e => new Date(e.entry_date).getFullYear() === uniqueYears[p])
+
         for(let i=0; i<inventoryList.items.length; i++){
             results = byYear.filter(item => JSON.stringify(item.item_id) === JSON.stringify(inventoryList.items[i]._id))
+            xSub.push(inventoryList.items[i].foodName)
             if(results.length > 0){
-                xSub.push(inventoryList.items[i].foodName)
                 
                 for(let n=0; n<results.length; n++){
+                    qtySub += parseInt(results[n].quantity)
                     totalQty += parseInt(results[n].quantity)
                 }
-                ySub.push(totalQty)
-                totalQty = 0
+                
             }
+            ySub.push(qtySub)
+            qtySub = 0
         }
         qtySold.dataset.push({
             year: uniqueYears[p],
             label: `Items sold in ${uniqueYears[p]}`,
             x: xSub, 
-            y: ySub
+            y: ySub,
+            total_quantity: totalQty
         })
         
     
@@ -125,7 +130,6 @@ router.get('/popular/:uuid', async (req,res)=>{
 
 router.get('/comparison/available/:uuid', async (req,res)=>{
     
-
     const inventoryList = await ListedBundle.findOne({
         owner: req.params.uuid
     })
@@ -147,6 +151,7 @@ router.get('/comparison/available/:uuid', async (req,res)=>{
     
     res.json(uniqueYears)
 })
+
 router.get('/comparison/:uuid', async (req,res)=>{
     
     if(!req.query.year1 || !req.query.year2){
