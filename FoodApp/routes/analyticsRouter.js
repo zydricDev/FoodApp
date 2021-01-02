@@ -114,7 +114,7 @@ router.get('/yearly/:uuid', async (req,res)=>{
             label: `Revenue made in ${uniqueYears[p]}`,
             x: xSub_Months,
             y: ySub,
-            totalRevenue: totalPrice
+            totalRevenue: totalPrice.toFixed(2)
         })
         totalPrice = 0
     }
@@ -233,7 +233,7 @@ router.get('/comparison/:uuid', async (req,res)=>{
             label: `Revenue in ${comparingYears[p]}`,
             x: xSub_Months,
             y: ySub,    
-            totalRevenue: totalPrice
+            totalRevenue: totalPrice.toFixed(2)
         })
 
         totalPrice = 0

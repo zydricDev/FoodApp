@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { stringify } = require('querystring');
+
 
 const foodSchema = new mongoose.Schema({
     foodName: {type: String, required: true},
