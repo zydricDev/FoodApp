@@ -12,7 +12,7 @@ import Analytics from '../storeFeatures/Analytics'
 export default function MyStore() {
     let content = <ForbiddenPage></ForbiddenPage>
     
-    const [view, setView] = useState('analytics')
+    const [view, setView] = useState('report')
     const user = useContext(UserContext)
 
     if(user.userData.user){
