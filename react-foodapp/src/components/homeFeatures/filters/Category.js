@@ -58,7 +58,7 @@ export default function Category(searchProps) {
                                     </div>
                                 )}
 
-                                <img src={menuType.img} alt={menuType.newCategoryType} className='rounded-full w-40 h-40 object-cover opacity-50 hover:opacity-100' />
+                                <img src={menuType.img} alt={menuType.newCategoryType} className='rounded-full w-40 h-40 object-cover opacity-80 hover:opacity-100' />
                                 {menuType.newCategoryType !== itemCategory ? <p>{menuType.newCategoryType}</p> : <p className='font-bold'>{menuType.newCategoryType}</p>}
                             </button>
                         </div>

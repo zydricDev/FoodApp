@@ -16,6 +16,7 @@ import Landing from './components/pages/Landing'
 import UserEdit from './components/pages/UserEdit'
 import NearMeMap from './components/pages/NearMeMap'
 import MyCart from './components/pages/MyCart'
+import Footer from './components/layout/Footer'
 
 
 
@@ -60,8 +61,8 @@ export default function App() {
         <BrowserRouter>
             <UserContext.Provider value={{ userData, setUserData }}>
                 <Header />
+                
                 <Switch>
-                    
                     <Route exact path='/' component={Landing} />
                     <Route path='/home' component={Mainhub} />
                     <Route path='/login' component={Login} />
@@ -74,7 +75,9 @@ export default function App() {
                     <Route path='/user/edit' component={UserEdit} />
                     <Route path='/map' component={NearMeMap} />
                 </Switch>
+                <Footer />
             </UserContext.Provider>
         </BrowserRouter>
+        
     </>
 }
