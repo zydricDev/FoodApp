@@ -54,7 +54,7 @@ export default function Header() {
                     <div className='sm:flex w-full'>
                         <div className='flex w-2/6'>
                             <Link to='/home'>
-                                <h1 className='md:text-xl lg:text-3xl py-5 text-red-500 hover:text-red-600 font-bold ml-5 w-full'>Food App</h1>
+                                <h1 className='text-xl lg:text-3xl py-5 text-red-500 hover:text-red-600 font-bold p-5 w-full'>Food App</h1>
                             </Link>
                         </div>
                         <div className='flex w-4/6'>
