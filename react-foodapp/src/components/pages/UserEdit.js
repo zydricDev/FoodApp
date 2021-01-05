@@ -85,7 +85,7 @@ export default function UserEdit() {
 
     if (currentData.data) {
         content =
-            <div className='bg-gray-300 h-screen'>
+            <div className='bg-gray-300 h-full'>
                 {error && 
                 <div className='flex w-full pt-5 justify-center'>
                     <ErrorNotice message={error} clearError={() => setError(undefined)} />
