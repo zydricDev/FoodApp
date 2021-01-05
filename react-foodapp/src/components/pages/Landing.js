@@ -114,7 +114,7 @@ export default function Landing() {
                 </div>
             </div>
         
-            <div className='md:flex p-5 bg-blue-500'>
+            <div className='md:flex p-5 bg-blue-500 text-white'>
                 <p className='w-full font-bold md:text-center md:text-3xl text-2xl self-center mb-5 sm:mb-0'>About Food App</p>
                 <p className='w-full xl:px-20'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Urna neque viverra justo nec ultrices dui. Convallis aenean et tortor at. Sapien pellentesque habitant morbi tristique senectus et netus et. Odio eu feugiat pretium nibh ipsum consequat. At imperdiet dui accumsan sit. Amet mattis vulputate enim nulla aliquet. Aliquet enim tortor at auctor. Tellus at urna condimentum mattis pellentesque. Non tellus orci ac auctor augue mauris augue neque. Pulvinar pellentesque habitant morbi tristique senectus et netus. Aliquam id diam maecenas ultricies mi eget mauris pharetra et. Eros in cursus turpis massa tincidunt dui ut ornare lectus.</p>
             </div>

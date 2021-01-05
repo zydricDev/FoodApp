@@ -41,7 +41,7 @@ function paginateThis(model) {
                 ahead: pagesAhead,
                 before: pagesBefore,
                 current: page,
-                maxPage: Math.ceil(filtered.length / limit),
+                maxPage: Math.ceil(filtered.length / limit)
             }
 
 

@@ -35,7 +35,7 @@ export default function Items(superProps) {
             
             case 'last':
                 if (max && restaurantList.data) {
-                    return { page: max, lower: (limit * (max - 1)), upper: (limit * (max - 1)) + (restaurantList.data.length % limit) }
+                    return { page: max, lower: limit * (max - 1), upper: (limit * (max - 1)) + (restaurantList.data.length % limit) }
                 }
                 return { page: state.page, lower: state.lower, upper: state.upper }    
 
