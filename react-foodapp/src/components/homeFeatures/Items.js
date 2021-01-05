@@ -2,13 +2,14 @@ import React, { useReducer } from 'react'
 import { useAxiosGet } from '../../Hooks/HttpRequest'
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
+import { faAngleRight, faAngleLeft, faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons'
 import Loader from '../misc/Loader'
 import domain from '../../domain'
 
 export default function Items(superProps) {
 
     let url = `${domain}/food/display/test`
+
 
     if (superProps.searchFor) {
         url = `${domain}/food/find/${superProps.searchFor}`
@@ -26,6 +27,18 @@ export default function Items(superProps) {
         const max = Math.ceil(restaurantList.data.length / limit)
 
         switch (action.type) {
+            case 'first':
+                if (state.page - 1 > 0) {
+                    return { page: 1, lower: 0, upper: 9 }
+                }
+                return { page: state.page, lower: state.lower, upper: state.upper }
+            
+            case 'last':
+                if (max && restaurantList.data) {
+                    return { page: max, lower: (limit * (max - 1)), upper: (limit * (max - 1)) + (restaurantList.data.length % limit) }
+                }
+                return { page: state.page, lower: state.lower, upper: state.upper }    
+
             case 'prev':
                 if (state.page - 1 > 0) {
                     return { page: state.page - 1, lower: state.lower - limit, upper: state.upper - limit }
@@ -84,6 +97,7 @@ export default function Items(superProps) {
     let pagesAhead = []
     let pagesBefore = []
     let maxPage = undefined
+    
     try {
 
         if (restaurantList.data) {
@@ -140,8 +154,15 @@ export default function Items(superProps) {
                                 </div>
                             )}
                     </div>
-                    <div className='flex justify-center w-full'>
-
+                    <div className='flex justify-center w-full'> 
+                        <button onClick={() => dispatch({ type: 'first' })} className='focus:outline-none'>
+                            <div className='border-t border-b border-l w-12 h-12 py-2 border-black hover:bg-blue-800 items-center inline-flex justify-center'>
+                                <FontAwesomeIcon icon={faAngleDoubleLeft} className='text-xl' />
+                            </div>
+                        </button>
+                            
+                   
+                      
                         {(state.page > 1) && (
                             <button onClick={() => dispatch({ type: 'prev' })} className='focus:outline-none'>
                                 <div className='border-t border-b border-l w-12 h-12 py-2 border-black hover:bg-blue-800 items-center inline-flex justify-center'>
@@ -188,6 +209,12 @@ export default function Items(superProps) {
                                 </div>
                             </button>
                         )}
+
+                        <button onClick={() => dispatch({ type: 'last' })} className='focus:outline-none'>
+                            <div className='border-t border-b border-r w-12 h-12 py-2 border-black hover:bg-blue-800 items-center inline-flex justify-center'>
+                                <FontAwesomeIcon icon={faAngleDoubleRight} className='text-xl' />
+                            </div>
+                        </button>
                     </div>
                     <div className='text-center pb-5'>
                         <p>Page {state.page} of {Math.ceil(restaurantList.data.filter(filtered).length / limit)}</p>

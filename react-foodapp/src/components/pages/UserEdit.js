@@ -85,14 +85,14 @@ export default function UserEdit() {
 
     if (currentData.data) {
         content =
-            <>
-                <div className='flex w-full mt-5 justify-center'>
-                    {error && (<ErrorNotice message={error} clearError={() => setError(undefined)} />)}
-                </div>
-
+            <div className='bg-gray-300 h-screen'>
+                {error && 
+                <div className='flex w-full pt-5 justify-center'>
+                    <ErrorNotice message={error} clearError={() => setError(undefined)} />
+                </div>}
                 <div className='flex w-full justify-center'>
 
-                    <div className='sm:flex grid grid-cols-1 w-full mt-10 sm:w-4/6'>
+                    <div className='sm:flex grid grid-cols-1 w-full pt-10 sm:w-4/6'>
                         <div className='flex-col py-5 px-3 w-full sm:w-2/6'>
                             <button className='w-full' onClick={() => setAccDetails(!accDetails)}>
                                 {accDetails ? <p className='py-3 px-5 w-full bg-gray-700 font-semibold text-left text-white'>Account Details</p> : <p className='py-3 px-5 w-full hover:bg-gray-500'>Account Details</p>}
@@ -303,7 +303,7 @@ export default function UserEdit() {
 
                     </div>
                 </div>
-            </>
+            </div>
     }
 
 

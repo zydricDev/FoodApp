@@ -77,8 +77,8 @@ export default function Category(searchProps) {
                             </div>
 
                             <div className='p-5 flex justify-center'>
-                                <p className='hover:border-0 hover:bg-blue-600 hover:text-white w-full text-center py-2 rounded-tl-lg rounded-bl-lg text-blue-500 font-medium border border-gray-400'>NOT YET</p>
-                                <p className='hover:border-0 hover:bg-blue-700 hover:text-white w-full text-center py-2 rounded-tr-lg rounded-br-lg text-blue-500 font-medium border border-gray-400'>NON</p>
+                                <p className='hover:border-0 hover:bg-blue-600 hover:text-white w-full text-center py-2 rounded-tl-lg rounded-bl-lg text-blue-500 font-medium border border-gray-400'>TBA</p>
+                                <p className='hover:border-0 hover:bg-blue-700 hover:text-white w-full text-center py-2 rounded-tr-lg rounded-br-lg text-blue-500 font-medium border border-gray-400'>TBA</p>
                             </div>
                             <div className='border-t border-b'>
                                 <button className='w-full flex justify-between' onClick={() => { setActiveFeature(!activeFeature) }}>
